@@ -663,7 +663,6 @@ func focus_in():
 	#	set_pause(false)
 
 func _notification(what):
-
 	if what == MainLoop.NOTIFICATION_WM_FOCUS_OUT:
 		focus_out()
 	elif what == MainLoop.NOTIFICATION_WM_FOCUS_IN:
@@ -672,13 +671,19 @@ func _notification(what):
 		quit_request()
 
 func quit_request():
-	#if root.menu_stack.size() > 0 && (root.menu_stack[root.menu_stack.size()-1] extends preload("res://game/ui/confirmation_popup.gd")):
-	#	return
-	#var ConfPopup = get_node("/root/main").load_menu("res://game/ui/confirmation_popup.scn")
+	if root.menu_stack.size() > 0 && (root.menu_stack[root.menu_stack.size()-1] extends preload("res://ui/confirm_popup.gd")):
+		return
+	#var ConfPopup = get_node("/root/main").load_menu("res://ui/confirm_popup.tscn")
 	#ConfPopup.PopupConfirmation("KEY_QUIT_GAME",self,"","_quit_game")
+
+	var confirm_popup = get_node("/root/main").load_menu("res://ui/confirm_popup.tscn")
+	confirm_popup.start("UI_QUIT_CONFIRM",self,"_quit_game")
+	
 	pass
 
-func _quit_game():
+func _quit_game(p_confirm):
+	if !p_confirm:
+		return
 	get_tree().quit()
 
 func check_achievement(name):
