@@ -51,15 +51,20 @@ func start(params, p_context):
 		if sep > 0:
 			var tid = text.substr(0, sep)
 			text = text.substr(sep + 2, text.length() - (sep + 2))
-
-			var ptext = TranslationServer.translate(tid)
-			if ptext != tid:
-				text = ptext
-			elif force_ids:
-				text = tid + " (" + text + ")"
+	
+			# This won't work unless we put the placeholder variables in translation files - Flesk
+			#var ptext = TranslationServer.translate(tid)
+			#if ptext != tid:
+			#	text = ptext
+			#elif force_ids:
+			#	text = tid + " (" + text + ")"
 
 		elif force_ids:
 			text = "(no id) " + text
+			
+		# Interpolate global variables - Flesk
+		printt("check string for globals", text)
+		text = vm.interpolate_globals(text)
 
 		label.set_text(text)
 		but.connect("pressed", self, "selected", [i])

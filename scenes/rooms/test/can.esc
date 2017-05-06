@@ -6,4 +6,4 @@ set_active can false
 
 :look
 
-say player "A can"
+say player "A !!can!!"

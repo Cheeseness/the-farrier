@@ -315,7 +315,11 @@ func sched_event(time, obj, event):
 	event_queue.push_back([time, obj, event])
 
 func get_global(name):
-	return (name in globals) && globals[name]
+	#return (name in globals) && globals[name]
+	# Return actual value if set; otherwise false - Flesk
+	if name in globals:
+		return globals[name]
+	return false
 
 func set_global(name, val):
 	globals[name] = val
@@ -747,4 +751,18 @@ func _ready():
 	connect("global_changed", self, "check_achievement")
 
 	set_process(true)
+	
+# Putting it here to make available; might not be the most suitable location - Flesk
+func interpolate_globals(text):
+	var i = 0
+	var new_text = ""
 
+	for t in text.split("!!"):
+		if i % 2 and get_global(t):
+			printt("text replacement", t, get_global(t))
+			new_text += get_global(t)
+		else:
+			new_text += t
+		i = i+1
+
+	return new_text
