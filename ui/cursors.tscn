@@ -1,0 +1,25 @@
+[gd_scene load_steps=5 format=1]
+
+[ext_resource path="res://ui/cursors.gd" type="Script" id=1]
+[ext_resource path="res://scenes/rooms/test/sprites/can.png" type="Texture" id=2]
+[ext_resource path="res://scenes/rooms/test/sprites/ice_cream.png" type="Texture" id=3]
+[ext_resource path="res://scenes/rooms/test/sprites/chainsaw.png" type="Texture" id=4]
+
+[node name="cursors" type="Node2D"]
+
+script/script = ExtResource( 1 )
+
+[node name="can" type="Sprite" parent="."]
+
+texture = ExtResource( 2 )
+
+[node name="ice_cream" type="Sprite" parent="."]
+
+texture = ExtResource( 3 )
+offset = Vector2( -44, -59 )
+
+[node name="chainsaw" type="Sprite" parent="."]
+
+texture = ExtResource( 4 )
+
+
