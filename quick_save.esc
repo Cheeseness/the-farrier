@@ -1,0 +1,19 @@
+:load
+
+cut_scene telon fade_out
+
+## Global flags
+
+set_global box_open true
+
+## Objects
+
+set_state box newspaper
+
+
+## Player
+
+change_scene res://scenes/rooms/test/test.scn
+teleport_pos player 763.047241 431.545105
+
+cut_scene telon fade_in
