@@ -1,0 +1,8 @@
+:use
+
+set_global cursor/pliers true
+set_global grooming_tool pliers
+
+:look
+
+say player "A pair of pliers"
