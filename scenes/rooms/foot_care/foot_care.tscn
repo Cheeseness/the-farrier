@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=1]
+[gd_scene load_steps=17 format=1]
 
 [ext_resource path="res://globals/scene.gd" type="Script" id=1]
 [ext_resource path="res://ui/cursors.tscn" type="PackedScene" id=2]
@@ -7,27 +7,39 @@
 [ext_resource path="res://scenes/tools/brush.tscn" type="PackedScene" id=5]
 [ext_resource path="res://globals/game.scn" type="PackedScene" id=6]
 [ext_resource path="res://scenes/rooms/foot_care/foot.gd" type="Script" id=7]
-[ext_resource path="res://globals/item_background.gd" type="Script" id=8]
+[ext_resource path="res://scenes/rooms/foot_care/sprites/foot_clean.png" type="Texture" id=8]
+[ext_resource path="res://globals/item_background.gd" type="Script" id=9]
+[ext_resource path="res://scenes/rooms/foot_care/sprites/para1b.png" type="Texture" id=10]
 
-[sub_resource type="ConvexPolygonShape2D" id=1]
+[sub_resource type="ConvexPolygonShape2D" id=7]
 
 custom_solver_bias = 0.0
-points = Vector2Array( 40, -310, 160, -250, 230, -140, 300, 120, 200, 240, 30, 300, -130, 290, -300, 190, -240, -50, -150, -250 )
+points = Vector2Array( -7.00354, -269.387, 184.329, -208.966, 264.89, -62.9491, 254.82, 130.901, 212.022, 246.708, 15.6543, 281.953, -160.573, 276.918, -243.652, 153.559, -261.275, -47.8439, -195.819, -193.861 )
 
 [sub_resource type="ConvexPolygonShape2D" id=2]
 
 custom_solver_bias = 0.0
-points = Vector2Array( 1240, 700, 1250, 310, 1290, 200, 1360, 350, 1440, 710 )
+points = Vector2Array( 1784.91, 678.103, 1935.96, 549.709, 1930.92, 1103.57, 1706.86, 997.83 )
 
 [sub_resource type="ConvexPolygonShape2D" id=3]
 
 custom_solver_bias = 0.0
-points = Vector2Array( 1620, 130, 1540, 0, 1920, 0 )
+points = Vector2Array( 1784.91, 678.103, 1706.86, 997.83, 1540.7, 806.497, 1721.97, 632.787 )
 
 [sub_resource type="ConvexPolygonShape2D" id=4]
 
 custom_solver_bias = 0.0
-points = Vector2Array( 1360, 350, 1620, 130, 1920, 0, 1910, 960, 1630, 820, 1440, 710 )
+points = Vector2Array( 1653.99, 375.999, 1923.37, 451.525, 1875.54, 529.568, 1752.18, 557.261 )
+
+[sub_resource type="ConvexPolygonShape2D" id=5]
+
+custom_solver_bias = 0.0
+points = Vector2Array( 1721.97, 632.787, 1540.7, 806.497, 1359.44, 675.585, 1276.36, 456.56, 1653.99, 375.999, 1752.18, 557.261 )
+
+[sub_resource type="ConvexPolygonShape2D" id=6]
+
+custom_solver_bias = 0.0
+points = Vector2Array( 1231.05, 715.866, 1122.79, 698.243, 1112.72, 615.165, 1276.36, 456.56, 1359.44, 675.585 )
 
 [node name="scene" type="Node2D"]
 
@@ -68,25 +80,26 @@ max_lines_visible = -1
 
 [node name="pliers" parent="." instance=ExtResource( 4 )]
 
-margin/left = 20.0
-margin/right = 216.0
-margin/bottom = 112.0
+margin/left = 23.0
+margin/top = 55.0
+margin/right = 219.0
+margin/bottom = 167.0
 
 [node name="brush" parent="." instance=ExtResource( 5 )]
 
 focus/ignore_mouse = false
-margin/left = 20.0
-margin/top = 130.0
-margin/right = 248.0
-margin/bottom = 242.0
+margin/left = 33.0
+margin/top = 263.0
+margin/right = 261.0
+margin/bottom = 375.0
 
 [node name="game" parent="." instance=ExtResource( 6 )]
 
 [node name="foot" type="Area2D" parent="."]
 
 input/pickable = true
-shapes/0/shape = SubResource( 1 )
-shapes/0/transform = Matrix32( 1, 0, 0, 1, 800, 590 )
+shapes/0/shape = SubResource( 7 )
+shapes/0/transform = Matrix32( 1, 0, 0, 1, 666.571, 597.553 )
 shapes/0/trigger = false
 gravity_vec = Vector2( 0, 1 )
 gravity = 98.0
@@ -94,11 +107,17 @@ linear_damp = 0.1
 angular_damp = 1.0
 script/script = ExtResource( 7 )
 
+[node name="Sprite" type="Sprite" parent="foot"]
+
+transform/pos = Vector2( 665.16, 361.722 )
+transform/scale = Vector2( 1.29693, 1.29693 )
+texture = ExtResource( 8 )
+
 [node name="foot_shape" type="CollisionPolygon2D" parent="foot"]
 
-transform/pos = Vector2( 800, 590 )
+transform/pos = Vector2( 666.571, 597.553 )
 build_mode = 0
-polygon = Vector2Array( -150, -250, -240, -50, -300, 190, -130, 290, 30, 300, 200, 240, 300, 120, 230, -140, 160, -250, 40, -310 )
+polygon = Vector2Array( -195.819, -193.861, -261.275, -47.8439, -243.652, 153.559, -160.573, 276.918, 15.6543, 281.953, 212.022, 246.708, 254.82, 130.901, 264.89, -62.9491, 184.329, -208.966, -7.00354, -269.387 )
 shape_range = Vector2( 0, 0 )
 trigger = false
 
@@ -114,11 +133,17 @@ shapes/1/trigger = false
 shapes/2/shape = SubResource( 4 )
 shapes/2/transform = Matrix32( 1, 0, 0, 1, 0, 0 )
 shapes/2/trigger = false
+shapes/3/shape = SubResource( 5 )
+shapes/3/transform = Matrix32( 1, 0, 0, 1, 0, 0 )
+shapes/3/trigger = false
+shapes/4/shape = SubResource( 6 )
+shapes/4/transform = Matrix32( 1, 0, 0, 1, 0, 0 )
+shapes/4/trigger = false
 gravity_vec = Vector2( 0, 1 )
 gravity = 98.0
 linear_damp = 0.1
 angular_damp = 1.0
-script/script = ExtResource( 8 )
+script/script = ExtResource( 9 )
 animations = null
 speed = 300
 scale_on_map = false
@@ -138,11 +163,17 @@ placeholders = {
 }
 use_custom_z = false
 
+[node name="Sprite" type="Sprite" parent="head"]
+
+transform/pos = Vector2( 1546.16, 622.211 )
+transform/scale = Vector2( 0.669161, 0.669161 )
+texture = ExtResource( 10 )
+
 [node name="head_shape" type="CollisionPolygon2D" parent="head"]
 
 build_mode = 0
-polygon = Vector2Array( 1540, 0, 1620, 130, 1360, 350, 1290, 200, 1250, 310, 1240, 700, 1440, 710, 1630, 820, 1910, 960, 1920, 0 )
-shape_range = Vector2( 0, 2 )
+polygon = Vector2Array( 1935.96, 549.709, 1784.91, 678.103, 1721.97, 632.787, 1752.18, 557.261, 1875.54, 529.568, 1923.37, 451.525, 1653.99, 375.999, 1276.36, 456.56, 1112.72, 615.165, 1122.79, 698.243, 1231.05, 715.866, 1359.44, 675.585, 1540.7, 806.497, 1706.86, 997.83, 1930.92, 1103.57 )
+shape_range = Vector2( 0, 4 )
 trigger = false
 
 
