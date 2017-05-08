@@ -31,6 +31,7 @@ func _input(event):
 	if event.type == InputEvent.MOUSE_BUTTON and event.button_index == BUTTON_RIGHT:
 		Input.set_custom_mouse_cursor(null)
 		vm.set_globals("cursor/", false)
+		vm.set_globals("grooming_tool", false)
 
 func _ready():
 	for child in get_children():
