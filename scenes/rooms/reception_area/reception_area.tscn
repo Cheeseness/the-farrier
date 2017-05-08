@@ -1,9 +1,13 @@
-[gd_scene load_steps=5 format=1]
+[gd_scene load_steps=9 format=1]
 
 [ext_resource path="res://globals/scene.gd" type="Script" id=1]
 [ext_resource path="res://scenes/rooms/reception_area/sprites/background.png" type="Texture" id=2]
 [ext_resource path="res://globals/background.gd" type="Script" id=3]
 [ext_resource path="res://globals/game.scn" type="PackedScene" id=4]
+[ext_resource path="res://scenes/rooms/reception_area/sprites/triceratops_placeholder.png" type="Texture" id=5]
+[ext_resource path="res://scenes/rooms/reception_area/sprites/yemm_placeholder.png" type="Texture" id=6]
+[ext_resource path="res://scenes/rooms/reception_area/sprites/reception_counter_placeholder.png" type="Texture" id=7]
+[ext_resource path="res://scenes/rooms/reception_area/sprites/customer_placeholder.png" type="Texture" id=8]
 
 [node name="scene" type="Node2D"]
 
@@ -25,5 +29,25 @@ script/script = ExtResource( 3 )
 action = "walk"
 
 [node name="game" parent="." instance=ExtResource( 4 )]
+
+[node name="PlaceholderDino" type="Sprite" parent="."]
+
+transform/pos = Vector2( 1712.55, 615.222 )
+texture = ExtResource( 5 )
+
+[node name="PlaceholderYemm" type="Sprite" parent="."]
+
+transform/pos = Vector2( 959.297, 628.583 )
+texture = ExtResource( 6 )
+
+[node name="Counter" type="Sprite" parent="."]
+
+transform/pos = Vector2( 690.577, 796.103 )
+texture = ExtResource( 7 )
+
+[node name="PlaceholderCustomer" type="Sprite" parent="."]
+
+transform/pos = Vector2( 236.108, 666.998 )
+texture = ExtResource( 8 )
 
 
