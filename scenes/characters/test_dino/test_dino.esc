@@ -1,0 +1,16 @@
+:talk
+? default test_dino
+	- "Shh shh shh..."
+		say player "Shh shh shh..."
+	- "There there..."
+		say player "There there..."
+	- "It's OK..."
+		say player "It's OK..."
+	- "Take it easy..."
+		say player "Take it easy..."
+	- "Nearly done..."
+		say player "Nearly done..."
+	- "!!*bruuuuugh*!!"
+		say player "!!*bruuuuugh*!!"
+		say test_dino "!!*bruuuuugh*!!"
+		set_global *bruuuuugh* "(greeting)"
