@@ -1,0 +1,87 @@
+[gd_scene load_steps=8 format=1]
+
+[ext_resource path="res://globals/item_background.gd" type="Script" id=1]
+[ext_resource path="res://scenes/rooms/foot_care/sprites/para1b.png" type="Texture" id=2]
+
+[sub_resource type="ConvexPolygonShape2D" id=1]
+
+custom_solver_bias = 0.0
+points = Vector2Array( 313.981, 7.60492, 448.533, -156.38, 431.714, 507.97, 70.1062, 310.347 )
+
+[sub_resource type="ConvexPolygonShape2D" id=2]
+
+custom_solver_bias = 0.0
+points = Vector2Array( 196.249, 49.6524, 313.981, 7.60492, 70.1062, 310.347 )
+
+[sub_resource type="ConvexPolygonShape2D" id=3]
+
+custom_solver_bias = 0.0
+points = Vector2Array( 124.768, -227.861, 381.257, -156.38, 322.391, -89.1042, 171.02, -59.671 )
+
+[sub_resource type="ConvexPolygonShape2D" id=4]
+
+custom_solver_bias = 0.0
+points = Vector2Array( 124.768, -227.861, 171.02, -59.671, 196.249, 49.6524, 70.1062, 310.347, -156.95, 83.2903, -123.312, -219.451 )
+
+[sub_resource type="ConvexPolygonShape2D" id=5]
+
+custom_solver_bias = 0.0
+points = Vector2Array( -451.282, 24.4239, -362.983, -93.309, -123.312, -219.451, -156.95, 83.2903, -308.321, 95.9046, -400.825, 95.9046 )
+
+[node name="test_dino" type="Area2D"]
+
+input/pickable = true
+shapes/0/shape = SubResource( 1 )
+shapes/0/transform = Matrix32( 1, 0, 0, 1, 8.40967, 224.537 )
+shapes/0/trigger = false
+shapes/1/shape = SubResource( 2 )
+shapes/1/transform = Matrix32( 1, 0, 0, 1, 8.40967, 224.537 )
+shapes/1/trigger = false
+shapes/2/shape = SubResource( 3 )
+shapes/2/transform = Matrix32( 1, 0, 0, 1, 8.40967, 224.537 )
+shapes/2/trigger = false
+shapes/3/shape = SubResource( 4 )
+shapes/3/transform = Matrix32( 1, 0, 0, 1, 8.40967, 224.537 )
+shapes/3/trigger = false
+shapes/4/shape = SubResource( 5 )
+shapes/4/transform = Matrix32( 1, 0, 0, 1, 8.40967, 224.537 )
+shapes/4/trigger = false
+gravity_vec = Vector2( 0, 1 )
+gravity = 98.0
+linear_damp = 0.1
+angular_damp = 1.0
+script/script = ExtResource( 1 )
+animations = null
+speed = 300
+scale_on_map = false
+light_on_map = false
+tooltip = "test_dino"
+action = "talk"
+events_path = "res://scenes/characters/test_dino/test_dino.esc"
+global_id = "test_dino"
+use_combine = false
+inventory = false
+use_action_menu = true
+interact_angle = -1
+talk_animation = "talk"
+active = true
+placeholders = {
+
+}
+use_custom_z = false
+
+[node name="Sprite" type="Sprite" parent="."]
+
+transform/pos = Vector2( 4.20471, 229.779 )
+transform/scale = Vector2( 0.669161, 0.669161 )
+texture = ExtResource( 2 )
+
+[node name="head_shape" type="CollisionPolygon2D" parent="."]
+
+transform/pos = Vector2( 8.40967, 224.537 )
+build_mode = 0
+polygon = Vector2Array( 448.533, -156.38, 313.981, 7.60492, 196.249, 49.6524, 171.02, -59.671, 322.391, -89.1042, 381.257, -156.38, 124.768, -227.861, -123.312, -219.451, -362.983, -93.309, -451.282, 24.4239, -400.825, 95.9046, -308.321, 95.9046, -156.95, 83.2903, 70.1062, 310.347, 431.714, 507.97 )
+shape_range = Vector2( 0, 4 )
+trigger = false
+
+
