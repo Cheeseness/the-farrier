@@ -1,16 +1,19 @@
 :talk
 ? default test_dino
 	- "Shh shh shh..."
-		say yemm_anchor "Shh shh shh..." yemm
+		say yemm_anchor "Shh shh shh..."
 	- "There there..."
-		say yemm_anchor "There there..." yemm
+		say yemm_anchor "There there..."
 	- "It's OK..."
-		say yemm_anchor "It's OK..." yemm
+		say yemm_anchor "It's OK..."
 	- "Take it easy..."
-		say yemm_anchor "Take it easy..." yemm
+		say yemm_anchor "Take it easy..."
 	- "Nearly done..."
-		say yemm_anchor "Nearly done..." yemm
+		say yemm_anchor "Nearly done..."
 	- "!!*bruuuuugh*!!"
-		say yemm_anchor "!!*bruuuuugh*!!" yemm
+		say yemm_anchor "!!*bruuuuugh*!!"
 		say test_dino "!!*bruuuuugh*!!"
 		set_global *bruuuuugh* "(greeting)"
+	- "Give me a sec'."
+		say yemm_anchor "I have to go check on the front desk. Give me a sec'."
+		change_scene res://scenes/rooms/reception_area/reception_area.tscn

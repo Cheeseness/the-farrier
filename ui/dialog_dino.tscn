@@ -70,11 +70,11 @@ margin/top = -50.0
 margin/right = 188.0
 margin/bottom = 44.0
 custom_fonts/normal_font = ExtResource( 3 )
-custom_colors/default_color = Color( 0.488071, 0.0771027, 0.636719, 1 )
+custom_colors/default_color = Color( 0.597656, 0.165756, 0.358087, 1 )
 custom_colors/font_color_selected = Color( 0, 0, 0, 1 )
 custom_constants/line_separation = -5
 bbcode/enabled = false
-bbcode/bbcode = "Hello, World!"
+bbcode/bbcode = ""
 visible_characters = -1
 
 [node name="avatars" parent="anchor" instance=ExtResource( 4 )]

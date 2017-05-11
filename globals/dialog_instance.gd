@@ -105,10 +105,10 @@ func init(p_params, p_context, p_intro, p_outro):
 		var avatars = get_node("anchor/avatars")
 		if avatars.get_child_count() > 0:
 			var name
-			if p_params.size() < 4:
+			if p_params.size() < 3:
 				name = avatars.get_child(0).get_name()
 			else:
-				name = p_params[3]
+				name = p_params[2]
 			for i in range(0, avatars.get_child_count()):
 				var c = avatars.get_child(i)
 				if c.get_name() == name:
