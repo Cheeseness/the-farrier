@@ -1,0 +1,8 @@
+:talk
+? reception
+	- "(Greet)"
+		say yemm "Hello."
+		say customer "Hi."
+	- "(Leave)"
+		say yemm "Be right back."
+		change_scene res://scenes/rooms/foot_care/foot_care.tscn

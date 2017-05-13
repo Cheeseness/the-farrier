@@ -4,10 +4,11 @@ var types = {}
 
 func say(params, callback):
 	var type
-	if params.size() < 3 || !has_resource(params[2]):
+	printt("params", params[0], params[1])
+	if params.size() < 2 || !has_resource(params[0]):
 		type = "default"
 	else:
-		type = params[2]
+		type = params[0]
 	type = type + Globals.get("platform/dialog_type_suffix")
 	var inst = get_resource(type).instance()
 	var z = inst.get_z()

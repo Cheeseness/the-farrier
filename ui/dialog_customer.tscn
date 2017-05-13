@@ -1,0 +1,99 @@
+[gd_scene load_steps=7 format=1]
+
+[ext_resource path="res://globals/dialog_instance.gd" type="Script" id=1]
+[ext_resource path="res://ui/dialog_bg.png" type="Texture" id=2]
+[ext_resource path="res://ui/fonts/overlock_bold.fnt" type="BitmapFont" id=3]
+[ext_resource path="res://ui/avatars/avatars.tscn" type="PackedScene" id=4]
+
+[sub_resource type="Animation" id=1]
+
+resource/name = "hide"
+length = 0.25
+loop = false
+step = 0.1
+tracks/0/type = "value"
+tracks/0/path = NodePath("anchor:visibility/opacity")
+tracks/0/interp = 1
+tracks/0/imported = false
+tracks/0/keys = {
+"times": FloatArray( 0, 0.2 ),
+"transitions": FloatArray( 1, 1 ),
+"update": 0,
+"values": [ 1.0, 0.0 ]
+}
+
+[sub_resource type="Animation" id=2]
+
+resource/name = "show"
+length = 0.25
+loop = false
+step = 0.1
+tracks/0/type = "value"
+tracks/0/path = NodePath("anchor:visibility/opacity")
+tracks/0/interp = 1
+tracks/0/imported = false
+tracks/0/keys = {
+"times": FloatArray( 0, 0.2 ),
+"transitions": FloatArray( 1, 1 ),
+"update": 0,
+"values": [ 0.0, 1.0 ]
+}
+
+[node name="dialog_instance" type="Node2D"]
+
+z/z = 1080
+script/script = ExtResource( 1 )
+__meta__ = {
+"__editor_plugin_screen__": "2D"
+}
+fixed_pos = false
+
+[node name="anchor" type="Node2D" parent="."]
+
+transform/pos = Vector2( 0, 0.160187 )
+
+[node name="Sprite" type="Sprite" parent="anchor"]
+
+visibility/visible = false
+transform/pos = Vector2( 7.74872, 4.7569 )
+transform/scale = Vector2( 0.473106, 0.473106 )
+texture = ExtResource( 2 )
+
+[node name="text" type="Label" parent="anchor"]
+
+focus/ignore_mouse = true
+focus/stop_mouse = true
+size_flags/horizontal = 2
+size_flags/vertical = 2
+margin/left = 380.0
+margin/top = 120.0
+margin/right = 748.0
+margin/bottom = 214.0
+custom_fonts/font = ExtResource( 3 )
+custom_colors/font_color = Color( 0.324219, 0.284394, 0.178574, 1 )
+custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
+custom_constants/shadow_offset_x = 2
+custom_constants/shadow_offset_y = 2
+align = 1
+valign = 2
+percent_visible = 1.0
+lines_skipped = 0
+max_lines_visible = -1
+
+[node name="avatars" parent="anchor" instance=ExtResource( 4 )]
+
+visibility/visible = false
+
+[node name="animation" type="AnimationPlayer" parent="."]
+
+playback/process_mode = 1
+playback/default_blend_time = 0.0
+root/root = NodePath("..")
+anims/hide = SubResource( 1 )
+anims/show = SubResource( 2 )
+playback/active = true
+playback/speed = 1.0
+blend_times = [  ]
+autoplay = ""
+
+
