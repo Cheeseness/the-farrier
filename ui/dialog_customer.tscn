@@ -2,7 +2,7 @@
 
 [ext_resource path="res://globals/dialog_instance.gd" type="Script" id=1]
 [ext_resource path="res://ui/dialog_bg.png" type="Texture" id=2]
-[ext_resource path="res://ui/fonts/Overlock-Bold.fnt" type="BitmapFont" id=3]
+[ext_resource path="res://ui/fonts/overlock_bold.fnt" type="BitmapFont" id=3]
 [ext_resource path="res://ui/avatars/avatars.tscn" type="PackedScene" id=4]
 
 [sub_resource type="Animation" id=1]
@@ -59,7 +59,7 @@ transform/pos = Vector2( 7.74872, 4.7569 )
 transform/scale = Vector2( 0.473106, 0.473106 )
 texture = ExtResource( 2 )
 
-[node name="text" type="RichTextLabel" parent="anchor"]
+[node name="text" type="Label" parent="anchor"]
 
 focus/ignore_mouse = true
 focus/stop_mouse = true
@@ -69,13 +69,16 @@ margin/left = 380.0
 margin/top = 120.0
 margin/right = 748.0
 margin/bottom = 214.0
-custom_fonts/normal_font = ExtResource( 3 )
-custom_colors/default_color = Color( 0.0505385, 0.0336456, 0.574219, 1 )
-custom_colors/font_color_selected = Color( 0, 0, 0, 1 )
-custom_constants/line_separation = -5
-bbcode/enabled = false
-bbcode/bbcode = ""
-visible_characters = -1
+custom_fonts/font = ExtResource( 3 )
+custom_colors/font_color = Color( 0.324219, 0.284394, 0.178574, 1 )
+custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
+custom_constants/shadow_offset_x = 2
+custom_constants/shadow_offset_y = 2
+align = 1
+valign = 2
+percent_visible = 1.0
+lines_skipped = 0
+max_lines_visible = -1
 
 [node name="avatars" parent="anchor" instance=ExtResource( 4 )]
 

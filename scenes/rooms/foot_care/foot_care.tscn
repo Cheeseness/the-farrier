@@ -103,7 +103,7 @@ z/z = 417
 
 [node name="yemm" type="Node2D" parent="."]
 
-transform/pos = Vector2( 1091.08, 1041.62 )
+transform/pos = Vector2( 960, 1030 )
 z/z = 1041
 script/script = ExtResource( 10 )
 animations = null

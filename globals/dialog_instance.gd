@@ -138,7 +138,9 @@ func init(p_params, p_context, p_intro, p_outro):
 	printt("check string for globals", text)
 	text = vm.interpolate_globals(text)
 
-	label.parse_bbcode(text)
+	#If we use normal labels, we get to have text shadows
+	#label.parse_bbcode(text)
+	label.set_text(text)
 	label.set_visible_characters(0)
 
 	if self extends Node2D:

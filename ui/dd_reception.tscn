@@ -141,7 +141,7 @@ visibility/visible = false
 
 [node name="item" type="Control" parent="."]
 
-rect/min_size = Vector2( 1920, 20 )
+rect/min_size = Vector2( 1920, 45 )
 focus/ignore_mouse = false
 focus/stop_mouse = true
 size_flags/horizontal = 2
@@ -155,7 +155,7 @@ margin/bottom = 60.0
 
 anchor/right = 1
 anchor/bottom = 1
-rect/min_size = Vector2( 1920, 20 )
+rect/min_size = Vector2( 1920, 45 )
 focus/ignore_mouse = false
 focus/stop_mouse = true
 size_flags/horizontal = 2
@@ -172,7 +172,7 @@ params/stretch_mode = 0
 
 [node name="label" type="Label" parent="item/button"]
 
-rect/min_size = Vector2( 1870, 20 )
+rect/min_size = Vector2( 1870, 45 )
 focus/ignore_mouse = true
 focus/stop_mouse = false
 size_flags/horizontal = 2
