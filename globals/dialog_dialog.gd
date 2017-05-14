@@ -35,6 +35,8 @@ func start(params, p_context):
 	printt("dialog start with params ", params.size())
 	context = p_context
 	cmd = params[0]
+	# Intercept and add dialogue options
+	append_words(cmd)
 	var i = 0
 	var visible = 0
 	for q in cmd:
@@ -171,3 +173,28 @@ func _ready():
 	animation.connect("finished", self, "anim_finished")
 	#get_node("anchor/scroll").set_theme(preload("res://game/globals/dialog_theme.xml"))
 	add_to_group("game")
+
+var words = {
+	"*grrgl*": ["[greeting]", 0],
+	"*hmndn*": ["[human]", 0]
+}
+
+func append_words(cmd):
+	# Append words to dialogue options dynamically from list
+	
+	# 0 - not learned, only appears the "turn" after it was spoken by dino
+	# 1 - learned, appears if repeated by player
+	# 2 - understood, always appears translated
+
+	# Correct words will be defined by .esc scripts,
+	# so make not to repeat words already in list.
+
+	# Get current player and dino from globals
+	var player = "yemm_anchor"
+	var dino = "test_dino"
+	
+	for word in words:
+		var p = {"name": "*", "params": [word, []]}
+		p["params"][1].append({"name": "say", "params": [player, word]})
+		p["params"][1].append({"name": "say", "params": [dino, "?"]})
+		cmd.append(p)
