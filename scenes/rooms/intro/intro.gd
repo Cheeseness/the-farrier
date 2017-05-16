@@ -13,6 +13,8 @@ extends TextureFrame
 #with the same name as the speaker in the lines dict. If no matching
 #Node2D is present, the line is positioned in the centre of the screen.
 
+#the name of the scene to transition to after this one is done
+var next_scene = "res://scenes/rooms/foot_care/foot_care.tscn"
 
 #optional colours for speaking characters
 var colour_list = {
@@ -94,11 +96,9 @@ func _ready():
 	set_process(true)
 	set_process_input(true)
 
-var skip_dialogue = false
-
 func _input(event):
 	if event.is_action("skip") and not event.is_pressed():
-		skip_dialogue = true
+		transition_scene()
 
 func _process(delta):
 	counter += delta
@@ -106,12 +106,6 @@ func _process(delta):
 	#Remove any expired lines
 	while !current_lines.empty():
 		var line_end = get_first_dict_index(current_lines)
-
-		# Skip dialogue line
-		if skip_dialogue:
-			counter = line_end
-			skip_dialogue = false
-
 		if counter >= line_end:
 			current_lines[line_end].queue_free()
 			current_lines.erase(line_end)
@@ -163,8 +157,12 @@ func _process(delta):
 			# clear dialogue lines?
 		else:
 			#print("Done")
-			get_parent().queue_free()
-			get_tree().change_scene("res://scenes/rooms/foot_care/foot_care.tscn")
+			transition_scene()
+
+func transition_scene():
+	get_parent().queue_free()
+	get_tree().change_scene(next_scene)
+
 
 func setup_backgrounds():
 	for i in range(backgrounds.size()):
