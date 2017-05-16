@@ -87,7 +87,7 @@ var pending_lines = {}
 var current_lines = {}
 
 func _ready():
-	print("Ready...")
+	#print("Ready...")
 	current_index = 0
 	setup_backgrounds()
 	setup_lines(backgrounds[current_index][0])
@@ -122,7 +122,7 @@ func _process(delta):
 	while !pending_lines.empty():
 		var line_start = get_first_dict_index(pending_lines)
 		if counter >= line_start:
-			print("Adding label ", pending_lines[line_start][1])
+			#print("Adding label ", pending_lines[line_start][1])
 			var label = Label.new()
 			label.set_size(Vector2(800, 100))
 			label.set_custom_minimum_size(Vector2(800, 100))
@@ -162,14 +162,14 @@ func _process(delta):
 			counter = 0
 			# clear dialogue lines?
 		else:
-			print("Done")
+			#print("Done")
+			get_parent().queue_free()
 			get_tree().change_scene("res://scenes/rooms/foot_care/foot_care.tscn")
-			get_tree().get_current_scene().queue_free()
 
 func setup_backgrounds():
 	for i in range(backgrounds.size()):
 		var it = ImageTexture.new()
-		print("loading", backgrounds[i][0])
+		#print("loading", backgrounds[i][0])
 		it.load("res://scenes/rooms/intro/sprites/" + backgrounds[i][0])
 		background_list[i] = [it, backgrounds[i][1]]
 
@@ -187,7 +187,7 @@ func get_first_dict_index(d):
 		return null
 
 func setup_lines(background):
-	print("Setting up lines for", background)
+	#print("Setting up lines for", background)
 	for l in current_lines.keys():
 		current_lines[l].queue_free()
 	current_lines.clear()
@@ -195,9 +195,9 @@ func setup_lines(background):
 	pending_lines.clear()
 	if lines.has(background):
 		for l in lines[background]:
-			print("Setting up line",l," for background", background)
+			#print("Setting up line",l," for background", background)
 			var temp = l[2] #fixme: This is silly
 			while pending_lines.has(temp):
 				temp += 0.1
 			pending_lines[temp] = [l[0], l[1], l[3] + temp]
-	print("Done.")
+	#print("Done.")
