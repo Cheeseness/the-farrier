@@ -92,6 +92,13 @@ func _ready():
 	setup_backgrounds()
 	setup_lines(backgrounds[current_index][0])
 	set_process(true)
+	set_process_input(true)
+
+var skip_dialogue = false
+
+func _input(event):
+	if event.is_action("skip") and not event.is_pressed():
+		skip_dialogue = true
 
 func _process(delta):
 	counter += delta
@@ -101,8 +108,9 @@ func _process(delta):
 		var line_end = get_first_dict_index(current_lines)
 
 		# Skip dialogue line
-		if Input.is_action_pressed("skip"):
+		if skip_dialogue:
 			counter = line_end
+			skip_dialogue = false
 
 		if counter >= line_end:
 			current_lines[line_end].queue_free()

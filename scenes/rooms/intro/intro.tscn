@@ -2,7 +2,7 @@
 
 [ext_resource path="res://globals/scene.gd" type="Script" id=1]
 [ext_resource path="res://scenes/rooms/intro/sprites/thefarrier_intro_01.png" type="Texture" id=2]
-[ext_resource path="res://intro.gd" type="Script" id=3]
+[ext_resource path="res://scenes/rooms/intro/intro.gd" type="Script" id=3]
 [ext_resource path="res://globals/game.scn" type="PackedScene" id=4]
 
 [node name="scene" type="Node2D"]
