@@ -99,6 +99,11 @@ func _process(delta):
 	#Remove any expired lines
 	while !current_lines.empty():
 		var line_end = get_first_dict_index(current_lines)
+
+		# Skip dialogue line
+		if Input.is_action_pressed("skip"):
+			counter = line_end
+
 		if counter >= line_end:
 			current_lines[line_end].queue_free()
 			current_lines.erase(line_end)
@@ -118,7 +123,7 @@ func _process(delta):
 			if has_node(pending_lines[line_start][0]):
 				var anchor = get_node(pending_lines[line_start][0])
 				label.set_pos(Vector2(anchor.get_pos()[0] - 400, anchor.get_pos()[1]))
-			label.set_valign(label.VALIGN_BOTTOM)
+			label.set_valign(Label.VALIGN_BOTTOM)
 			label.set_align(Label.ALIGN_CENTER)
 			label.set_text(pending_lines[line_start][1])
 			label.add_font_override("font", load("res://ui/fonts/overlock_bold.fnt"))
@@ -150,6 +155,8 @@ func _process(delta):
 			# clear dialogue lines?
 		else:
 			print("Done")
+			get_tree().change_scene("res://scenes/rooms/foot_care/foot_care.tscn")
+			get_tree().get_current_scene().queue_free()
 
 func setup_backgrounds():
 	for i in range(backgrounds.size()):
