@@ -558,6 +558,9 @@ func save():
 
 	ret.append("## Global flags\n\n")
 	for k in globals.keys():
+		# TODO: Implement serialization of dictionary
+		if typeof(globals[k]) == TYPE_DICTIONARY:
+			continue
 		if !globals[k]:
 			continue
 		ret.append("set_global " + k + " true\n")

@@ -174,10 +174,12 @@ func _ready():
 	#get_node("anchor/scroll").set_theme(preload("res://game/globals/dialog_theme.xml"))
 	add_to_group("game")
 
-var words = {
-	"*grrgl*": ["[greeting]", 0],
-	"*hmndn*": ["[human]", 0]
-}
+	# Set global word list
+	if not "words" in vm.get_global_list():
+		vm.set_global("words", {
+			"*grrgl*": ["[greeting]", 0],
+			"*hmndn*": ["[human]", 0]
+		})
 
 func append_words(cmd):
 	# Append words to dialogue options dynamically from list
@@ -192,9 +194,27 @@ func append_words(cmd):
 	# Get current player and dino from globals
 	var player = "yemm_anchor"
 	var dino = "test_dino"
-	
-	for word in words:
+
+	var lines = get_lines(cmd)
+
+	# TODO: Don't append if already there
+	for word in vm.get_global("words"):
+		if word in lines:
+			continue
 		var p = {"name": "*", "params": [word, []]}
 		p["params"][1].append({"name": "say", "params": [player, word]})
 		p["params"][1].append({"name": "say", "params": [dino, "?"]})
 		cmd.append(p)
+
+func get_lines(cmd):
+	var lines = []
+	for c in cmd:
+		var append = true
+		if "if_true" in c:
+			for key in c["if_true"]:
+				if !vm.get_global(key):
+					append = false
+					continue
+		if append:
+			lines.append(c["params"][0])
+	return lines
