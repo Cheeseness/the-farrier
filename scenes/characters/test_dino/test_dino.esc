@@ -1,8 +1,7 @@
 :talk
 ? default test_dino
-	- "Shh shh shh..." [flesk]
+	- "Shh shh shh..."
 		say yemm_anchor "Shh shh shh..."
-		set_global flesk true
 	- "There there..."
 		say yemm_anchor "There there..."
 	- "It's OK..."

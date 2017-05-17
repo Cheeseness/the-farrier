@@ -222,17 +222,3 @@ func remove_words(cmd):
 
 	for r in remove:
 		cmd.erase(r)
-
-# TODO: Ugh! We want to remove lines too, so this is useless
-func get_lines(cmd):
-	var lines = []
-	for c in cmd:
-		var append = true
-		if "if_true" in c:
-			for key in c["if_true"]:
-				if !vm.get_global(key):
-					append = false
-					continue
-		if append:
-			lines.append(c["params"][0])
-	return lines
