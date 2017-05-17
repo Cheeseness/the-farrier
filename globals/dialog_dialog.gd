@@ -65,7 +65,6 @@ func start(params, p_context):
 			text = "(no id) " + text
 			
 		# Interpolate global variables - Flesk
-		printt("check string for globals", text)
 		text = vm.interpolate_globals(text)
 
 		label.set_text(text)
@@ -202,11 +201,9 @@ func append_words(cmd):
 	var words = vm.get_global("words")
 	for word in words:
 		var meaning = words[word][0]
-		printt("word+meaning", word, meaning)
 		# If not heard, don't repeat
 		if not vm.get_global("heard/%s" % meaning):
 			continue
-		printt("added word+meaning", word, meaning)
 		var p = {"name": "*", "params": [word, []]}
 		p["params"][1].append({"name": "say", "params": [player, word]})
 		p["params"][1].append({"name": "set_global", "params": ["%s_learned" % meaning, "true"]})
