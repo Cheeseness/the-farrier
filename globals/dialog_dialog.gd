@@ -195,17 +195,29 @@ func append_words(cmd):
 	var player = "yemm_anchor"
 	var dino = "test_dino"
 
-	var lines = get_lines(cmd)
+	# Remove temporary words - this approach is problematic if .esc scripts
+	# use any of the same word for dialogue branches
+	remove_words(cmd)
 
 	# TODO: Don't append if already there
 	for word in vm.get_global("words"):
-		if word in lines:
-			continue
 		var p = {"name": "*", "params": [word, []]}
 		p["params"][1].append({"name": "say", "params": [player, word]})
 		p["params"][1].append({"name": "say", "params": [dino, "?"]})
 		cmd.append(p)
 
+func remove_words(cmd):
+	# Removing items in place doesn't work, so we'll use a temporary array
+	var remove = []
+	
+	for c in cmd:
+		if c["params"][0] in vm.get_global("words"):
+			remove.append(c)
+
+	for r in remove:
+		cmd.erase(r)
+
+# TODO: Ugh! We want to remove lines too, so this is useless
 func get_lines(cmd):
 	var lines = []
 	for c in cmd:
