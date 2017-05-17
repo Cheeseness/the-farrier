@@ -177,8 +177,8 @@ func _ready():
 	# Set global word list
 	if not "words" in vm.get_global_list():
 		vm.set_global("words", {
-			"*grrgl*": ["[greeting]", 0],
-			"*hmndn*": ["[human]", 0]
+			"*bruuuuugh*": ["greeting", 0],
+			"*hmndn*": ["human", 0]
 		})
 
 func append_words(cmd):
@@ -199,12 +199,21 @@ func append_words(cmd):
 	# use any of the same word for dialogue branches
 	remove_words(cmd)
 
-	# TODO: Don't append if already there
-	for word in vm.get_global("words"):
+	var words = vm.get_global("words")
+	for word in words:
+		var meaning = words[word][0]
+		printt("word+meaning", word, meaning)
+		# If not heard, don't repeat
+		if not vm.get_global("heard/%s" % meaning):
+			continue
+		printt("added word+meaning", word, meaning)
 		var p = {"name": "*", "params": [word, []]}
 		p["params"][1].append({"name": "say", "params": [player, word]})
-		p["params"][1].append({"name": "say", "params": [dino, "?"]})
+		p["params"][1].append({"name": "set_global", "params": ["%s_learned" % meaning, "true"]})
 		cmd.append(p)
+
+	# If not repeated on following "turn", learning opportunity is lost for now
+	vm.set_globals("heard/*", false)
 
 func remove_words(cmd):
 	# Removing items in place doesn't work, so we'll use a temporary array
