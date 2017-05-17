@@ -92,7 +92,7 @@ func init(p_params, p_context, p_intro, p_outro):
 
 	play_intro = p_intro
 	play_outro = p_outro
-	total_time = text.length() / speed
+	total_time = 0 # text.length() / speed
 	if !fixed_pos:
 		var pos
 		if character.has_node("dialog_pos"):
