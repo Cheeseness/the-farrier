@@ -6,3 +6,5 @@
 	- "(Leave)"
 		say yemm "Be right back."
 		change_scene res://scenes/rooms/foot_care/foot_care.tscn
+
+set_global customer_dialogue_ended true

@@ -1,15 +1,15 @@
 :talk
 ? default test_dino
 	- "Shh shh shh..."
-		say yemm_anchor "Shh shh shh..."
+		say yemm "Shh shh shh..."
 	- "There there..."
-		say yemm_anchor "There there..."
+		say yemm "There there..."
 	- "It's OK..."
-		say yemm_anchor "It's OK..."
+		say yemm "It's OK..."
 	- "Take it easy..."
-		say yemm_anchor "Take it easy..."
+		say yemm "Take it easy..."
 	- "Nearly done..."
-		say yemm_anchor "Nearly done..."
+		say yemm "Nearly done..."
 	- "Hello!" [!greeting_understood]
 		say test_dino "!!*bruuuuugh*!!"
 		>	[greeting_learned]
@@ -18,7 +18,7 @@
 			stop
 		set_global heard/greeting true
 	- "(greeting)" [greeting_understood]
-		say yemm_anchor "(greeting), dinosaur"
+		say yemm "(greeting), dinosaur"
 	- "Give me a sec'."
-		say yemm_anchor "I have to go check on the front desk. Give me a sec'."
+		say yemm "I have to go check on the front desk. Give me a sec'."
 		change_scene res://scenes/rooms/reception_area/reception_area.tscn

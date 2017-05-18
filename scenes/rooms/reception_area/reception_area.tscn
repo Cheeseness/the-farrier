@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=1]
+[gd_scene load_steps=12 format=1]
 
 [ext_resource path="res://globals/scene.gd" type="Script" id=1]
 [ext_resource path="res://scenes/rooms/reception_area/sprites/storefront_bg_back.png" type="Texture" id=2]
@@ -7,9 +7,10 @@
 [ext_resource path="res://scenes/rooms/reception_area/sprites/storefront_parasaur_1.png" type="Texture" id=5]
 [ext_resource path="res://scenes/rooms/reception_area/sprites/storefront_bg_mid.png" type="Texture" id=6]
 [ext_resource path="res://scenes/rooms/reception_area/sprites/storefront_yemm.png" type="Texture" id=7]
-[ext_resource path="res://globals/item.gd" type="Script" id=8]
+[ext_resource path="res://globals/dialog_anchor.gd" type="Script" id=8]
 [ext_resource path="res://scenes/rooms/reception_area/sprites/storefront_bg_front.png" type="Texture" id=9]
 [ext_resource path="res://scenes/characters/customer/customer.tscn" type="PackedScene" id=10]
+[ext_resource path="res://scenes/rooms/reception_area/dialogue_loop.gd" type="Script" id=11]
 
 [node name="scene" type="Node2D"]
 
@@ -54,25 +55,17 @@ margin/right = 1920.0
 margin/bottom = 1080.0
 texture = ExtResource( 7 )
 stretch_mode = 0
+
+[node name="yemm_mouth" type="Node2D" parent="PlaceholderYemm"]
+
+transform/pos = Vector2( 800, 300 )
 script/script = ExtResource( 8 )
 animations = null
 speed = 300
 scale_on_map = false
 light_on_map = false
-tooltip = "Yemm"
-action = ""
-events_path = ""
+tooltip = ""
 global_id = "yemm"
-use_combine = false
-inventory = false
-use_action_menu = true
-interact_angle = -1
-talk_animation = "talk"
-active = true
-placeholders = {
-
-}
-use_custom_z = false
 
 [node name="Counter" type="Sprite" parent="."]
 
@@ -80,5 +73,18 @@ texture = ExtResource( 9 )
 centered = false
 
 [node name="PlaceholderCustomer" parent="." instance=ExtResource( 10 )]
+
+[node name="dialogue_loop" type="Node2D" parent="."]
+
+script/script = ExtResource( 11 )
+
+[node name="Timer" type="Timer" parent="dialogue_loop"]
+
+process_mode = 1
+wait_time = 0.1
+one_shot = true
+autostart = true
+
+[connection signal="timeout" from="dialogue_loop/Timer" to="dialogue_loop" method="start_dialogue"]
 
 

@@ -190,10 +190,6 @@ func append_words(cmd):
 	# Correct words will be defined by .esc scripts,
 	# so make not to repeat words already in list.
 
-	# Get current player and dino from globals
-	var player = "yemm_anchor"
-	var dino = "test_dino"
-
 	# Remove temporary words - this approach is problematic if .esc scripts
 	# use any of the same word for dialogue branches
 	remove_words(cmd)
@@ -205,7 +201,7 @@ func append_words(cmd):
 		if not vm.get_global("heard/%s" % meaning):
 			continue
 		var p = {"name": "*", "params": [word, []]}
-		p["params"][1].append({"name": "say", "params": [player, word]})
+		p["params"][1].append({"name": "say", "params": ["yemm", word]})
 		p["params"][1].append({"name": "set_global", "params": ["%s_learned" % meaning, "true"]})
 		cmd.append(p)
 
