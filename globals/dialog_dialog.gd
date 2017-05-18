@@ -35,6 +35,8 @@ func start(params, p_context):
 	printt("dialog start with params ", params.size())
 	context = p_context
 	cmd = params[0]
+	# Intercept and add dialogue options
+	append_words(cmd)
 	var i = 0
 	var visible = 0
 	for q in cmd:
@@ -63,7 +65,6 @@ func start(params, p_context):
 			text = "(no id) " + text
 			
 		# Interpolate global variables - Flesk
-		printt("check string for globals", text)
 		text = vm.interpolate_globals(text)
 
 		label.set_text(text)
@@ -171,3 +172,53 @@ func _ready():
 	animation.connect("finished", self, "anim_finished")
 	#get_node("anchor/scroll").set_theme(preload("res://game/globals/dialog_theme.xml"))
 	add_to_group("game")
+
+	# Set global word list
+	if not "words" in vm.get_global_list():
+		vm.set_global("words", {
+			"*bruuuuugh*": ["greeting", 0],
+			"*hmndn*": ["human", 0]
+		})
+
+func append_words(cmd):
+	# Append words to dialogue options dynamically from list
+	
+	# 0 - not learned, only appears the "turn" after it was spoken by dino
+	# 1 - learned, appears if repeated by player
+	# 2 - understood, always appears translated
+
+	# Correct words will be defined by .esc scripts,
+	# so make not to repeat words already in list.
+
+	# Get current player and dino from globals
+	var player = "yemm_anchor"
+	var dino = "test_dino"
+
+	# Remove temporary words - this approach is problematic if .esc scripts
+	# use any of the same word for dialogue branches
+	remove_words(cmd)
+
+	var words = vm.get_global("words")
+	for word in words:
+		var meaning = words[word][0]
+		# If not heard, don't repeat
+		if not vm.get_global("heard/%s" % meaning):
+			continue
+		var p = {"name": "*", "params": [word, []]}
+		p["params"][1].append({"name": "say", "params": [player, word]})
+		p["params"][1].append({"name": "set_global", "params": ["%s_learned" % meaning, "true"]})
+		cmd.append(p)
+
+	# If not repeated on following "turn", learning opportunity is lost for now
+	vm.set_globals("heard/*", false)
+
+func remove_words(cmd):
+	# Removing items in place doesn't work, so we'll use a temporary array
+	var remove = []
+	
+	for c in cmd:
+		if c["params"][0] in vm.get_global("words"):
+			remove.append(c)
+
+	for r in remove:
+		cmd.erase(r)
