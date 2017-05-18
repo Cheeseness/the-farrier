@@ -110,6 +110,6 @@ animations = null
 speed = 300
 scale_on_map = false
 light_on_map = false
-global_id = "yemm_anchor"
+global_id = "yemm"
 
 
