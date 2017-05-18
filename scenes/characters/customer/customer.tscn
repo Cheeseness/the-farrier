@@ -1,6 +1,6 @@
 [gd_scene load_steps=3 format=1]
 
-[ext_resource path="res://scenes/rooms/reception_area/sprites/customer_placeholder.png" type="Texture" id=1]
+[ext_resource path="res://scenes/rooms/reception_area/sprites/storefront_figure_3.png" type="Texture" id=1]
 [ext_resource path="res://globals/item.gd" type="Script" id=2]
 
 [node name="PlaceholderCustomer" type="TextureFrame"]
@@ -9,10 +9,10 @@ focus/ignore_mouse = false
 focus/stop_mouse = true
 size_flags/horizontal = 2
 size_flags/vertical = 2
-margin/left = 77.0
-margin/top = 70.0
-margin/right = 394.0
-margin/bottom = 1264.0
+margin/left = 0.0
+margin/top = 0.0
+margin/right = 1920.0
+margin/bottom = 1194.0
 texture = ExtResource( 1 )
 stretch_mode = 0
 script/script = ExtResource( 2 )
