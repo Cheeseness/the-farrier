@@ -7,6 +7,15 @@ var disposition_change = {
 	"decrease_disposition_small": -1,
 	"decrease_disposition_big": -5
 }
+var disposition_frame = {
+	"angry": 0,
+	"annoyed": 1, 
+	"neutral": 5,
+	"content": 2,
+	"happy": 4,
+	"growling": 3,
+}
+var dino
 
 func global_listener(name):
 	if name in disposition_change or name == "reset_disposition":
@@ -33,6 +42,16 @@ func change_disposition(name):
 	print("current disposition is %d" % disposition)
 	vm.set_global("disposition", disposition)
 	# TODO: Set animation according to disposition
+	if disposition > 7:
+		dino.get_node("Sprite").set_frame(disposition_frame["happy"])
+	elif disposition > 2:
+		dino.get_node("Sprite").set_frame(disposition_frame["content"])
+	elif disposition > -2:
+		dino.get_node("Sprite").set_frame(disposition_frame["neutral"])
+	elif disposition > -7:
+		dino.get_node("Sprite").set_frame(disposition_frame["annoyed"])
+	else:
+		dino.get_node("Sprite").set_frame(disposition_frame["angry"])
 
 func go_to_reception():
 	get_parent().queue_free()
@@ -40,10 +59,16 @@ func go_to_reception():
 
 # Function is first started by timer to dodge race conditions
 func start_dialogue():
-	var test_dino = get_parent().get_node("test_dino")
-	get_tree().call_group(0, "game", "clicked", test_dino, test_dino.get_pos())
+	get_tree().call_group(0, "game", "clicked", dino, dino.get_pos())
 
 func _ready():
 	vm = get_tree().get_root().get_node("/root/vm")
 	# Use listener to restart dialogue tree
 	vm.connect("global_changed", self, "global_listener")
+	for child in get_parent().get_children():
+		# Find the first visible dino
+		if child.get_name() in ["bern", "lull", "krik"] and child.is_visible():
+			prints("set active dinosaur:", child.get_name())
+			dino = child
+			dino.get_node("Sprite").set_frame(disposition_frame["neutral"])
+			break
