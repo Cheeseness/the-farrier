@@ -1,18 +1,20 @@
-[gd_scene load_steps=14 format=1]
+[gd_scene load_steps=16 format=1]
 
 [ext_resource path="res://globals/scene.gd" type="Script" id=1]
 [ext_resource path="res://scenes/rooms/reception_area/sprites/storefront_bg_back.png" type="Texture" id=2]
 [ext_resource path="res://globals/background.gd" type="Script" id=3]
 [ext_resource path="res://globals/game.scn" type="PackedScene" id=4]
-[ext_resource path="res://scenes/rooms/reception_area/sprites/storefront_parasaur_1.png" type="Texture" id=5]
-[ext_resource path="res://scenes/rooms/reception_area/sprites/storefront_bg_mid.png" type="Texture" id=6]
-[ext_resource path="res://scenes/rooms/reception_area/sprites/storefront_yemm.png" type="Texture" id=7]
-[ext_resource path="res://globals/dialog_anchor.gd" type="Script" id=8]
-[ext_resource path="res://scenes/rooms/reception_area/sprites/storefront_bg_front.png" type="Texture" id=9]
-[ext_resource path="res://scenes/rooms/reception_area/dialogue_loop.gd" type="Script" id=10]
-[ext_resource path="res://scenes/characters/customer/customer_onda.tscn" type="PackedScene" id=11]
-[ext_resource path="res://scenes/characters/customer/customer_wu.tscn" type="PackedScene" id=12]
-[ext_resource path="res://scenes/characters/customer/customer_herk.tscn" type="PackedScene" id=13]
+[ext_resource path="res://scenes/characters/dinos_reception/lull.tscn" type="PackedScene" id=5]
+[ext_resource path="res://scenes/characters/dinos_reception/krik.tscn" type="PackedScene" id=6]
+[ext_resource path="res://scenes/characters/dinos_reception/bern.tscn" type="PackedScene" id=7]
+[ext_resource path="res://scenes/rooms/reception_area/sprites/storefront_bg_mid.png" type="Texture" id=8]
+[ext_resource path="res://scenes/rooms/reception_area/sprites/storefront_yemm.png" type="Texture" id=9]
+[ext_resource path="res://globals/dialog_anchor.gd" type="Script" id=10]
+[ext_resource path="res://scenes/rooms/reception_area/sprites/storefront_bg_front.png" type="Texture" id=11]
+[ext_resource path="res://scenes/rooms/reception_area/dialogue_loop.gd" type="Script" id=12]
+[ext_resource path="res://scenes/characters/customer/customer_onda.tscn" type="PackedScene" id=13]
+[ext_resource path="res://scenes/characters/customer/customer_wu.tscn" type="PackedScene" id=14]
+[ext_resource path="res://scenes/characters/customer/customer_herk.tscn" type="PackedScene" id=15]
 
 [node name="scene" type="Node2D"]
 
@@ -35,14 +37,19 @@ action = "walk"
 
 [node name="game" parent="." instance=ExtResource( 4 )]
 
-[node name="PlaceholderDino" type="Sprite" parent="."]
+[node name="lull" parent="." instance=ExtResource( 5 )]
 
-texture = ExtResource( 5 )
-centered = false
+[node name="krik" parent="." instance=ExtResource( 6 )]
+
+visibility/visible = false
+
+[node name="bern" parent="." instance=ExtResource( 7 )]
+
+visibility/visible = false
 
 [node name="Wall" type="Sprite" parent="."]
 
-texture = ExtResource( 6 )
+texture = ExtResource( 8 )
 centered = false
 
 [node name="PlaceholderYemm" type="TextureFrame" parent="."]
@@ -55,13 +62,13 @@ margin/left = 0.0
 margin/top = 0.0
 margin/right = 1920.0
 margin/bottom = 1080.0
-texture = ExtResource( 7 )
+texture = ExtResource( 9 )
 stretch_mode = 0
 
 [node name="yemm_mouth" type="Node2D" parent="PlaceholderYemm"]
 
 transform/pos = Vector2( 1029.78, 161.765 )
-script/script = ExtResource( 8 )
+script/script = ExtResource( 10 )
 animations = null
 speed = 300
 scale_on_map = false
@@ -71,12 +78,12 @@ global_id = "yemm"
 
 [node name="Counter" type="Sprite" parent="."]
 
-texture = ExtResource( 9 )
+texture = ExtResource( 11 )
 centered = false
 
 [node name="dialogue_loop" type="Node2D" parent="."]
 
-script/script = ExtResource( 10 )
+script/script = ExtResource( 12 )
 
 [node name="Timer" type="Timer" parent="dialogue_loop"]
 
@@ -85,13 +92,13 @@ wait_time = 0.1
 one_shot = true
 autostart = true
 
-[node name="customer_onda" parent="." instance=ExtResource( 11 )]
+[node name="customer_onda" parent="." instance=ExtResource( 13 )]
 
-[node name="customer_wu" parent="." instance=ExtResource( 12 )]
+[node name="customer_wu" parent="." instance=ExtResource( 14 )]
 
 visibility/visible = false
 
-[node name="customer_herk" parent="." instance=ExtResource( 13 )]
+[node name="customer_herk" parent="." instance=ExtResource( 15 )]
 
 visibility/visible = false
 
