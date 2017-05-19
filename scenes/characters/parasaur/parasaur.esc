@@ -2,12 +2,16 @@
 ? default parasaur
 	- "Shh shh shh..."
 		say yemm "Shh shh shh..."
+		set_state parasaur growling
 	- "There there..."
 		say yemm "There there..."
+		set_state parasaur happy
 	- "It's OK..."
 		say yemm "It's OK..."
+		set_state parasaur angry
 	- "Take it easy..."
 		say yemm "Take it easy..."
+		set_state parasaur annoyed
 	- "Nearly done..."
 		say yemm "Nearly done..."
 	- "Hello!" [!greeting_understood]

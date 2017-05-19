@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=1]
+[gd_scene load_steps=15 format=1]
 
 [ext_resource path="res://globals/scene.gd" type="Script" id=1]
 [ext_resource path="res://ui/cursors.tscn" type="PackedScene" id=2]
@@ -10,8 +10,9 @@
 [ext_resource path="res://scenes/rooms/foot_care/sprites/foot_clean.png" type="Texture" id=8]
 [ext_resource path="res://scenes/conditions/splinter/splinter.tscn" type="PackedScene" id=9]
 [ext_resource path="res://scenes/characters/test_dino/test_dino.tscn" type="PackedScene" id=10]
-[ext_resource path="res://globals/dialog_anchor.gd" type="Script" id=11]
-[ext_resource path="res://scenes/rooms/foot_care/event_trigger.gd" type="Script" id=12]
+[ext_resource path="res://scenes/characters/parasaur/parasaur.tscn" type="PackedScene" id=11]
+[ext_resource path="res://globals/dialog_anchor.gd" type="Script" id=12]
+[ext_resource path="res://scenes/rooms/foot_care/event_trigger.gd" type="Script" id=13]
 
 [sub_resource type="ConvexPolygonShape2D" id=1]
 
@@ -118,14 +119,20 @@ trigger = false
 
 [node name="test_dino" parent="." instance=ExtResource( 10 )]
 
+visibility/visible = false
 transform/pos = Vector2( 1552.45, 417.65 )
 z/z = 417
+
+[node name="parasaur" parent="." instance=ExtResource( 11 )]
+
+transform/pos = Vector2( 1500, 600 )
+z/z = 600
 
 [node name="yemm" type="Node2D" parent="."]
 
 transform/pos = Vector2( 960, 1030 )
 z/z = 1041
-script/script = ExtResource( 11 )
+script/script = ExtResource( 12 )
 animations = null
 speed = 300
 scale_on_map = false
@@ -135,7 +142,7 @@ global_id = "yemm"
 
 [node name="event_trigger" type="Node2D" parent="."]
 
-script/script = ExtResource( 12 )
+script/script = ExtResource( 13 )
 
 [node name="Timer" type="Timer" parent="event_trigger"]
 

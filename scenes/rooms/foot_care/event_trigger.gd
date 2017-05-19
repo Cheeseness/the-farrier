@@ -22,8 +22,8 @@ func go_to_reception():
 
 # Function is first started by timer to dodge race conditions
 func start_dialogue():
-	var test_dino = get_parent().get_node("test_dino")
-	get_tree().call_group(0, "game", "clicked", test_dino, test_dino.get_pos())
+	var parasaur = get_parent().get_node("parasaur")
+	get_tree().call_group(0, "game", "clicked", parasaur, parasaur.get_pos())
 
 func _ready():
 	vm = get_tree().get_root().get_node("/root/vm")
