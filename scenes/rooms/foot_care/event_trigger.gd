@@ -1,8 +1,16 @@
 extends Node2D
 
 var vm
+var disposition_change = {
+	"increase_disposition_small": 1,
+	"increase_disposition_big": 5,
+	"decrease_disposition_small": -1,
+	"decrease_disposition_big": -5
+}
 
 func global_listener(name):
+	if name in disposition_change or name == "reset_disposition":
+		change_disposition(name)
 	if name == "splinters_removed":
 		Input.set_custom_mouse_cursor(null)
 		vm.set_globals("cursor/", false)
@@ -15,6 +23,16 @@ func global_listener(name):
 			# Not an issue if we're not just reloading the same room over and over.
 			vm.set_global("splinters_removed", false)
 			go_to_reception()
+
+func change_disposition(name):
+	var disposition = vm.get_global("disposition")
+	if not disposition or name == "reset_disposition":
+		disposition = 0
+	if name in disposition_change:
+		disposition += disposition_change[name]
+	print("current disposition is %d" % disposition)
+	vm.set_global("disposition", disposition)
+	# TODO: Set animation according to disposition
 
 func go_to_reception():
 	get_parent().queue_free()
