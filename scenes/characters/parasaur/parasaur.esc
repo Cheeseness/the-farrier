@@ -1,0 +1,26 @@
+:talk
+? default parasaur
+	- "Shh shh shh..."
+		say yemm "Shh shh shh..."
+	- "There there..."
+		say yemm "There there..."
+	- "It's OK..."
+		say yemm "It's OK..."
+	- "Take it easy..."
+		say yemm "Take it easy..."
+	- "Nearly done..."
+		say yemm "Nearly done..."
+	- "Hello!" [!greeting_understood]
+		say parasaur "!!*bruuuuugh*!!"
+		>	[greeting_learned]
+			set_global greeting_understood true
+			set_global *bruuuuugh* "(greeting)"
+			stop
+		set_global heard/greeting true
+	- "(greeting)" [greeting_understood]
+		say yemm "(greeting), dinosaur"
+	- "Give me a sec'."
+		say yemm "I have to go check on the front desk. Give me a sec'."
+		change_scene res://scenes/rooms/reception_area/reception_area.tscn
+
+set_global dinosaur_dialogue_ended true
