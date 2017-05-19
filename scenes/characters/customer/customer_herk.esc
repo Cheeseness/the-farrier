@@ -90,7 +90,7 @@ say customer_herk "Good. How soon will she be ready to work?" [customer_herk_end
 
 			- "She stays here."
 				say yemm "She stays here."
-				say bern "(happy)
+				say bern "(happy)"
 				say customer_herk "Fine. We'll make do... somehow."
 				set_global bern_stays true
 				change_scene res://scenes/rooms/reception_area/reception_area.tscn

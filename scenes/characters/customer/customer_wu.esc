@@ -34,12 +34,12 @@ say customer_wu "I can tell Krik is relieved. You work so well with them." [cust
 		say customer_wu "It doesn't look like much so far, but Fenn wants to work out where it's going before we let people know."
 		say customer_wu "He hasn't even told Onda - his own wife!"
 		say customer_wu "Sorry. Don't worry about it. We're all just feeling a little stressed."
-		set_global topic_missing_grain
+		set_global topic_missing_grain true
 
 	- "What caused the bruises?" [!customer_wu_end]
 		say yemm "What caused the bruises?"
 		say customer_wu "I found Krik lying on the ground. I couldn't see anything around that might have caused this."
-		set_global topic_krik_location
+		set_global topic_krik_location true
 		set_global customer_wu_greeting true
 
 	- "Where did you find Krik?" [!customer_wu_end, topic_krik_location]

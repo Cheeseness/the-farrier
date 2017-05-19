@@ -1,7 +1,6 @@
 #Onda is customer_onda and "owner" of Lull.
 
 :talk
-say lull "(happy)"
 say customer_onda "Greetings, Farrier." [!customer_onda_step1,!customer_onda_end]
 say yemm "Greetings to you too, Onda." [!customer_onda_step1,!customer_onda_end]
 say customer_onda "We haven't seen you for some weeks. How have you been?" [!customer_onda_step1,!customer_onda_end]
@@ -48,7 +47,7 @@ say customer_onda "Ha ha, you just can't keep her quiet. Come on girl, let's go 
 		say yemm "The storms haven't been that bad."
 		say customer_onda "Wu is on the way too. I'm afraid that last night's storm has left you with a lot of work to be done."
 		say yemm "These are seasonal storms. It's no more work than last year."
-		say customer_onda "I suppose not.
+		say customer_onda "I suppose not."
 		## restart dialogue
 
 ## opening dialogue step 2
