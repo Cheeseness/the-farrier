@@ -11,6 +11,9 @@ func global_listener(name):
 	if name == "dinosaur_dialogue_ended":
 		# TODO Check if we're done with all our tasks - if so, go back to reception area
 		if vm.get_global("splinters_removed"):
+			# Reset flag, so that it works on coming back.
+			# Not an issue if we're not just reloading the same room over and over.
+			vm.set_global("splinters_removed", false)
 			go_to_reception()
 
 func go_to_reception():
