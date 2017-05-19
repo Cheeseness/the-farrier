@@ -98,14 +98,12 @@ z/z = 470
 
 [node name="splinter 2" parent="foot" instance=ExtResource( 9 )]
 
-visibility/blend_mode = 4
 transform/pos = Vector2( 540, 550 )
 transform/scale = Vector2( 0.648465, 0.648465 )
 z/z = 550
 
 [node name="splinter 3" parent="foot" instance=ExtResource( 9 )]
 
-visibility/blend_mode = 4
 transform/pos = Vector2( 690, 690 )
 transform/scale = Vector2( 0.648465, 0.648465 )
 z/z = 689
