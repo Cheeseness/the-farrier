@@ -30,15 +30,15 @@ var colour_list = {
 # dialogue lines declared per background as as speaker, line, start, duration
 var lines = {
 			"thefarrier_intro_01.png": [
-				["yemm", "Papa, why do you talk to them?", 1, 1.5],
+				["yemm", "Papa, why do you talk to them?", 1, 2],
 			],
 			"thefarrier_intro_02.png": [
 				["dinosaur", "(anxious) (replace with sound!)", 0, 1],
 				["papa", "Woah there, easy now. It's OK.", 0.75, 2],
-				["papa", "To keep them calm. It's important to reassure them even if they can't understand.", 3, 2.5],
+				["papa", "To keep them calm. It's important to reassure them even if they can't understand.", 3, 3],
 			],
 			"thefarrier_intro_03.png": [
-				["papa", "Pass me the pliers, would you Yemm?", 0.5, 1],
+				["papa", "Pass me the pliers, would you Yemm?", 0.5, 1.5],
 			],
 			"thefarrier_intro_07.png": [
 				["papa", "Thank you.", 0, 1],
@@ -48,7 +48,7 @@ var lines = {
 				["papa", "Shh, this'll only hurt a bit.", 0.5, 2.0],
 			],
 			"thefarrier_intro_09.png": [
-				["papa", "And sometimes perhaps, it's to reassure us as well...", 0, 2.5],
+				["papa", "And sometimes perhaps, it's to reassure us as well...", 0, 3],
 			],
 			"thefarrier_intro_10.png": [
 				["yemm", "*gasp*", 0, 0.75],
