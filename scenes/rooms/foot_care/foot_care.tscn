@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=1]
+[gd_scene load_steps=14 format=1]
 
 [ext_resource path="res://globals/scene.gd" type="Script" id=1]
 [ext_resource path="res://ui/cursors.tscn" type="PackedScene" id=2]
@@ -8,8 +8,10 @@
 [ext_resource path="res://globals/game.scn" type="PackedScene" id=6]
 [ext_resource path="res://scenes/rooms/foot_care/foot.gd" type="Script" id=7]
 [ext_resource path="res://scenes/rooms/foot_care/sprites/foot_clean.png" type="Texture" id=8]
-[ext_resource path="res://scenes/characters/test_dino/test_dino.tscn" type="PackedScene" id=9]
-[ext_resource path="res://globals/dialog_anchor.gd" type="Script" id=10]
+[ext_resource path="res://scenes/conditions/splinter/splinter.tscn" type="PackedScene" id=9]
+[ext_resource path="res://scenes/characters/test_dino/test_dino.tscn" type="PackedScene" id=10]
+[ext_resource path="res://globals/dialog_anchor.gd" type="Script" id=11]
+[ext_resource path="res://scenes/rooms/foot_care/event_trigger.gd" type="Script" id=12]
 
 [sub_resource type="ConvexPolygonShape2D" id=1]
 
@@ -88,6 +90,24 @@ transform/pos = Vector2( 686.995, 448.447 )
 transform/scale = Vector2( 1.29693, 1.29693 )
 texture = ExtResource( 8 )
 
+[node name="splinter" parent="foot" instance=ExtResource( 9 )]
+
+transform/pos = Vector2( 850, 550 )
+transform/scale = Vector2( 0.648465, 0.648465 )
+z/z = 470
+
+[node name="splinter 2" parent="foot" instance=ExtResource( 9 )]
+
+transform/pos = Vector2( 540, 550 )
+transform/scale = Vector2( 0.648465, 0.648465 )
+z/z = 550
+
+[node name="splinter 3" parent="foot" instance=ExtResource( 9 )]
+
+transform/pos = Vector2( 690, 690 )
+transform/scale = Vector2( 0.648465, 0.648465 )
+z/z = 689
+
 [node name="foot_shape" type="CollisionPolygon2D" parent="foot"]
 
 transform/pos = Vector2( 666.571, 597.553 )
@@ -96,7 +116,7 @@ polygon = Vector2Array( -195.819, -193.861, -261.275, -47.8439, -243.652, 153.55
 shape_range = Vector2( 0, 0 )
 trigger = false
 
-[node name="test_dino" parent="." instance=ExtResource( 9 )]
+[node name="test_dino" parent="." instance=ExtResource( 10 )]
 
 transform/pos = Vector2( 1552.45, 417.65 )
 z/z = 417
@@ -105,12 +125,25 @@ z/z = 417
 
 transform/pos = Vector2( 960, 1030 )
 z/z = 1041
-script/script = ExtResource( 10 )
+script/script = ExtResource( 11 )
 animations = null
 speed = 300
 scale_on_map = false
 light_on_map = false
 tooltip = ""
 global_id = "yemm"
+
+[node name="event_trigger" type="Node2D" parent="."]
+
+script/script = ExtResource( 12 )
+
+[node name="Timer" type="Timer" parent="event_trigger"]
+
+process_mode = 1
+wait_time = 0.1
+one_shot = true
+autostart = true
+
+[connection signal="timeout" from="event_trigger/Timer" to="event_trigger" method="start_dialogue"]
 
 

@@ -22,3 +22,5 @@
 	- "Give me a sec'."
 		say yemm "I have to go check on the front desk. Give me a sec'."
 		change_scene res://scenes/rooms/reception_area/reception_area.tscn
+
+set_global dinosaur_dialogue_ended true
