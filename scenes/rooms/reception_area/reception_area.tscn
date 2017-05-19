@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=1]
+[gd_scene load_steps=14 format=1]
 
 [ext_resource path="res://globals/scene.gd" type="Script" id=1]
 [ext_resource path="res://scenes/rooms/reception_area/sprites/storefront_bg_back.png" type="Texture" id=2]
@@ -9,8 +9,10 @@
 [ext_resource path="res://scenes/rooms/reception_area/sprites/storefront_yemm.png" type="Texture" id=7]
 [ext_resource path="res://globals/dialog_anchor.gd" type="Script" id=8]
 [ext_resource path="res://scenes/rooms/reception_area/sprites/storefront_bg_front.png" type="Texture" id=9]
-[ext_resource path="res://scenes/characters/customer/customer.tscn" type="PackedScene" id=10]
-[ext_resource path="res://scenes/rooms/reception_area/dialogue_loop.gd" type="Script" id=11]
+[ext_resource path="res://scenes/rooms/reception_area/dialogue_loop.gd" type="Script" id=10]
+[ext_resource path="res://scenes/characters/customer/customer_onda.tscn" type="PackedScene" id=11]
+[ext_resource path="res://scenes/characters/customer/customer_wu.tscn" type="PackedScene" id=12]
+[ext_resource path="res://scenes/characters/customer/customer_herk.tscn" type="PackedScene" id=13]
 
 [node name="scene" type="Node2D"]
 
@@ -58,7 +60,7 @@ stretch_mode = 0
 
 [node name="yemm_mouth" type="Node2D" parent="PlaceholderYemm"]
 
-transform/pos = Vector2( 800, 300 )
+transform/pos = Vector2( 1029.78, 161.765 )
 script/script = ExtResource( 8 )
 animations = null
 speed = 300
@@ -72,11 +74,9 @@ global_id = "yemm"
 texture = ExtResource( 9 )
 centered = false
 
-[node name="PlaceholderCustomer" parent="." instance=ExtResource( 10 )]
-
 [node name="dialogue_loop" type="Node2D" parent="."]
 
-script/script = ExtResource( 11 )
+script/script = ExtResource( 10 )
 
 [node name="Timer" type="Timer" parent="dialogue_loop"]
 
@@ -84,6 +84,16 @@ process_mode = 1
 wait_time = 0.1
 one_shot = true
 autostart = true
+
+[node name="customer_onda" parent="." instance=ExtResource( 11 )]
+
+[node name="customer_wu" parent="." instance=ExtResource( 12 )]
+
+visibility/visible = false
+
+[node name="customer_herk" parent="." instance=ExtResource( 13 )]
+
+visibility/visible = false
 
 [connection signal="timeout" from="dialogue_loop/Timer" to="dialogue_loop" method="start_dialogue"]
 

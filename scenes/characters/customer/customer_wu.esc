@@ -1,0 +1,17 @@
+:talk
+say customer "Customer 2 introduction" [!customer2_end]
+say yemm "Customer 2 end" [customer2_end]
+
+? reception
+## opening dialogue step 1
+	- "I will take care of her now." [!customer2_end]
+		say yemm "I will take care of her now."
+		change_scene res://scenes/rooms/foot_care/foot_care.tscn
+
+## closing dialogue
+	- "Goodbye" [customer2_end]
+		say yem "Goodbye"
+		say customer "Thank you "
+		change_scene res://scenes/rooms/reception_area/reception_area.tscn
+
+set_global customer_dialogue_ended true
