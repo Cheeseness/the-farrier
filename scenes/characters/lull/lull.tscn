@@ -1,0 +1,171 @@
+[gd_scene load_steps=15 format=1]
+
+[ext_resource path="res://globals/item_background.gd" type="Script" id=1]
+[ext_resource path="res://scenes/characters/lull/sprites/parasaur_A_angry.png" type="Texture" id=2]
+[ext_resource path="res://scenes/characters/lull/sprites/parasaur_A_annoyed.png" type="Texture" id=3]
+[ext_resource path="res://scenes/characters/lull/sprites/parasaur_A_content.png" type="Texture" id=4]
+[ext_resource path="res://scenes/characters/lull/sprites/parasaur_A_growling.png" type="Texture" id=5]
+[ext_resource path="res://scenes/characters/lull/sprites/parasaur_A_happy.png" type="Texture" id=6]
+[ext_resource path="res://scenes/characters/lull/sprites/parasaur_A_neutral.png" type="Texture" id=7]
+
+[sub_resource type="SpriteFrames" id=1]
+
+animations = [ {
+"frames": [ ExtResource( 2 ), ExtResource( 3 ), ExtResource( 4 ), ExtResource( 5 ), ExtResource( 6 ), ExtResource( 7 ) ],
+"loop": true,
+"name": "default",
+"speed": 5.0
+} ]
+
+[sub_resource type="Animation" id=2]
+
+resource/name = "angry"
+length = 0.1
+loop = false
+step = 0.1
+tracks/0/type = "value"
+tracks/0/path = NodePath("Sprite:frame")
+tracks/0/interp = 1
+tracks/0/imported = false
+tracks/0/keys = {
+"times": FloatArray( 0 ),
+"transitions": FloatArray( 1 ),
+"update": 0,
+"values": [ 0 ]
+}
+
+[sub_resource type="Animation" id=3]
+
+resource/name = "annoyed"
+length = 0.1
+loop = false
+step = 0.1
+tracks/0/type = "value"
+tracks/0/path = NodePath("Sprite:frame")
+tracks/0/interp = 1
+tracks/0/imported = false
+tracks/0/keys = {
+"times": FloatArray( 0 ),
+"transitions": FloatArray( 1 ),
+"update": 0,
+"values": [ 1 ]
+}
+
+[sub_resource type="Animation" id=4]
+
+resource/name = "content"
+length = 0.1
+loop = false
+step = 0.1
+tracks/0/type = "value"
+tracks/0/path = NodePath("Sprite:frame")
+tracks/0/interp = 1
+tracks/0/imported = false
+tracks/0/keys = {
+"times": FloatArray( 0 ),
+"transitions": FloatArray( 1 ),
+"update": 0,
+"values": [ 2 ]
+}
+
+[sub_resource type="Animation" id=5]
+
+resource/name = "growling"
+length = 0.1
+loop = false
+step = 0.1
+tracks/0/type = "value"
+tracks/0/path = NodePath("Sprite:frame")
+tracks/0/interp = 1
+tracks/0/imported = false
+tracks/0/keys = {
+"times": FloatArray( 0 ),
+"transitions": FloatArray( 1 ),
+"update": 0,
+"values": [ 3 ]
+}
+
+[sub_resource type="Animation" id=6]
+
+resource/name = "happy"
+length = 0.1
+loop = false
+step = 0.1
+tracks/0/type = "value"
+tracks/0/path = NodePath("Sprite:frame")
+tracks/0/interp = 1
+tracks/0/imported = false
+tracks/0/keys = {
+"times": FloatArray( 0 ),
+"transitions": FloatArray( 1 ),
+"update": 0,
+"values": [ 4 ]
+}
+
+[sub_resource type="Animation" id=7]
+
+resource/name = "neutral"
+length = 0.1
+loop = false
+step = 0.1
+tracks/0/type = "value"
+tracks/0/path = NodePath("Sprite:frame")
+tracks/0/interp = 1
+tracks/0/imported = false
+tracks/0/keys = {
+"times": FloatArray( 0 ),
+"transitions": FloatArray( 1 ),
+"update": 0,
+"values": [ 5 ]
+}
+
+[node name="lull" type="Area2D"]
+
+input/pickable = true
+gravity_vec = Vector2( 0, 1 )
+gravity = 98.0
+linear_damp = 0.1
+angular_damp = 1.0
+script/script = ExtResource( 1 )
+animations = null
+speed = 300
+scale_on_map = false
+light_on_map = false
+tooltip = "Lull"
+action = "talk"
+events_path = ""
+global_id = "lull"
+use_combine = false
+inventory = false
+use_action_menu = true
+interact_angle = -1
+talk_animation = "talk"
+active = true
+placeholders = {
+
+}
+use_custom_z = false
+
+[node name="Sprite" type="AnimatedSprite" parent="."]
+
+frames = SubResource( 1 )
+animation = "default"
+frame = 5
+
+[node name="animation" type="AnimationPlayer" parent="."]
+
+playback/process_mode = 1
+playback/default_blend_time = 0.0
+root/root = NodePath("..")
+anims/angry = SubResource( 2 )
+anims/annoyed = SubResource( 3 )
+anims/content = SubResource( 4 )
+anims/growling = SubResource( 5 )
+anims/happy = SubResource( 6 )
+anims/neutral = SubResource( 7 )
+playback/active = true
+playback/speed = 1.0
+blend_times = [  ]
+autoplay = ""
+
+
