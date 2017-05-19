@@ -32,6 +32,8 @@ func input(viewport, event, shape_idx):
 						if dist <= 100:
 							child.set_hidden(true)
 							splinters_removed += 1
+							# This is very silly, and just to test updating animation
+							get_parent().get_node("parasaur/Sprite").set_frame(splinters_removed)
 							printt("splinters removed", splinters_removed)
 							if splinters_removed == 3:
 								vm.set_global("splinters_removed", true)
