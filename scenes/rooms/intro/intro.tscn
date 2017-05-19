@@ -27,13 +27,29 @@ script/script = ExtResource( 3 )
 
 transform/pos = Vector2( 569.157, 230.02 )
 
+[node name="yemm2" type="Node2D" parent="background"]
+
+transform/pos = Vector2( 726.792, 393.837 )
+
+[node name="yemm3" type="Node2D" parent="background"]
+
+transform/pos = Vector2( 1076.06, 464.927 )
+
 [node name="dinosaur" type="Node2D" parent="background"]
 
 transform/pos = Vector2( 1722.66, 227.61 )
 
+[node name="dinosaur2" type="Node2D" parent="background"]
+
+transform/pos = Vector2( 1240.48, 122.52 )
+
 [node name="papa" type="Node2D" parent="background"]
 
 transform/pos = Vector2( 1133.41, 37.7674 )
+
+[node name="bell" type="Node2D" parent="background"]
+
+transform/pos = Vector2( 1791.77, 269.584 )
 
 [node name="game" parent="." instance=ExtResource( 4 )]
 

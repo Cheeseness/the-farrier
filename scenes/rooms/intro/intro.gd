@@ -19,23 +19,26 @@ var next_scene = "res://scenes/rooms/reception_area/reception_area.tscn"
 #optional colours for speaking characters
 var colour_list = {
 					"yemm": "e1e11d",
+					"yemm2": "e1e11d",
+					"yemm3": "e1e11d",
 					"papa": "b0b0b0",
-					"dinosaur": "be1946"
+					"dinosaur": "be1946",
+					"dinosaur2": "be1946",
+					"bell": "e1e11d",
 					}
 
 # dialogue lines declared per background as as speaker, line, start, duration
 var lines = {
 			"thefarrier_intro_01.png": [
 				["yemm", "Papa, why do you talk to them?", 1, 1.5],
-				["dinosaur", "(anxious) (replace with sound!)", 2.75, 0.5],
 			],
 			"thefarrier_intro_02.png": [
-				["dinosaur", "(anxious) (replace with sound!)", 0, 0.5],
-				["papa", "Woah there, easy now. It's OK.", 0.75, 1.5],
-				["papa", "To keep them calm. It's important to reassure them even if they can't understand.", 2.75, 2.5],
+				["dinosaur", "(anxious) (replace with sound!)", 0, 1],
+				["papa", "Woah there, easy now. It's OK.", 0.75, 2],
+				["papa", "To keep them calm. It's important to reassure them even if they can't understand.", 3, 2.5],
 			],
 			"thefarrier_intro_03.png": [
-				["papa", "Pass me the pliers, would you Yemm?", 0, 1],
+				["papa", "Pass me the pliers, would you Yemm?", 0.5, 1],
 			],
 			"thefarrier_intro_07.png": [
 				["papa", "Thank you.", 0, 1],
@@ -48,15 +51,31 @@ var lines = {
 				["papa", "And sometimes perhaps, it's to reassure us as well...", 0, 2.5],
 			],
 			"thefarrier_intro_10.png": [
-				["yemm", "*gasp*", 0, 0.5],
-				["dinosaur", "(pain) (replace with sound!)", 0, 0.5],
-			],
-			"thefarrier_intro_11.png": [
-				["yemm", "*gasp*", 0, 0.5],
-				["dinosaur", "(pain) (replace with sound!)", 0, 0.5],
+				["yemm", "*gasp*", 0, 0.75],
+				["dinosaur", "(pain) (replace with sound!)", 0, 0.75],
 			],
 			"thefarrier_intro_12.png": [
 				["papa", "There we go. Good as new.", 0.5, 1.5],
+				["dinosaur", "(happy) (replace with sound!)", 2.5, 1.5],
+			],
+			"thefarrier_intro_14.png":
+			[
+				["yemm2", "Shh, this'll only hurt a bit.", 0, 2.0],
+			],
+			"thefarrier_intro_15.png":
+			[
+				["dinosaur2", "(pain) (replace with sound!).", 0, 2.0],
+			],
+			"thefarrier_intro_16.png":
+			[
+				["yemm2", "There we go. Good as new.", 0.5, 1.5],
+				["dinosaur2", "(happy) (replace with sound!)", 2.5, 1.5],
+			],
+			"thefarrier_intro_17.png":
+			[
+				["bell", "*ding*", 0, 1],
+				["yemm2", "*sigh*", 1, 1.5],
+				["yemm3", "Coming!", 3, 1.5],
 			],
 		}
 
@@ -74,10 +93,12 @@ var backgrounds = [
 					["thefarrier_intro_09.png", 2.5],
 					["thefarrier_intro_10.png", 0.5],
 					["thefarrier_intro_11.png", 0.5],
-					["thefarrier_intro_12.png", 2.5],
-					#["thefarrier_intro_13.png", 2.5],
-					#["thefarrier_intro_14.png", 2.5],
-					#["thefarrier_intro_15.png", 2.5],
+					["thefarrier_intro_12.png", 5.0],
+					["thefarrier_intro_13.png", 1], #Yemm all grown up
+					["thefarrier_intro_14.png", 2.5],
+					["thefarrier_intro_15.png", 2.5],
+					["thefarrier_intro_16.png", 2.5],
+					["thefarrier_intro_17.png", 2.5],
 					]
 var background_list = {}
 var counter = 0
