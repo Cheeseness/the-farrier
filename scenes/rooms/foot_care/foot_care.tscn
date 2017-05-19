@@ -2,7 +2,7 @@
 
 [ext_resource path="res://globals/scene.gd" type="Script" id=1]
 [ext_resource path="res://ui/cursors.tscn" type="PackedScene" id=2]
-[ext_resource path="res://scenes/rooms/foot_care/sprites/background.png" type="Texture" id=3]
+[ext_resource path="res://scenes/rooms/foot_care/sprites/foot_care_bg.png" type="Texture" id=3]
 [ext_resource path="res://scenes/tools/pliers.tscn" type="PackedScene" id=4]
 [ext_resource path="res://scenes/tools/brush.tscn" type="PackedScene" id=5]
 [ext_resource path="res://globals/game.scn" type="PackedScene" id=6]
@@ -76,7 +76,7 @@ margin/bottom = 375.0
 
 input/pickable = true
 shapes/0/shape = SubResource( 1 )
-shapes/0/transform = Matrix32( 1, 0, 0, 1, 666.571, 597.553 )
+shapes/0/transform = Matrix32( 1, 0, 0, 1, 692.48, 606.806 )
 shapes/0/trigger = false
 gravity_vec = Vector2( 0, 1 )
 gravity = 98.0
@@ -86,7 +86,7 @@ script/script = ExtResource( 7 )
 
 [node name="Sprite" type="Sprite" parent="foot"]
 
-transform/pos = Vector2( 686.995, 448.447 )
+transform/pos = Vector2( 688.995, 448.447 )
 transform/scale = Vector2( 1.29693, 1.29693 )
 texture = ExtResource( 8 )
 
@@ -110,7 +110,7 @@ z/z = 689
 
 [node name="foot_shape" type="CollisionPolygon2D" parent="foot"]
 
-transform/pos = Vector2( 666.571, 597.553 )
+transform/pos = Vector2( 692.48, 606.806 )
 build_mode = 0
 polygon = Vector2Array( -195.819, -193.861, -261.275, -47.8439, -243.652, 153.559, -160.573, 276.918, 15.6543, 281.953, 212.022, 246.708, 254.82, 130.901, 264.89, -62.9491, 184.329, -208.966, -7.00354, -269.387 )
 shape_range = Vector2( 0, 0 )
