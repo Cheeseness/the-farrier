@@ -1,6 +1,7 @@
 #Onda is customer_onda and "owner" of Lull.
 
 :talk
+say lull "(happy)"
 say customer_onda "Greetings, Farrier." [!customer_onda_step1,!customer_onda_end]
 say yemm "Greetings to you too, Onda." [!customer_onda_step1,!customer_onda_end]
 say customer_onda "We haven't seen you for some weeks. How have you been?" [!customer_onda_step1,!customer_onda_end]
@@ -12,7 +13,7 @@ say yemm "I see you've brought Lull." [customer_onda_step1,!customer_onda_end]
 
 say customer_onda "How bad was it?" [customer_onda_end]
 say yemm "Not too bad." [customer_onda_end]
-say lull "[happy]" [customer_onda_end]
+say lull "(happy)" [customer_onda_end]
 say customer_onda "Ha ha, you just can't keep her quiet. Come on girl, let's go carry some crates." [customer_onda_end]
 
 ? reception
@@ -82,7 +83,7 @@ say customer_onda "Ha ha, you just can't keep her quiet. Come on girl, let's go 
 		say customer_onda "I suppose it's better to lose her today than have her foot get worse. Thank you again, Farrier."
 		say yemm "Goodbye Onda."
 		say yemm "Be well, Lull."
-		say lull "[goodbye]"
+		say lull "(goodbye)"
 		change_scene res://scenes/rooms/reception_area/reception_area.tscn
 
 	- "*say nothing*" [customer_onda_end]
