@@ -14,7 +14,7 @@ extends TextureFrame
 #Node2D is present, the line is positioned in the centre of the screen.
 
 #the name of the scene to transition to after this one is done
-var next_scene = "res://scenes/rooms/foot_care/foot_care.tscn"
+var next_scene = "res://scenes/rooms/reception_area/reception_area.tscn"
 
 #optional colours for speaking characters
 var colour_list = {
@@ -27,10 +27,10 @@ var colour_list = {
 var lines = {
 			"thefarrier_intro_01.png": [
 				["yemm", "Papa, why do you talk to them?", 1, 1.5],
-				["dinosaur", "[anxious] (replace with sound!)", 2.75, 0.5],
+				["dinosaur", "(anxious) (replace with sound!)", 2.75, 0.5],
 			],
 			"thefarrier_intro_02.png": [
-				["dinosaur", "[anxious] (replace with sound!)", 0, 0.5],
+				["dinosaur", "(anxious) (replace with sound!)", 0, 0.5],
 				["papa", "Woah there, easy now. It's OK.", 0.75, 1.5],
 				["papa", "To keep them calm. It's important to reassure them even if they can't understand.", 2.75, 2.5],
 			],
@@ -49,11 +49,11 @@ var lines = {
 			],
 			"thefarrier_intro_10.png": [
 				["yemm", "*gasp*", 0, 0.5],
-				["dinosaur", "[pain] (replace with sound!)", 0, 0.5],
+				["dinosaur", "(pain) (replace with sound!)", 0, 0.5],
 			],
 			"thefarrier_intro_11.png": [
 				["yemm", "*gasp*", 0, 0.5],
-				["dinosaur", "[pain] (replace with sound!)", 0, 0.5],
+				["dinosaur", "(pain) (replace with sound!)", 0, 0.5],
 			],
 			"thefarrier_intro_12.png": [
 				["papa", "There we go. Good as new.", 0.5, 1.5],

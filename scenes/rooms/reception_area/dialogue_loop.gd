@@ -8,7 +8,7 @@ func global_listener(name):
 
 # Function is first started by timer to dodge race conditions
 func start_dialogue():
-	var customer = get_parent().get_node("PlaceholderCustomer")
+	var customer = get_parent().get_node("customer_onda")
 	get_tree().call_group(0, "game", "clicked", customer, customer.get_pos())
 
 func _ready():
