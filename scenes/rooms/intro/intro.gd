@@ -14,7 +14,7 @@ extends TextureFrame
 #Node2D is present, the line is positioned in the centre of the screen.
 
 #the name of the scene to transition to after this one is done
-var next_scene = "res://scenes/rooms/foot_care/foot_care.tscn"
+var next_scene = "res://scenes/rooms/reception_area/reception_area.tscn"
 
 #optional colours for speaking characters
 var colour_list = {
