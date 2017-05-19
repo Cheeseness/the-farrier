@@ -40,6 +40,7 @@ say customer_wu "I can tell Krik is relieved. You work so well with them." [cust
 		say yemm "What caused the bruises?"
 		say customer_wu "I found Krik lying on the ground. I couldn't see anything around that might have caused this."
 		set_global topic_krik_location
+		set_global customer_wu_greeting true
 
 	- "Where did you find Krik?" [!customer_wu_end, topic_krik_location]
 		say yemm "Where did you find Krik?"
