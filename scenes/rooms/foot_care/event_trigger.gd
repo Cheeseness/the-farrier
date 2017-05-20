@@ -3,9 +3,9 @@ extends Node2D
 var vm
 var disposition_change = {
 	"increase_disposition_small": 1,
-	"increase_disposition_big": 5,
+	"increase_disposition_big": 3,
 	"decrease_disposition_small": -1,
-	"decrease_disposition_big": -5
+	"decrease_disposition_big": -3
 }
 var disposition_frame = {
 	"angry": 0,
@@ -33,6 +33,7 @@ func global_listener(name):
 			Input.set_custom_mouse_cursor(null)
 			vm.set_globals("cursor/", false)
 			vm.set_globals("grooming_tool", false)
+			change_disposition("decrease_disposition_small")
 			start_dialogue()
 			vm.set_global("splinter_removed", false)
 	if name == "dinosaur_dialogue_ended":
