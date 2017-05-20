@@ -91,7 +91,7 @@
 				say customer_herk "Thank you. I'll make sure she avoids any heavy loads and unnecessary walking."
 				say customer_herk "We'll take it slow going home."
 				set_global next_customer false
-				change_scene res://ui/main_menu.tscn
+				change_scene res://scenes/rooms/farewell/farewell.tscn
 
 			- "She stays here."
 				say yemm "She stays here."
@@ -99,6 +99,6 @@
 				say customer_herk "Fine. We'll make do... somehow."
 				set_global bern_stays true
 				set_global next_customer false
-				change_scene res://ui/main_menu.tscn
+				change_scene res://scenes/rooms/farewell/farewell.tscn
 
 set_global customer_dialogue_ended true
