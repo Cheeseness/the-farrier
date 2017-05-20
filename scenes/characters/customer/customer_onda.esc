@@ -86,11 +86,13 @@
 		say yemm "Goodbye Onda."
 		say yemm "Be well, Lull."
 		say lull "!!*pbbbbt*!!"
+		set_global next_customer customer_wu
 		change_scene res://scenes/rooms/reception_area/reception_area.tscn
 
 	- "*say nothing*" [customer_onda_end]
 		say yem "..."
 		say customer_onda "Thank you for healing her, Farrier!"
+		set_global next_customer customer_wu
 		change_scene res://scenes/rooms/reception_area/reception_area.tscn
 
 set_global customer_dialogue_ended true

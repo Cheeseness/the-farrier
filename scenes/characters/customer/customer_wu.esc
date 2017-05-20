@@ -92,6 +92,7 @@
 		say yemm "Take Krik home and see that he rests. Come back and tell me how he is in two days."
 		say yemm "If he needs more attention, I will visit."
 		say customer_wu "Thank you again, Yemm."
+		set_global next_customer customer_herk
 		change_scene res://scenes/rooms/reception_area/reception_area.tscn
 
 set_global customer_dialogue_ended true
