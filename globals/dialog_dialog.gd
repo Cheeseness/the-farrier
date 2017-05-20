@@ -192,13 +192,26 @@ func append_words(cmd):
 		return
 	
 	for word in words:
+		if get_tree().get_root().find_node("PlaceholderYemm", true, false) != null:
+			#print("We're in the wrong scene!")
+			break
 		var meaning = words[word][0]
 		# If word is heard, present opportunity to learn
 		if not words[word][1] == 1:
 			continue
 		var p = {"name": "*", "params": [word, []]}
-		p["params"][1].append({"name": "say", "params": ["yemm", word]})
+		p["params"][1].append({"name": "say", "params": ["yemm", "!!" + word + "!!"]})
 		p["params"][1].append({"name": "set_global", "params": ["%s_learned" % meaning, "true"]})
+		var dino = "lull"
+		if !vm.get_global("customer_onda_end"):
+			pass #dino is already lull
+		elif !vm.get_global("customer_wu_end"):
+			dino = "krik"
+		elif !vm.get_global("customer_herk_end"):
+			dino = "bern"
+		p["params"][1].append({"name": "say", "params": [dino, "!!" + word + "!!"]})
+		p["params"][1].append({"name": "say", "params": [dino, "!!" + word + "!!"]})
+		p["params"][1].append({"name": "say", "params": ["yemm", word + " ... " + meaning + "?"]})
 		cmd.append(p)
 
 	# If not repeated on following "turn", learning opportunity is lost for now
@@ -206,11 +219,6 @@ func append_words(cmd):
 		# Flip heard but not repeated words back
 		if words[word][1] == 1:
 			words[word][1] = 0
-		elif words[word][1] == 2:
-			vm.set_global("%s_learned" % words[word][0], true)
-		elif words[word][1] == 3:
-			vm.set_global("%s_understood" % words[word][0], true)
-			vm.set_global(word, "%s" % words[word][0])
 	vm.set_global("words", words)
 
 func remove_words(cmd):

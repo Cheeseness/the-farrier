@@ -788,6 +788,8 @@ func interpolate_globals(text):
 	var i = 0
 	var new_text = ""
 
+	print("Interpolating globals.", text)
+
 	var words = get_global("words")
 
 	for t in text.split("!!"):
@@ -800,6 +802,18 @@ func interpolate_globals(text):
 		else:
 			new_text += t
 		i = i+1
+
+	# If not repeated on following "turn", learning opportunity is lost for now
+	for word in words:
+		if words[word][1] == 2:
+			set_global("%s_learned" % words[word][0], true)
+			print("Setting %s_learned" % words[word][0])
+		elif words[word][1] == 3:
+			set_global("%s_understood" % words[word][0], true)
+			print("Setting %s_understood" % words[word][0])
+			set_global(word, "%s" % words[word][0])
+	set_global("words", words)
+
 
 	set_global("words", words)
 	return new_text
