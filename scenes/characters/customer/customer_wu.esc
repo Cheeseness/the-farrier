@@ -1,8 +1,9 @@
 #Wu is customer_wu and "owner" of Krik. A farmer who works with Fenn to manage the village's crops and grain stores.
 
 :talk
-> [!customer_wu_end]
+> [!customer_wu_end,!customer_wu_intro]
 	say customer_wu "My Para must've tripped over something."
+	set global customer_wu_intro true
 
 > [customer_wu_end,!customer_wu_end_intro]
 	say customer_wu "All done?"
@@ -19,13 +20,14 @@
 		say yemm "Good day, Wu."
 		set_global customer_wu_greeting true
 
-	- "Another open wound?" [!customer_wu_end]
+	- "Another open wound?" [!customer_wu_end,!customer_wu_wound]
 		say yemm "Another open wound?"
 		say customer_wu "No, gladly not. I saw Krik limping today and checked his foot - there are a lot of bruises."
 		say customer_wu "I will probably have to leave him laying on his haystack for the rest of the week."
 		say yemm "That would be a good idea."
-		say customer_wu "It's going to be hard with both Lull and Krik out of action. Fenn's not going to be upset."
+		say customer_wu "It's going to be hard with both Lull and Krik out of action. Fenn's going to be upset."
 		set_global customer_wu_greeting true
+		set_global customer_wu_wound true
 		set_global topic_upset_fenn true
 
 	- "Why would Fenn be upset?" [!customer_wu_end,topic_upset_fenn]
@@ -39,7 +41,7 @@
 		say customer_wu "Sorry. Don't worry about it. We're all just feeling a little stressed."
 		set_global topic_missing_grain true
 
-	- "What caused the bruises?" [!customer_wu_end]
+	- "What caused the bruises?" [!customer_wu_end,customer_wu_wound]
 		say yemm "What caused the bruises?"
 		say customer_wu "I found Krik lying on the ground. I couldn't see anything around that might have caused this."
 		set_global topic_krik_location true
