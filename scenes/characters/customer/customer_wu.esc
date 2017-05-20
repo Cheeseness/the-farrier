@@ -1,12 +1,15 @@
 #Wu is customer_wu and "owner" of Krik. A farmer who works with Fenn to manage the village's crops and grain stores.
 
 :talk
-say customer_wu "My Para must've tripped over something." [!customer_wu_end]
+> [!customer_wu_end]
+	say customer_wu "My Para must've tripped over something."
 
-say customer_wu "All done?" [customer_wu_end]
-say yemm "I've applied a poultice and bandaged the bruising." [customer_wu_end]
-say krik "!!(happy)!!" [customer_wu_end]
-say customer_wu "I can tell Krik is relieved. You work so well with them." [customer_wu_end]
+> [customer_wu_end,!customer_wu_end_intro]
+	say customer_wu "All done?"
+	say yemm "I've applied a poultice and bandaged the bruising."
+	say krik "!!(happy)!!"
+	say customer_wu "I can tell Krik is relieved. You work so well with them."
+	set_global customer_wu_end_intro true
 
 ? reception
 ## opening dialogue

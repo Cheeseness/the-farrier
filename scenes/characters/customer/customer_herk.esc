@@ -1,10 +1,14 @@
 #Herk is customer_herk and "owner" of Bern. A construction worker who handles most of the building maintenance in the village.
 
 :talk
-say customer_herk "Greetings, Farrier." [!customer_herk_end]
+> [!customer_herk_end,!customer_herk_greeting]
+	say customer_herk "Greetings, Farrier." 
+	set_global customer_herk_greeting true
 
-say yemm "The wounds are cleaned and bandaged." [customer_herk_end]
-say customer_herk "Good. How soon will she be ready to work?" [customer_herk_end]
+> [customer_herk_end,!customer_herk_end_intro]
+	say yemm "The wounds are cleaned and bandaged."
+	say customer_herk "Good. How soon will she be ready to work?"
+	set_global customer_herk_end_intro true
 
 ? reception
 ## opening dialogue
