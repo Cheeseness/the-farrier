@@ -1,6 +1,6 @@
 [gd_scene load_steps=4 format=1]
 
-[ext_resource path="res://scenes/characters/customer/sprites/storefront_figure_3.png" type="Texture" id=1]
+[ext_resource path="res://scenes/characters/customer/sprites/storefront_figure_2.png" type="Texture" id=1]
 [ext_resource path="res://globals/item.gd" type="Script" id=2]
 [ext_resource path="res://globals/dialog_anchor.gd" type="Script" id=3]
 
