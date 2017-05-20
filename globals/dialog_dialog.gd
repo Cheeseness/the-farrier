@@ -197,8 +197,8 @@ func append_words(cmd):
 	var words = vm.get_global("words")
 	for word in words:
 		var meaning = words[word][0]
-		# If not heard, don't repeat
-		if not vm.get_global("heard/%s" % meaning):
+		# If word is heard, present opportunity to learn
+		if not words[word][1] == 1:
 			continue
 		var p = {"name": "*", "params": [word, []]}
 		p["params"][1].append({"name": "say", "params": ["yemm", word]})
@@ -206,7 +206,16 @@ func append_words(cmd):
 		cmd.append(p)
 
 	# If not repeated on following "turn", learning opportunity is lost for now
-	vm.set_globals("heard/*", false)
+	for word in words:
+		# Flip heard but not repeated words back
+		if words[word][1] == 1:
+			words[word][1] = 0
+		elif words[word][1] == 2:
+			vm.set_global("%s_learned" % words[word][0], true)
+		elif words[word][1] == 3:
+			vm.set_global("%s_understood" % words[word][0], true)
+			vm.set_global(word, "(%s)" % words[word][0])
+	vm.set_global("words", words)
 
 func remove_words(cmd):
 	# Removing items in place doesn't work, so we'll use a temporary array

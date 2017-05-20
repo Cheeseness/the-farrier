@@ -18,6 +18,14 @@ var disposition_frame = {
 var dino
 
 func global_listener(name):
+	# More ugly hacks
+	var words = vm.get_global("words")
+	for word in words:
+		var ev_name = "%s_learned" % words[word][0]
+		if name == ev_name:
+			words[word][1] = 2
+			vm.set_global("words", words)
+			break
 	if name in disposition_change or name == "reset_disposition":
 		change_disposition(name)
 	if name == "splinters_removed":
@@ -32,7 +40,7 @@ func global_listener(name):
 			# Not an issue if we're not just reloading the same room over and over.
 			vm.set_global("splinters_removed", false)
 			go_to_reception()
-
+	
 func change_disposition(name):
 	var disposition = vm.get_global("disposition")
 	if not disposition or name == "reset_disposition":
@@ -54,6 +62,12 @@ func change_disposition(name):
 		dino.get_node("Sprite").set_frame(disposition_frame["angry"])
 
 func go_to_reception():
+	# Remove heard but not learned (or more) words before going to reception?
+	var words = vm.get_global("words")
+	for word in words:
+		if words[word][1] == 1:
+			words[word][1] = 0
+	vm.set_global("words", words)
 	get_parent().queue_free()
 	get_tree().change_scene("res://scenes/rooms/reception_area/reception_area.tscn")
 
