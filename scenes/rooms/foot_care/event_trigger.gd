@@ -105,6 +105,8 @@ func _ready():
 		customer_name = vm.get_global("next_customer")
 		show_hide_dinosaurs(customer_name)
 
+	vm.set_global("disposition", 0)
+
 	for child in get_parent().get_children():
 		# Find the first visible dino
 		if child.get_name() in ["bern", "lull", "krik"] and child.is_visible():
