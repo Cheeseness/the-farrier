@@ -134,13 +134,13 @@ z/z = 700
 
 [node name="lull" parent="." instance=ExtResource( 12 )]
 
-visibility/visible = false
 transform/pos = Vector2( 1600, 700 )
 transform/scale = Vector2( 0.8, 0.8 )
 z/z = 700
 
 [node name="krik" parent="." instance=ExtResource( 13 )]
 
+visibility/visible = false
 transform/pos = Vector2( 1600, 700 )
 transform/scale = Vector2( 0.8, 0.8 )
 z/z = 700
