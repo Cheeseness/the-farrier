@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=1]
+[gd_scene load_steps=17 format=1]
 
 [ext_resource path="res://globals/scene.gd" type="Script" id=1]
 [ext_resource path="res://scenes/rooms/reception_area/sprites/storefront_bg_back.png" type="Texture" id=2]
@@ -11,10 +11,11 @@
 [ext_resource path="res://scenes/rooms/reception_area/sprites/storefront_yemm.png" type="Texture" id=9]
 [ext_resource path="res://globals/dialog_anchor.gd" type="Script" id=10]
 [ext_resource path="res://scenes/rooms/reception_area/sprites/storefront_bg_front.png" type="Texture" id=11]
-[ext_resource path="res://scenes/rooms/reception_area/dialogue_loop.gd" type="Script" id=12]
-[ext_resource path="res://scenes/characters/customer/customer_onda.tscn" type="PackedScene" id=13]
-[ext_resource path="res://scenes/characters/customer/customer_wu.tscn" type="PackedScene" id=14]
-[ext_resource path="res://scenes/characters/customer/customer_herk.tscn" type="PackedScene" id=15]
+[ext_resource path="res://scenes/rooms/reception_area/sprites/storefront_yemm_hand.png" type="Texture" id=12]
+[ext_resource path="res://scenes/rooms/reception_area/dialogue_loop.gd" type="Script" id=13]
+[ext_resource path="res://scenes/characters/customer/customer_onda.tscn" type="PackedScene" id=14]
+[ext_resource path="res://scenes/characters/customer/customer_wu.tscn" type="PackedScene" id=15]
+[ext_resource path="res://scenes/characters/customer/customer_herk.tscn" type="PackedScene" id=16]
 
 [node name="scene" type="Node2D"]
 
@@ -81,9 +82,14 @@ global_id = "yemm"
 texture = ExtResource( 11 )
 centered = false
 
+[node name="storefront_yemm_hand" type="Sprite" parent="."]
+
+transform/pos = Vector2( 958.218, 542.231 )
+texture = ExtResource( 12 )
+
 [node name="dialogue_loop" type="Node2D" parent="."]
 
-script/script = ExtResource( 12 )
+script/script = ExtResource( 13 )
 
 [node name="Timer" type="Timer" parent="dialogue_loop"]
 
@@ -92,13 +98,13 @@ wait_time = 0.1
 one_shot = true
 autostart = true
 
-[node name="customer_onda" parent="." instance=ExtResource( 13 )]
+[node name="customer_onda" parent="." instance=ExtResource( 14 )]
 
-[node name="customer_wu" parent="." instance=ExtResource( 14 )]
+[node name="customer_wu" parent="." instance=ExtResource( 15 )]
 
 visibility/visible = false
 
-[node name="customer_herk" parent="." instance=ExtResource( 15 )]
+[node name="customer_herk" parent="." instance=ExtResource( 16 )]
 
 visibility/visible = false
 
