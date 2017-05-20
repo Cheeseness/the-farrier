@@ -319,6 +319,8 @@ func get_global(name):
 	# Return actual value if set; otherwise false - Flesk
 	if name in globals:
 		return globals[name]
+	if name == "words":
+		return {}
 	return false
 
 func set_global(name, val):
