@@ -18,9 +18,9 @@ var next_scene = "res://scenes/rooms/reception_area/reception_area.tscn"
 
 #optional colours for speaking characters
 var colour_list = {
-					"yemm": "e1e11d",
-					"yemm2": "e1e11d",
-					"yemm3": "e1e11d",
+					"yemm": "8a9af3",
+					"yemm2": "8a9af3",
+					"yemm3": "8a9af3",
 					"papa": "b0b0b0",
 					"dinosaur": "be1946",
 					"dinosaur2": "be1946",
