@@ -7,7 +7,7 @@ func start(message, p_target, p_slot):
 	get_node("message").set_text(message)
 	target = p_target
 	slot = p_slot
-	anim.play("open")
+	#anim.play("open")
 	get_node("/root/main").menu_open(self)
 	show()
 
@@ -32,7 +32,7 @@ func close():
 		if cur == "close":
 			return
 
-	anim.play("close")
+	#anim.play("close")
 
 func anim_finished():
 	var cur = anim.get_current_animation()
