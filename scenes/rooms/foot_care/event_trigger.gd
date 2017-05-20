@@ -84,10 +84,27 @@ func go_to_reception():
 func start_dialogue():
 	get_tree().call_group(0, "game", "clicked", dino, dino.get_pos())
 
+func show_hide_dinosaurs(customer_name):
+	for n in ["lull", "krik", "bern"]:
+		get_parent().get_node(n).hide()
+
+	if customer_name == "customer_onda":
+		get_parent().get_node("lull").show()
+	elif customer_name == "customer_wu":
+		get_parent().get_node("krik").show()
+	elif customer_name == "customer_herk":
+		get_parent().get_node("bern").show()
+
 func _ready():
 	vm = get_tree().get_root().get_node("/root/vm")
 	# Use listener to restart dialogue tree
 	vm.connect("global_changed", self, "global_listener")
+
+	var customer_name = "customer_onda"
+	if vm.get_global("next_customer"):
+		customer_name = vm.get_global("next_customer")
+		show_hide_dinosaurs(customer_name)
+
 	for child in get_parent().get_children():
 		# Find the first visible dino
 		if child.get_name() in ["bern", "lull", "krik"] and child.is_visible():
