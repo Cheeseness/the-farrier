@@ -210,7 +210,7 @@ func append_words(cmd):
 			vm.set_global("%s_learned" % words[word][0], true)
 		elif words[word][1] == 3:
 			vm.set_global("%s_understood" % words[word][0], true)
-			vm.set_global(word, "(%s)" % words[word][0])
+			vm.set_global(word, "%s" % words[word][0])
 	vm.set_global("words", words)
 
 func remove_words(cmd):

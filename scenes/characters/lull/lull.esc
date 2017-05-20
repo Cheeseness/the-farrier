@@ -14,26 +14,26 @@
 
 	- "So you were outside running around in the storm, were you?" [topic_outside_in_storm]
 		say yemm "So you were outside running around in the storm, were you?"
-		say lull "!!(pain)!!"
+		say lull "!!*browmm*!!"
 		say yemm "That's pretty dangerous, especially this time of year."
-		say lull "!!(yes)!!"
+		say lull "!!*reehii*!!"
 
 	- "I guess you don't really like the lightning, huh?" [topic_lightning]
 		say yemm "I guess you don't really like the lightning, huh?"
-		say lull "!!(sad)!!"
+		say lull "!!*proooom*!!"
 		say yemm "I don't really like it either."
 
 	- "Do you know why we're called farriers?"
 		say yemm "Do you know why we're called farriers?"
-		say lull "!!(no)!!"
+		say lull "!!*pum*!!"
 		say yemm "My grandfather, Papa, told me that a long time ago, our family used to look after horses. Do you know what a horse is?"
-		say lull "!!(no)!!"
+		say lull "!!*pum*!!"
 		say yemm "They're four legged and as big as a triceratops. They're very fast and graceful."
 		say yemm "I've never seen one, but there were pictures in the books that Papa let me read."
 
 	- "Do you have a favourite food?"
 		say yemm "Do you have a favourite food?"
-		say lull "!!(food)!!"
+		say lull "!!*drrrrgl*!!"
 		say yemm "Strawberries are my favourite."
 
 set_global dinosaur_dialogue_ended true

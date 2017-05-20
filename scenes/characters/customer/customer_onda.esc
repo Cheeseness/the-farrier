@@ -15,7 +15,7 @@
 > [customer_onda_end]
 	say customer_onda "How bad was it?"
 	say yemm "Not too bad."
-	say lull "!!(happy)!!"
+	say lull "!!*braaa*!!"
 	say customer_onda "Ha ha, you just can't keep her quiet. Come on girl, let's go carry some crates."
 
 ? reception
@@ -88,7 +88,7 @@
 		say customer_onda "I suppose it's better to lose her today than have her foot get worse. Thank you again, Farrier."
 		say yemm "Goodbye Onda."
 		say yemm "Be well, Lull."
-		say lull "!!(goodbye)!!"
+		say lull "!!*pbbbbt*!!"
 		change_scene res://scenes/rooms/reception_area/reception_area.tscn
 
 	- "*say nothing*" [customer_onda_end]
