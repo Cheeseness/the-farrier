@@ -2,15 +2,15 @@
 ? default bern
 	- "Shh shh shh..."
 		say yemm "Shh shh shh..."
-		set_global increase_disposition_small true
+		set_global increase_disposition_big true
 
 	- "There there..."
 		say yemm "There there..."
-		set_global increase_disposition_small true
+		set_global increase_disposition_big true
 
 	- "Nearly done..."
 		say yemm "Nearly done..."
-		set_global decrease_disposition_small true
+		set_global increase_disposition_big true
 
 	- "Do you think the food will run out?" [topic_food_crisis]
 		say yemm "Do you think the food will run out?"

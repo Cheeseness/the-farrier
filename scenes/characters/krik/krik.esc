@@ -2,15 +2,15 @@
 ? default krik
 	- "Shh shh shh..."
 		say yemm "Shh shh shh..."
-		set_global increase_disposition_small true
+		set_global increase_disposition_big true
 
 	- "There there..."
 		say yemm "There there..."
-		set_global increase_disposition_small true
+		set_global increase_disposition_big true
 
 	- "Nearly done..."
 		say yemm "Nearly done..."
-		set_global decrease_disposition_small true
+		set_global increase_disposition_big true
 
 	- "Wu says that Fenn is upset." [topic_upset_fenn]
 		say yemm "Wu says that Fenn is upset."

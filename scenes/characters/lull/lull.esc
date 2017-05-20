@@ -2,15 +2,15 @@
 ? default lull
 	- "Shh shh shh..."
 		say yemm "Shh shh shh..."
-		set_global increase_disposition_small true
+		set_global increase_disposition_big true
 
 	- "There there..."
 		say yemm "There there..."
-		set_global increase_disposition_small true
+		set_global increase_disposition_big true
 
 	- "Nearly done..."
 		say yemm "Nearly done..."
-		set_global decrease_disposition_small true
+		set_global increase_disposition_big true
 
 	- "So you were outside running around in the storm, were you?" [topic_outside_in_storm]
 		say yemm "So you were outside running around in the storm, were you?"
