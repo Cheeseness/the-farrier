@@ -3,7 +3,7 @@
 :talk
 > [!customer_wu_end,!customer_wu_intro]
 	say customer_wu "My Para must've tripped over something."
-	set global customer_wu_intro true
+	set_global customer_wu_intro true
 
 > [customer_wu_end,!customer_wu_end_intro]
 	say customer_wu "All done?"
