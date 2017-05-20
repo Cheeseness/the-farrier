@@ -1,9 +1,8 @@
-[gd_scene load_steps=8 format=1]
+[gd_scene load_steps=7 format=1]
 
 [ext_resource path="res://ui/confirm_popup.gd" type="Script" id=1]
 [ext_resource path="res://ui/quitmenu_bg.png" type="Texture" id=2]
-[ext_resource path="res://ui/quit_yes.png" type="Texture" id=3]
-[ext_resource path="res://ui/quit_no.png" type="Texture" id=4]
+[ext_resource path="res://ui/fonts/overlock_bold.fnt" type="BitmapFont" id=3]
 
 [sub_resource type="Animation" id=1]
 
@@ -73,11 +72,14 @@ size_flags/vertical = 2
 margin/left = 810.0
 margin/top = 510.0
 margin/right = 881.0
-margin/bottom = 545.0
+margin/bottom = 557.0
+custom_fonts/font = ExtResource( 3 )
+custom_colors/font_color = Color( 1, 1, 1, 1 )
+custom_colors/font_color_hover = Color( 0.324219, 0.699066, 1, 1 )
 toggle_mode = false
 enabled_focus_mode = 2
 shortcut = null
-icon = ExtResource( 3 )
+text = "Yes"
 flat = true
 
 [node name="no" type="Button" parent="."]
@@ -86,14 +88,17 @@ focus/ignore_mouse = false
 focus/stop_mouse = true
 size_flags/horizontal = 2
 size_flags/vertical = 2
-margin/left = 1040.0
+margin/left = 1030.0
 margin/top = 510.0
-margin/right = 1097.0
-margin/bottom = 545.0
+margin/right = 1089.0
+margin/bottom = 557.0
+custom_fonts/font = ExtResource( 3 )
+custom_colors/font_color = Color( 1, 1, 1, 1 )
+custom_colors/font_color_hover = Color( 0.321569, 0.698039, 1, 1 )
 toggle_mode = false
 enabled_focus_mode = 2
 shortcut = null
-icon = ExtResource( 4 )
+text = "No"
 flat = true
 
 [node name="animation" type="AnimationPlayer" parent="."]
