@@ -1,31 +1,51 @@
 :talk
-? default test_dino
+? default krik
 	- "Shh shh shh..."
 		say yemm "Shh shh shh..."
 		set_global increase_disposition_small true
+
 	- "There there..."
 		say yemm "There there..."
-		set_global increase_disposition_big true
-	- "It's OK..."
-		say yemm "It's OK..."
-		set_global decrease_disposition_small true
-	- "Take it easy..."
-		say yemm "Take it easy..."
-		set_global decrease_disposition_big true
+		set_global increase_disposition_small true
+
 	- "Nearly done..."
 		say yemm "Nearly done..."
-		set_global reset_disposition true
-	- "Hello!" [!greeting_understood]
-		say test_dino "!!*bruuuuugh*!!"
-		>	[greeting_learned]
-			set_global greeting_understood true
-			set_global *bruuuuugh* "(greeting)"
-			stop
-		set_global heard/greeting true
-	- "(greeting)" [greeting_understood]
-		say yemm "(greeting), dinosaur"
-	- "Give me a sec'."
-		say yemm "I have to go check on the front desk. Give me a sec'."
-		change_scene res://scenes/rooms/reception_area/reception_area.tscn
+		set_global decrease_disposition_small true
+
+	- "Wu says that Fenn is upset." [topic_upset_fenn]
+		say yemm "Wu says that Fenn is upset."
+		say krik "!!(human)!!"
+		say yemm "I hope that that isn't making things difficult for the dinosaurs tending the farms."
+		say krik "!!(no)!!"
+
+	- "Do you know where the grain is?" [topic_missing_grain]
+		say yemm "Do you know where the grain is?"
+		say krik "!!(cave)!!"
+		> [cave_understood]
+			set_global topic_cave true
+
+	- "What do you know about the hidden dinosaurs?" [topic_unknown_dinosaurs]
+		say yemm "What do you know about the hidden dinosaurs?"
+		say krik "!!(dinosaur)!!"
+
+	- "Why take the food to the cave?" [topic_cave]
+		say yemm "Why take the food to the cave?"
+		say krik "!!(dinosaur)!!"
+		> [dinosaur_understood]
+			set_global topic_unknown_dinosaurs true
+
+	- "Papa, my grandfather, tought me everything I know about dinosaurs."
+		say yemm "Papa, my grandfather, tought me everything I know about dinosaurs."
+		say krik "!!(human)!!"
+		say yemm "You'd have liked him. He was kind and thoughtful."
+		say yemm "Sometimes slow, but always generous."
+		say yemm "He'd definitely have liked you."
+		say krik "!!(happy)!!"
+
+	- "I've never really had any friends."
+		say yemm "I've never really had any friends."
+		say krik "!!(dinosaur)!!"
+		say yemm "Dinosaurs are like friends to me."
+		say krik "!!(happy)!!"
 
 set_global dinosaur_dialogue_ended true

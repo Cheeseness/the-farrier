@@ -5,7 +5,7 @@ say customer_wu "My Para must've tripped over something." [!customer_wu_end]
 
 say customer_wu "All done?" [customer_wu_end]
 say yemm "I've applied a poultice and bandaged the bruising." [customer_wu_end]
-say krik "(happy)" [customer_wu_end]
+say krik "!!(happy)!!" [customer_wu_end]
 say customer_wu "I can tell Krik is relieved. You work so well with them." [customer_wu_end]
 
 ? reception

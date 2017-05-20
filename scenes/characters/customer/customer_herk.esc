@@ -83,14 +83,14 @@ say customer_herk "Good. How soon will she be ready to work?" [customer_herk_end
 		? reception 
 			- "Take her if you must."
 				say yemm "Take her if you must."
-				say bern "(sad)"
+				say bern "!!(sad)!!"
 				say customer_herk "Thank you. I'll make sure she avoids any heavy loads and unnecessary walking."
 				say customer_herk "We'll take it slow going home."
 				change_scene res://scenes/rooms/reception_area/reception_area.tscn
 
 			- "She stays here."
 				say yemm "She stays here."
-				say bern "(happy)"
+				say bern "!!(happy)!!"
 				say customer_herk "Fine. We'll make do... somehow."
 				set_global bern_stays true
 				change_scene res://scenes/rooms/reception_area/reception_area.tscn
