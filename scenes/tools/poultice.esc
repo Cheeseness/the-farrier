@@ -1,0 +1,8 @@
+:use
+
+set_global cursor/poultice true
+set_global grooming_tool poultice
+
+:look
+
+say player "A pestle of healing poultice."

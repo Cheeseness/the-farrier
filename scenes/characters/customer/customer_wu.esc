@@ -5,7 +5,7 @@ say customer_wu "My Para must've tripped over something." [!customer_wu_end]
 
 say customer_wu "All done?" [customer_wu_end]
 say yemm "I've applied a poultice and bandaged the bruising." [customer_wu_end]
-say krik "(happy)" [customer_wu_end]
+say krik "!!(happy)!!" [customer_wu_end]
 say customer_wu "I can tell Krik is relieved. You work so well with them." [customer_wu_end]
 
 ? reception
@@ -54,6 +54,9 @@ say customer_wu "I can tell Krik is relieved. You work so well with them." [cust
 	- "I will tend to Krik now." [!customer_wu_end]
 		say yemm "I will tend to Krik now."
 		change_scene res://scenes/rooms/foot_care/foot_care.tscn
+		set_active lull false
+		set_active krik true
+		set_active bern false
 
 ## closing dialogue
 	- "There may be a bruise on the bone as well." [customer_wu_end]

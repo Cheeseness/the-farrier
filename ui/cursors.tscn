@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=1]
+[gd_scene load_steps=10 format=1]
 
 [ext_resource path="res://ui/cursors.gd" type="Script" id=1]
 [ext_resource path="res://scenes/rooms/test/sprites/can.png" type="Texture" id=2]
@@ -6,6 +6,9 @@
 [ext_resource path="res://scenes/rooms/test/sprites/chainsaw.png" type="Texture" id=4]
 [ext_resource path="res://scenes/tools/sprites/brush.png" type="Texture" id=5]
 [ext_resource path="res://scenes/tools/sprites/pliers.png" type="Texture" id=6]
+[ext_resource path="res://scenes/tools/sprites/poultice.png" type="Texture" id=7]
+[ext_resource path="res://scenes/tools/sprites/bandage.png" type="Texture" id=8]
+[ext_resource path="res://scenes/tools/sprites/bucket.png" type="Texture" id=9]
 
 [node name="cursors" type="Node2D"]
 
@@ -30,6 +33,19 @@ texture = ExtResource( 5 )
 
 [node name="pliers" type="Sprite" parent="."]
 
+transform/pos = Vector2( -18.044, 39.0141 )
 texture = ExtResource( 6 )
+
+[node name="poultice" type="Sprite" parent="."]
+
+texture = ExtResource( 7 )
+
+[node name="bandage" type="Sprite" parent="."]
+
+texture = ExtResource( 8 )
+
+[node name="water" type="Sprite" parent="."]
+
+texture = ExtResource( 9 )
 
 

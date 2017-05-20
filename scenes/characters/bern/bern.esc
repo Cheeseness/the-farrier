@@ -1,31 +1,56 @@
 :talk
-? default test_dino
+? default bern
 	- "Shh shh shh..."
 		say yemm "Shh shh shh..."
 		set_global increase_disposition_small true
+
 	- "There there..."
 		say yemm "There there..."
-		set_global increase_disposition_big true
-	- "It's OK..."
-		say yemm "It's OK..."
-		set_global decrease_disposition_small true
-	- "Take it easy..."
-		say yemm "Take it easy..."
-		set_global decrease_disposition_big true
+		set_global increase_disposition_small true
+
 	- "Nearly done..."
 		say yemm "Nearly done..."
-		set_global reset_disposition true
-	- "Hello!" [!greeting_understood]
-		say test_dino "!!*bruuuuugh*!!"
-		>	[greeting_learned]
-			set_global greeting_understood true
-			set_global *bruuuuugh* "(greeting)"
-			stop
-		set_global heard/greeting true
-	- "(greeting)" [greeting_understood]
-		say yemm "(greeting), dinosaur"
-	- "Give me a sec'."
-		say yemm "I have to go check on the front desk. Give me a sec'."
-		change_scene res://scenes/rooms/reception_area/reception_area.tscn
+		set_global decrease_disposition_small true
+
+	- "Do you think the food will run out?" [topic_food_crisis]
+		say yemm "Do you think the food will run out?"
+		say bern "!!(no)!!"
+		say yemm "I remember when we had that food shortage five years ago. We were all a little thinner by the end of the winter, but we were OK."
+
+	- "I'm worried about blood poisoning from your cuts." [topic_blood_poisoning]
+		say yemm "I'm worried about blood poisoning from your cuts."
+		say bern "!!(pain)!!"
+		say yemm "Hopefully a clean and some poultice will be enough to prevent that."
+		say bern "!!(pain)!!"
+
+	- "Do you know where the grain is?" [topic_missing_grain]
+		say yemm "Do you know where the grain is?"
+		say bern "!!(cave)!!"
+		> [cave_understood]
+			set_global topic_cave true
+
+	- "What do you about the hidden dinosaurs?" [topic_unknown dinosaurs]
+		say yemm "What do you about the hidden dinosaurs?"
+		say bern "!!(dinosaur)!!"
+
+	- "Why take the food to the cave?" [topic_cave]
+		say yemm "Why take the food to the cave?"
+		say bern "!!(dinosaur)!!"
+		> [dinosaur_understood]
+			set_global topic_unknown_dinosaurs true
+
+	- "Would you like to hear about the first time I saw a dinosaur?"
+		say yemm "Would you like to hear about the first time I saw a dinosaur?"
+		say bern "!!(yes)!!"
+		say yemm "It was a huge Triceratops."
+		say yemm "I was very young, maybe three years old? My parents were still alive. They were terrified."
+		say yemm "I can remember it so clearly. Even though I was tiny and it could have walked straight over me without noticing, the Triceratops stopped and bowed its head."
+		say bern "!!(happy)!!"
+		say yemm "I was aware of my parents' screaming and the driver of the wagon that the Triceratops was pulling yelling, but none of that mattered."
+
+	- "Someday I hope to buy a large property outskirts of the village."
+		say yemm "Someday I hope to buy a large property outskirts of the village."
+		say yemm "I'd like to have a bigger workshop and open a nursery for orphaned dinosaurs."
+		say bern "!!(happy)!!"
 
 set_global dinosaur_dialogue_ended true
