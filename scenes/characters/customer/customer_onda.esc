@@ -72,6 +72,9 @@ say customer_onda "Ha ha, you just can't keep her quiet. Come on girl, let's go 
 	- "I will look after her now." [!customer_onda_end]
 		say yemm "I will look after her now."
 		change_scene res://scenes/rooms/foot_care/foot_care.tscn
+		set_active lull true
+		set_active bern false
+		set_active krik false
 
 ## closing dialogue
 	- "Her foot needs rest. She should not be lifting heavy things." [customer_onda_end]

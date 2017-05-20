@@ -1,0 +1,8 @@
+:use
+
+set_global cursor/bandage true
+set_global grooming_tool bandage
+
+:look
+
+say player "A length of bandage."
