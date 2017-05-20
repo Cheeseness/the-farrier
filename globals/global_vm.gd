@@ -765,7 +765,12 @@ func interpolate_globals(text):
 	var i = 0
 	var new_text = ""
 
+	var words = get_global("words")
+
 	for t in text.split("!!"):
+		if i % 2 and t in words:
+			if words[t][1] != 1:
+				words[t][1] += 1
 		if i % 2 and get_global(t):
 			printt("text replacement", t, get_global(t))
 			new_text += get_global(t)
@@ -773,4 +778,5 @@ func interpolate_globals(text):
 			new_text += t
 		i = i+1
 
+	set_global("words", words)
 	return new_text
