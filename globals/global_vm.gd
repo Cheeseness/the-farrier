@@ -762,7 +762,17 @@ func _ready():
 	if not "words" in get_global_list():
 		set_global("words", {
 			"*bruuuuugh*": ["greeting", 0],
-			"*hmndn*": ["human", 0]
+			"*pbbbbt*" : ["(goodbye)", 0],
+			"*proooom*" : ["(sad)", 0],
+			"*braaa*" : ["(happy)", 0],
+			"*hmndn*" : ["(human)", 0],
+			"*pum*" : ["(no)", 0],
+			"*reehii*" : ["(yes)", 0],
+			"*ghneeku*" : ["(cave)", 0],
+			"*yeeduu*" : ["(dinosaur)", 0],
+			"*browmm*" : ["(pain)", 0],
+			"*harroot*" : ["(cave)", 0],
+			"*drrrrgl*" : ["(food)", 0],
 		})
 
 	set_process(true)
