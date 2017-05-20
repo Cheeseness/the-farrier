@@ -71,6 +71,12 @@ func go_to_reception():
 		if words[word][1] == 1:
 			words[word][1] = 0
 	vm.set_global("words", words)
+	if !vm.get_global("customer_onda_end"):
+		vm.set_global("customer_onda_end", true)
+	elif !vm.get_global("customer_wu_end"):
+		vm.set_global("customer_wu_end", true)
+	elif !vm.get_global("customer_herk_end"):
+		vm.set_global("customer_herk_end", true)
 	get_parent().queue_free()
 	get_tree().change_scene("res://scenes/rooms/reception_area/reception_area.tscn")
 
