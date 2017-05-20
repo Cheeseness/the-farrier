@@ -173,13 +173,6 @@ func _ready():
 	#get_node("anchor/scroll").set_theme(preload("res://game/globals/dialog_theme.xml"))
 	add_to_group("game")
 
-	# Set global word list
-	if not "words" in vm.get_global_list():
-		vm.set_global("words", {
-			"*bruuuuugh*": ["greeting", 0],
-			"*hmndn*": ["human", 0]
-		})
-
 func append_words(cmd):
 	# Append words to dialogue options dynamically from list
 	

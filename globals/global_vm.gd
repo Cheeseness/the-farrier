@@ -758,6 +758,13 @@ func _ready():
 
 	connect("global_changed", self, "check_achievement")
 
+	# Set global word list
+	if not "words" in get_global_list():
+		set_global("words", {
+			"*bruuuuugh*": ["greeting", 0],
+			"*hmndn*": ["human", 0]
+		})
+
 	set_process(true)
 	
 # Putting it here to make available; might not be the most suitable location - Flesk
