@@ -14,43 +14,43 @@
 
 	- "Do you think the food will run out?" [topic_food_crisis]
 		say yemm "Do you think the food will run out?"
-		say bern "!!(no)!!"
+		say bern "!!*pum*!!"
 		say yemm "I remember when we had that food shortage five years ago. We were all a little thinner by the end of the winter, but we were OK."
 
 	- "I'm worried about blood poisoning from your cuts." [topic_blood_poisoning]
 		say yemm "I'm worried about blood poisoning from your cuts."
-		say bern "!!(pain)!!"
+		say bern "!!*browmm*!!"
 		say yemm "Hopefully a clean and some poultice will be enough to prevent that."
-		say bern "!!(pain)!!"
+		say bern "!!*browmm*!!"
 
 	- "Do you know where the grain is?" [topic_missing_grain]
 		say yemm "Do you know where the grain is?"
-		say bern "!!(cave)!!"
+		say bern "!!*ghneeku*!!"
 		> [cave_understood]
 			set_global topic_cave true
 
 	- "What do you about the hidden dinosaurs?" [topic_unknown dinosaurs]
 		say yemm "What do you about the hidden dinosaurs?"
-		say bern "!!(dinosaur)!!"
+		say bern "!!*yeeduu*!!"
 
 	- "Why take the food to the cave?" [topic_cave]
 		say yemm "Why take the food to the cave?"
-		say bern "!!(dinosaur)!!"
+		say bern "!!*yeeduu*!!"
 		> [dinosaur_understood]
 			set_global topic_unknown_dinosaurs true
 
 	- "Would you like to hear about the first time I saw a dinosaur?"
 		say yemm "Would you like to hear about the first time I saw a dinosaur?"
-		say bern "!!(yes)!!"
+		say bern "!!*reehii*!!"
 		say yemm "It was a huge Triceratops."
 		say yemm "I was very young, maybe three years old? My parents were still alive. They were terrified."
 		say yemm "I can remember it so clearly. Even though I was tiny and it could have walked straight over me without noticing, the Triceratops stopped and bowed its head."
-		say bern "!!(happy)!!"
+		say bern "!!*braaa*!!"
 		say yemm "I was aware of my parents' screaming and the driver of the wagon that the Triceratops was pulling yelling, but none of that mattered."
 
 	- "Someday I hope to buy a large property outskirts of the village."
 		say yemm "Someday I hope to buy a large property outskirts of the village."
 		say yemm "I'd like to have a bigger workshop and open a nursery for orphaned dinosaurs."
-		say bern "!!(happy)!!"
+		say bern "!!*braaa*!!"
 
 set_global dinosaur_dialogue_ended true

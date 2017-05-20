@@ -763,7 +763,7 @@ func _ready():
 	# Set global word list
 	if not "words" in get_global_list():
 		set_global("words", {
-			"*bruuuuugh*": ["greeting", 0],
+			"*bruuuuugh*": ["(greeting)", 0],
 			"*pbbbbt*" : ["(goodbye)", 0],
 			"*proooom*" : ["(sad)", 0],
 			"*braaa*" : ["(happy)", 0],

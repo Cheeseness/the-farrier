@@ -14,38 +14,38 @@
 
 	- "Wu says that Fenn is upset." [topic_upset_fenn]
 		say yemm "Wu says that Fenn is upset."
-		say krik "!!(human)!!"
+		say krik "!!*hmndn*!!"
 		say yemm "I hope that that isn't making things difficult for the dinosaurs tending the farms."
-		say krik "!!(no)!!"
+		say krik "!!*pum*!!"
 
 	- "Do you know where the grain is?" [topic_missing_grain]
 		say yemm "Do you know where the grain is?"
-		say krik "!!(cave)!!"
+		say krik "!!*ghneeku*!!"
 		> [cave_understood]
 			set_global topic_cave true
 
 	- "What do you know about the hidden dinosaurs?" [topic_unknown_dinosaurs]
 		say yemm "What do you know about the hidden dinosaurs?"
-		say krik "!!(dinosaur)!!"
+		say krik "!!*yeeduu*!!"
 
 	- "Why take the food to the cave?" [topic_cave]
 		say yemm "Why take the food to the cave?"
-		say krik "!!(dinosaur)!!"
+		say krik "!!*yeeduu*!!"
 		> [dinosaur_understood]
 			set_global topic_unknown_dinosaurs true
 
 	- "Papa, my grandfather, tought me everything I know about dinosaurs."
 		say yemm "Papa, my grandfather, tought me everything I know about dinosaurs."
-		say krik "!!(human)!!"
+		say krik "!!*hmndn*!!"
 		say yemm "You'd have liked him. He was kind and thoughtful."
 		say yemm "Sometimes slow, but always generous."
 		say yemm "He'd definitely have liked you."
-		say krik "!!(happy)!!"
+		say krik "!!*braaa*!!"
 
 	- "I've never really had any friends."
 		say yemm "I've never really had any friends."
-		say krik "!!(dinosaur)!!"
+		say krik "!!*yeeduu*!!"
 		say yemm "Dinosaurs are like friends to me."
-		say krik "!!(happy)!!"
+		say krik "!!*braaa*!!"
 
 set_global dinosaur_dialogue_ended true

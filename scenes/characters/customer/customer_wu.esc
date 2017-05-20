@@ -7,7 +7,7 @@
 > [customer_wu_end,!customer_wu_end_intro]
 	say customer_wu "All done?"
 	say yemm "I've applied a poultice and bandaged the bruising."
-	say krik "!!(happy)!!"
+	say krik "!!*braaa*!!"
 	say customer_wu "I can tell Krik is relieved. You work so well with them."
 	set_global customer_wu_end_intro true
 
