@@ -33,7 +33,7 @@ var lines = {
 				["yemm", "Papa, why do you talk to them?", 1, 2],
 			],
 			"thefarrier_intro_02.png": [
-				["dinosaur", "(anxious) (replace with sound!)", 0, 1],
+				["dinosaur", "*whebbebb*", 0, 1],
 				["papa", "Woah there, easy now. It's OK.", 0.75, 2],
 				["papa", "To keep them calm. It's important to reassure them even if they can't understand.", 3, 3],
 			],
@@ -52,11 +52,11 @@ var lines = {
 			],
 			"thefarrier_intro_10.png": [
 				["yemm", "*gasp*", 0, 0.75],
-				["dinosaur", "(pain) (replace with sound!)", 0, 0.75],
+				["dinosaur", "*browmm*", 0, 0.75],
 			],
 			"thefarrier_intro_12.png": [
 				["papa", "There we go. Good as new.", 0.5, 1.5],
-				["dinosaur", "(happy) (replace with sound!)", 2.5, 1.5],
+				["dinosaur", "*braaa*", 2.5, 1.5],
 			],
 			"thefarrier_intro_14.png":
 			[
@@ -64,12 +64,12 @@ var lines = {
 			],
 			"thefarrier_intro_15.png":
 			[
-				["dinosaur2", "(pain) (replace with sound!).", 0, 2.0],
+				["dinosaur2", "*browmm*", 0, 2.0],
 			],
 			"thefarrier_intro_16.png":
 			[
 				["yemm2", "There we go. Good as new.", 0.5, 1.5],
-				["dinosaur2", "(happy) (replace with sound!)", 2.5, 1.5],
+				["dinosaur2", "*braaa*", 2.5, 1.5],
 			],
 			"thefarrier_intro_17.png":
 			[
