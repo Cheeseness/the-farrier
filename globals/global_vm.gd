@@ -315,6 +315,9 @@ func sched_event(time, obj, event):
 	event_queue.push_back([time, obj, event])
 
 func get_global(name):
+	# Yet another ugly hack
+	if name == "words" and not name in globals:
+		init_word_list()
 	#return (name in globals) && globals[name]
 	# Return actual value if set; otherwise false - Flesk
 	if name in globals:
@@ -760,6 +763,9 @@ func _ready():
 
 	connect("global_changed", self, "check_achievement")
 
+	set_process(true)
+
+func init_word_list():
 	# Set global word list
 	if not "words" in get_global_list():
 		set_global("words", {
@@ -777,8 +783,6 @@ func _ready():
 			"*drrrrgl*" : ["(food)", 0],
 		})
 
-	set_process(true)
-	
 # Putting it here to make available; might not be the most suitable location - Flesk
 func interpolate_globals(text):
 	var i = 0
