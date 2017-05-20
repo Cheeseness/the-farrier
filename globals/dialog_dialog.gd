@@ -213,9 +213,12 @@ func append_words(cmd):
 func remove_words(cmd):
 	# Removing items in place doesn't work, so we'll use a temporary array
 	var remove = []
+	var words = vm.get_global("words")
+	if typeof(words) != TYPE_DICTIONARY:
+		return
 	
 	for c in cmd:
-		if c["params"][0] in vm.get_global("words"):
+		if c["params"][0] in words:
 			remove.append(c)
 
 	for r in remove:
