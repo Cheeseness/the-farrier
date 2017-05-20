@@ -188,6 +188,9 @@ func append_words(cmd):
 	remove_words(cmd)
 
 	var words = vm.get_global("words")
+	if typeof(words) != TYPE_DICTIONARY:
+		return
+	
 	for word in words:
 		var meaning = words[word][0]
 		# If word is heard, present opportunity to learn
