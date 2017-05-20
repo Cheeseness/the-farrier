@@ -1,7 +1,8 @@
-[gd_scene load_steps=3 format=1]
+[gd_scene load_steps=4 format=1]
 
 [ext_resource path="res://scenes/characters/customer/sprites/storefront_figure_3.png" type="Texture" id=1]
 [ext_resource path="res://globals/item.gd" type="Script" id=2]
+[ext_resource path="res://globals/dialog_anchor.gd" type="Script" id=3]
 
 [node name="customer_wu" type="TextureFrame"]
 
@@ -23,7 +24,7 @@ light_on_map = false
 tooltip = "Customer"
 action = "talk"
 events_path = "res://scenes/characters/customer/customer_wu.esc"
-global_id = "customer_wu"
+global_id = "customer_wu_sprite"
 use_combine = false
 inventory = false
 use_action_menu = true
@@ -34,5 +35,16 @@ placeholders = {
 
 }
 use_custom_z = false
+
+[node name="wu_mouth" type="Node2D" parent="."]
+
+transform/pos = Vector2( 320, 175 )
+script/script = ExtResource( 3 )
+animations = null
+speed = 300
+scale_on_map = false
+light_on_map = false
+tooltip = ""
+global_id = "customer_wu"
 
 

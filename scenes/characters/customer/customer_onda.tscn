@@ -38,7 +38,7 @@ use_custom_z = false
 
 [node name="customer_mouth" type="Node2D" parent="."]
 
-transform/pos = Vector2( 320, 174.664 )
+transform/pos = Vector2( 320, 175 )
 script/script = ExtResource( 3 )
 animations = null
 speed = 300
