@@ -33,6 +33,7 @@ func input(viewport, event, shape_idx):
 							child.set_hidden(true)
 							splinters_removed += 1
 							printt("splinters removed", splinters_removed)
+							vm.set_global("splinter_removed", true)
 							if splinters_removed == 3:
 								vm.set_global("splinters_removed", true)
 					

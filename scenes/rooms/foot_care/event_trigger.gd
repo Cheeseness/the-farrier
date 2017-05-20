@@ -28,11 +28,13 @@ func global_listener(name):
 			break
 	if name in disposition_change or name == "reset_disposition":
 		change_disposition(name)
-	if name == "splinters_removed":
-		Input.set_custom_mouse_cursor(null)
-		vm.set_globals("cursor/", false)
-		vm.set_globals("grooming_tool", false)
-		start_dialogue()
+	if name == "splinter_removed":
+		if vm.get_global("splinter_removed"):
+			Input.set_custom_mouse_cursor(null)
+			vm.set_globals("cursor/", false)
+			vm.set_globals("grooming_tool", false)
+			start_dialogue()
+			vm.set_global("splinter_removed", false)
 	if name == "dinosaur_dialogue_ended":
 		# TODO Check if we're done with all our tasks - if so, go back to reception area
 		if vm.get_global("splinters_removed"):
