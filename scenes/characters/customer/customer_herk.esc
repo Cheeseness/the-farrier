@@ -62,9 +62,6 @@
 	- "Let me look after Bern now." [!customer_herk_end]
 		say yemm "Let me look after Bern now."
 		change_scene res://scenes/rooms/foot_care/foot_care.tscn
-		set_active lull false
-		set_active krik false
-		set_active bern true
 
 ## closing dialogue
 	- "It will take weeks for these cuts to heal enough for Bern to carry any load." [customer_herk_end]

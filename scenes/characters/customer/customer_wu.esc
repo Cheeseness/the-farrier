@@ -57,9 +57,6 @@
 	- "I will tend to Krik now." [!customer_wu_end]
 		say yemm "I will tend to Krik now."
 		change_scene res://scenes/rooms/foot_care/foot_care.tscn
-		set_active lull false
-		set_active krik true
-		set_active bern false
 
 ## closing dialogue
 	- "There may be a bruise on the bone as well." [customer_wu_end]
