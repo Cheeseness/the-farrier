@@ -62,11 +62,14 @@ func show_hide_dinosaurs(customer_name):
 		get_parent().get_node(n).hide()
 
 	if customer_name == "customer_onda":
-		get_parent().get_node("lull").show()
+		dino = get_parent().get_node("lull")
 	elif customer_name == "customer_wu":
-		get_parent().get_node("krik").show()
+		dino = get_parent().get_node("krik")
 	elif customer_name == "customer_herk":
-		get_parent().get_node("bern").show()
+		dino = get_parent().get_node("bern")
+
+	if dino:
+		dino.show()
 
 func _ready():
 	vm = get_tree().get_root().get_node("/root/vm")
@@ -76,15 +79,11 @@ func _ready():
 	var customer_name = "customer_onda"
 	if vm.get_global("next_customer"):
 		customer_name = vm.get_global("next_customer")
-		show_hide_dinosaurs(customer_name)
+	show_hide_dinosaurs(customer_name)
 
 	# Set disposition to neutral
 	Disposition.set_value(0)
 
-	for child in get_parent().get_children():
-		# Find the first visible dino
-		if child.get_name() in ["bern", "lull", "krik"] and child.is_visible():
-			prints("set active dinosaur:", child.get_name())
-			dino = child
-			dino.get_node("Sprite").set_frame(Disposition.get_frame())
-			break
+	if dino:
+		prints("has active dinosaur:", dino.get_name())
+		dino.get_node("Sprite").set_frame(Disposition.get_frame())
