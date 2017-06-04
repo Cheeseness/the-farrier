@@ -1,20 +1,6 @@
 extends Node2D
 
 var vm
-var disposition_change = {
-	"increase_disposition_small": 1,
-	"increase_disposition_big": 3,
-	"decrease_disposition_small": -1,
-	"decrease_disposition_big": -3
-}
-var disposition_frame = {
-	"angry": 0,
-	"annoyed": 1, 
-	"neutral": 5,
-	"content": 2,
-	"happy": 4,
-	"growling": 3,
-}
 var dino
 
 func global_listener(name):
@@ -26,7 +12,7 @@ func global_listener(name):
 			words[word][1] = 2
 			vm.set_global("words", words)
 			break
-	if name in disposition_change or name == "reset_disposition":
+	if Disposition.is_trigger(name):
 		change_disposition(name)
 	if name == "splinter_removed":
 		if vm.get_global("splinter_removed"):
@@ -45,24 +31,11 @@ func global_listener(name):
 			go_to_reception()
 	
 func change_disposition(name):
-	var disposition = vm.get_global("disposition")
-	if not disposition or name == "reset_disposition":
-		disposition = 0
-	if name in disposition_change:
-		disposition += disposition_change[name]
-	print("current disposition is %d" % disposition)
-	vm.set_global("disposition", disposition)
-	# TODO: Set animation according to disposition
-	if disposition > 7:
-		dino.get_node("Sprite").set_frame(disposition_frame["happy"])
-	elif disposition > 2:
-		dino.get_node("Sprite").set_frame(disposition_frame["content"])
-	elif disposition > -2:
-		dino.get_node("Sprite").set_frame(disposition_frame["neutral"])
-	elif disposition > -7:
-		dino.get_node("Sprite").set_frame(disposition_frame["annoyed"])
-	else:
-		dino.get_node("Sprite").set_frame(disposition_frame["angry"])
+	Disposition.change(name)
+	print("current disposition is %d" % Disposition.get_value())
+
+	# Set animation according to disposition
+	dino.get_node("Sprite").set_frame(Disposition.get_frame())
 
 func go_to_reception():
 	# Remove heard but not learned (or more) words before going to reception?
@@ -105,12 +78,13 @@ func _ready():
 		customer_name = vm.get_global("next_customer")
 		show_hide_dinosaurs(customer_name)
 
-	vm.set_global("disposition", 0)
+	# Set disposition to neutral
+	Disposition.set_value(0)
 
 	for child in get_parent().get_children():
 		# Find the first visible dino
 		if child.get_name() in ["bern", "lull", "krik"] and child.is_visible():
 			prints("set active dinosaur:", child.get_name())
 			dino = child
-			dino.get_node("Sprite").set_frame(disposition_frame["neutral"])
+			dino.get_node("Sprite").set_frame(Disposition.get_frame())
 			break
