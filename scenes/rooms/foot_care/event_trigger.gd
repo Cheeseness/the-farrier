@@ -4,14 +4,9 @@ var vm
 var dino
 
 func global_listener(name):
-	# More ugly hacks
-	var words = vm.get_global("words")
-	for word in words:
-		var ev_name = "%s_learned" % words[word][0]
-		if name == ev_name:
-			words[word][1] = 2
-			vm.set_global("words", words)
-			break
+	# TODO: Figure out if this was being used
+	Words.set_learned_by_event(name)
+
 	if Disposition.is_trigger(name):
 		change_disposition(name)
 	if name == "splinter_removed":
@@ -38,12 +33,10 @@ func change_disposition(name):
 	dino.get_node("Sprite").set_frame(Disposition.get_frame())
 
 func go_to_reception():
-	# Remove heard but not learned (or more) words before going to reception?
-	var words = vm.get_global("words")
-	for word in words:
-		if words[word][1] == 1:
-			words[word][1] = 0
-	vm.set_global("words", words)
+	# Remove heard but not learned words before going to reception?
+	# TODO: Figure out why it's called from dialog_dialog.gd as well
+	Words.reset_unlearned()
+
 	if !vm.get_global("customer_onda_end"):
 		vm.set_global("customer_onda_end", true)
 	elif !vm.get_global("customer_wu_end"):
