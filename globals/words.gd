@@ -25,6 +25,11 @@ func get(dino_word):
 	if dino_word in words:
 		return words[dino_word]
 
+func get_meaning(dino_word):
+	if dino_word in words:
+		return words[dino_word][0]
+	return ""
+
 func heard(dino_word):
 	return _check_value(dino_word, 1)
 
@@ -55,10 +60,26 @@ func increment_state_by_dialogue(dino_word):
 		words[dino_word][1] += 1
 
 func set_learned_by_event(name):
-	# Mark word as learned if global is set in esc script
-	# Not sure if this was being used.
+	# Mark word as learned if option created by get_learning_opportunity() is clicked
 	for word in words:
-		var ev_name = "%s_learned" % words[word][0]
+		var ev_name = "%s_learned" % get_meaning(word)
 		if name == ev_name:
 			words[word][1] = 2
 			break
+
+func get_learning_opportunity(word):
+	# Set global if option is clicked, and if so, trigger learning in set_learned_by_event()
+	var meaning = get_meaning(word)
+	return [
+		{"name": "say", "params": ["yemm", "!!%s!!" % word]},
+		{"name": "set_global", "params": ["%s_learned" % meaning, "true"]}
+	]
+
+func get_learning_realization(dino, word):
+	# Create special dialogue for when a new word is learned
+	var meaning = get_meaning(word)
+	return [
+		{"name": "say", "params": [dino, "!!" + word + "!!"]},
+		{"name": "say", "params": [dino, "!!" + word + "!!"]},
+		{"name": "say", "params": ["yemm", word + " ... " + meaning + "?"]}
+	]

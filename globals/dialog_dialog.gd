@@ -195,13 +195,13 @@ func append_words(cmd):
 		if get_tree().get_root().find_node("PlaceholderYemm", true, false) != null:
 			#print("We're in the wrong scene!")
 			break
-		var meaning = words[word][0]
+		var meaning = Words.get_meaning(word)
 		# If word is heard, present opportunity to learn
-		if not words[word][1] == 1:
+		if not Words.heard(word):
 			continue
-		var p = {"name": "*", "params": [word, []]}
-		p["params"][1].append({"name": "say", "params": ["yemm", "!!" + word + "!!"]})
-		p["params"][1].append({"name": "set_global", "params": ["%s_learned" % meaning, "true"]})
+
+		var params = Words.get_learning_opportunity(word)
+
 		var dino = "lull"
 		if !vm.get_global("customer_onda_end"):
 			pass #dino is already lull
@@ -209,10 +209,10 @@ func append_words(cmd):
 			dino = "krik"
 		elif !vm.get_global("customer_herk_end"):
 			dino = "bern"
-		p["params"][1].append({"name": "say", "params": [dino, "!!" + word + "!!"]})
-		p["params"][1].append({"name": "say", "params": [dino, "!!" + word + "!!"]})
-		p["params"][1].append({"name": "say", "params": ["yemm", word + " ... " + meaning + "?"]})
-		cmd.append(p)
+
+		params += Words.get_learning_realization(dino, word)
+
+		cmd.append({"name": "*", "params": [word, params]})
 
 	# Remove heard but not learned words before next "turn"
 	# TODO: Figure out why it's called from event_trigger.gd as well
