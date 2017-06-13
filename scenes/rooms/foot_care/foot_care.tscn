@@ -121,7 +121,7 @@ texture = ExtResource( 11 )
 
 [node name="Position2D" type="Position2D" parent="foot"]
 
-transform/pos = Vector2( 708, 480 )
+transform/pos = Vector2( 648, 470 )
 
 [node name="Position2D 2" type="Position2D" parent="foot"]
 
@@ -141,10 +141,19 @@ transform/pos = Vector2( 540, 550 )
 
 [node name="Position2D 6" type="Position2D" parent="foot"]
 
-transform/pos = Vector2( 690, 690 )
+transform/pos = Vector2( 658, 730 )
+
+[node name="Position2D 7" type="Position2D" parent="foot"]
+
+transform/pos = Vector2( 748, 630 )
+
+[node name="Position2D 8" type="Position2D" parent="foot"]
+
+transform/pos = Vector2( 808, 450 )
 
 [node name="foot_shape" type="CollisionPolygon2D" parent="foot"]
 
+visibility/visible = false
 transform/pos = Vector2( 692.48, 606.806 )
 build_mode = 0
 polygon = Vector2Array( -195.819, -193.861, -261.275, -47.8439, -243.652, 153.559, -160.573, 276.918, 15.6543, 281.953, 212.022, 246.708, 254.82, 130.901, 264.89, -62.9491, 184.329, -208.966, -7.00354, -269.387 )

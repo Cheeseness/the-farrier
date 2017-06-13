@@ -6,6 +6,7 @@ var comfort = {
 	"indicator": null
 }
 var splinters_removed = 0
+var splinters_total = 3
 const splinter_scene = preload("res://scenes/conditions/splinter/splinter.tscn")
 
 func set_comfort_level(increase=true):
@@ -35,16 +36,30 @@ func input(viewport, event, shape_idx):
 							splinters_removed += 1
 							printt("splinters removed", splinters_removed)
 							vm.set_global("splinter_removed", true)
-							if splinters_removed == 3:
+							if splinters_removed == splinters_total:
 								vm.set_global("splinters_removed", true)
 
-func add_splinters():
+func get_foot_positions(num):
+	var positions = []
 	for child in get_children():
 		if child.get_type() == "Position2D":
-			var splinter = splinter_scene.instance()
-			splinter.set_pos(child.get_pos())
-			splinter.set_scale(Vector2(0.648465, 0.648465))
-			add_child(splinter)
+			positions.append(child)
+
+	randomize()
+	var picks = []
+	for i in range(num):
+		var idx = randi() % positions.size()
+		picks.append(positions[idx])
+		positions.remove(idx)
+
+	return picks
+
+func add_splinters():
+	for child in get_foot_positions(splinters_total):
+		var splinter = splinter_scene.instance()
+		splinter.set_pos(child.get_pos())
+		splinter.set_scale(Vector2(0.648465, 0.648465))
+		add_child(splinter)
 
 func _ready():
 	vm = get_tree().get_root().get_node("/root/vm")
