@@ -26,10 +26,13 @@ func input(viewport, event, shape_idx):
 			var grooming_tool = vm.get_global("grooming_tool")
 			prints("grooming_tool", grooming_tool)
 			# TEMPORARY!
-			
+
 			if grooming_tool:
 				set_comfort_level()
-			
+
+			# TODO: When bruises are treated with poultice, change animation:
+			# bruise.get_node("animation").play("poultice")
+
 			# TODO: Handle this in a less shitty way
 			if grooming_tool && grooming_tool == "pliers":
 				for child in get_children():
@@ -84,6 +87,7 @@ func _ready():
 	vm.set_global("dino_hello", "*ergjbld*")
 	vm.set_global("dino_goodbye", "*asdfkld*")
 
+	# TODO: Make sure splinters and bruises are not added to same position
 	add_splinters()
 	add_bruises()
 
