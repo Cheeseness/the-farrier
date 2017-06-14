@@ -7,7 +7,11 @@ var comfort = {
 }
 var splinters_removed = 0
 var splinters_total = 3
+var bruises_removed = 0
+var bruises_total = 2
 const splinter_scene = preload("res://scenes/conditions/splinter/splinter.tscn")
+const bruise_a_scene = preload("res://scenes/conditions/bruise/bruise_a.tscn")
+const bruise_b_scene = preload("res://scenes/conditions/bruise/bruise_b.tscn")
 
 func set_comfort_level(increase=true):
 	if increase:
@@ -61,6 +65,17 @@ func add_splinters():
 		#splinter.set_scale(Vector2(0.648465, 0.648465))
 		add_child(splinter)
 
+func add_bruises():
+	randomize()
+	for child in get_foot_positions(splinters_total):
+		var bruise
+		if randi() % 2:
+			bruise = bruise_a_scene.instance()
+		else:
+			bruise = bruise_b_scene.instance()
+		bruise.set_pos(child.get_pos())
+		add_child(bruise)
+
 func _ready():
 	vm = get_tree().get_root().get_node("/root/vm")
 	connect("input_event", self, "input")
@@ -70,6 +85,7 @@ func _ready():
 	vm.set_global("dino_goodbye", "*asdfkld*")
 
 	add_splinters()
+	add_bruises()
 
 	# Hook up a temporary comfort level indicator
 	# TODO Change facial expression instead
