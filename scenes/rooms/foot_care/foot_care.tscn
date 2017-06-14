@@ -1,4 +1,4 @@
-[gd_scene load_steps=20 format=1]
+[gd_scene load_steps=19 format=1]
 
 [ext_resource path="res://globals/scene.gd" type="Script" id=1]
 [ext_resource path="res://ui/cursors.tscn" type="PackedScene" id=2]
@@ -11,13 +11,12 @@
 [ext_resource path="res://globals/game.scn" type="PackedScene" id=9]
 [ext_resource path="res://scenes/rooms/foot_care/foot.gd" type="Script" id=10]
 [ext_resource path="res://scenes/rooms/foot_care/sprites/foot_clean.png" type="Texture" id=11]
-[ext_resource path="res://scenes/conditions/splinter/splinter.tscn" type="PackedScene" id=12]
-[ext_resource path="res://scenes/characters/test_dino/test_dino.tscn" type="PackedScene" id=13]
-[ext_resource path="res://scenes/characters/lull/lull.tscn" type="PackedScene" id=14]
-[ext_resource path="res://scenes/characters/krik/krik.tscn" type="PackedScene" id=15]
-[ext_resource path="res://scenes/characters/bern/bern.tscn" type="PackedScene" id=16]
-[ext_resource path="res://globals/dialog_anchor.gd" type="Script" id=17]
-[ext_resource path="res://scenes/rooms/foot_care/event_trigger.gd" type="Script" id=18]
+[ext_resource path="res://scenes/characters/test_dino/test_dino.tscn" type="PackedScene" id=12]
+[ext_resource path="res://scenes/characters/lull/lull.tscn" type="PackedScene" id=13]
+[ext_resource path="res://scenes/characters/krik/krik.tscn" type="PackedScene" id=14]
+[ext_resource path="res://scenes/characters/bern/bern.tscn" type="PackedScene" id=15]
+[ext_resource path="res://globals/dialog_anchor.gd" type="Script" id=16]
+[ext_resource path="res://scenes/rooms/foot_care/event_trigger.gd" type="Script" id=17]
 
 [sub_resource type="ConvexPolygonShape2D" id=1]
 
@@ -120,52 +119,67 @@ transform/pos = Vector2( 688.995, 448.447 )
 transform/scale = Vector2( 1.29693, 1.29693 )
 texture = ExtResource( 11 )
 
-[node name="splinter" parent="foot" instance=ExtResource( 12 )]
+[node name="Position2D" type="Position2D" parent="foot"]
+
+transform/pos = Vector2( 648, 470 )
+
+[node name="Position2D 2" type="Position2D" parent="foot"]
+
+transform/pos = Vector2( 498, 730 )
+
+[node name="Position2D 3" type="Position2D" parent="foot"]
+
+transform/pos = Vector2( 878, 700 )
+
+[node name="Position2D 4" type="Position2D" parent="foot"]
 
 transform/pos = Vector2( 850, 550 )
-transform/scale = Vector2( 0.648465, 0.648465 )
-z/z = 470
 
-[node name="splinter 2" parent="foot" instance=ExtResource( 12 )]
+[node name="Position2D 5" type="Position2D" parent="foot"]
 
 transform/pos = Vector2( 540, 550 )
-transform/scale = Vector2( 0.648465, 0.648465 )
-z/z = 550
 
-[node name="splinter 3" parent="foot" instance=ExtResource( 12 )]
+[node name="Position2D 6" type="Position2D" parent="foot"]
 
-transform/pos = Vector2( 690, 690 )
-transform/scale = Vector2( 0.648465, 0.648465 )
-z/z = 689
+transform/pos = Vector2( 658, 730 )
+
+[node name="Position2D 7" type="Position2D" parent="foot"]
+
+transform/pos = Vector2( 748, 630 )
+
+[node name="Position2D 8" type="Position2D" parent="foot"]
+
+transform/pos = Vector2( 808, 450 )
 
 [node name="foot_shape" type="CollisionPolygon2D" parent="foot"]
 
+visibility/visible = false
 transform/pos = Vector2( 692.48, 606.806 )
 build_mode = 0
 polygon = Vector2Array( -195.819, -193.861, -261.275, -47.8439, -243.652, 153.559, -160.573, 276.918, 15.6543, 281.953, 212.022, 246.708, 254.82, 130.901, 264.89, -62.9491, 184.329, -208.966, -7.00354, -269.387 )
 shape_range = Vector2( 0, 0 )
 trigger = false
 
-[node name="test_dino" parent="." instance=ExtResource( 13 )]
+[node name="test_dino" parent="." instance=ExtResource( 12 )]
 
 visibility/visible = false
 transform/pos = Vector2( 1552.45, 417.65 )
 z/z = 417
 
-[node name="lull" parent="." instance=ExtResource( 14 )]
+[node name="lull" parent="." instance=ExtResource( 13 )]
 
 transform/pos = Vector2( 1600, 700 )
 transform/scale = Vector2( 0.8, 0.8 )
 z/z = 700
 
-[node name="krik" parent="." instance=ExtResource( 15 )]
+[node name="krik" parent="." instance=ExtResource( 14 )]
 
 visibility/visible = false
 transform/pos = Vector2( 1600, 700 )
 transform/scale = Vector2( 0.8, 0.8 )
 z/z = 700
 
-[node name="bern" parent="." instance=ExtResource( 16 )]
+[node name="bern" parent="." instance=ExtResource( 15 )]
 
 visibility/visible = false
 transform/pos = Vector2( 1600, 700 )
@@ -176,7 +190,7 @@ z/z = 700
 
 transform/pos = Vector2( 960, 1030 )
 z/z = 1041
-script/script = ExtResource( 17 )
+script/script = ExtResource( 16 )
 animations = null
 speed = 300
 scale_on_map = false
@@ -186,7 +200,7 @@ global_id = "yemm"
 
 [node name="event_trigger" type="Node2D" parent="."]
 
-script/script = ExtResource( 18 )
+script/script = ExtResource( 17 )
 
 [node name="Timer" type="Timer" parent="event_trigger"]
 
