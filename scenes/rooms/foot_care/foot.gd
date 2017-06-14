@@ -58,7 +58,7 @@ func add_splinters():
 	for child in get_foot_positions(splinters_total):
 		var splinter = splinter_scene.instance()
 		splinter.set_pos(child.get_pos())
-		splinter.set_scale(Vector2(0.648465, 0.648465))
+		#splinter.set_scale(Vector2(0.648465, 0.648465))
 		add_child(splinter)
 
 func _ready():
