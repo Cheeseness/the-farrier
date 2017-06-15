@@ -12,6 +12,7 @@
 
 [node name="cursors" type="Node2D"]
 
+visibility/visible = false
 script/script = ExtResource( 1 )
 
 [node name="can" type="Sprite" parent="."]

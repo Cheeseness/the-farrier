@@ -25,18 +25,14 @@ func input(viewport, event, shape_idx):
 	# TODO: Block action if comfort level of dino is too low
 	if event.type == InputEvent.MOUSE_BUTTON and event.button_index == BUTTON_LEFT:
 		if event.is_pressed():
-			var grooming_tool = vm.get_global("grooming_tool")
-			prints("grooming_tool", grooming_tool)
+			prints("grooming_tool", Tool.selected())
 			# TEMPORARY!
 
-			if grooming_tool:
+			if Tool.selected():
 				set_comfort_level()
 
-			# TODO: When bruises are treated with poultice, change animation:
-			# bruise.get_node("animation").play("poultice")
-
 			# TODO: Handle this in a less shitty way
-			if grooming_tool && grooming_tool == "pliers":
+			if Tool.is("pliers"):
 				for child in get_children():
 					if child.get_name().find("splinter") >= 0 and not child.is_hidden():
 						var dist = child.get_pos().distance_to(get_local_mouse_pos())
@@ -48,7 +44,7 @@ func input(viewport, event, shape_idx):
 							if splinters_removed == splinters_total:
 								vm.set_global("splinters_removed", true)
 
-			if grooming_tool && grooming_tool == "poultice":
+			if Tool.is("poultice"):
 				for child in get_children():
 					if child.get_name().find("bruise") >= 0:
 						var animation = child.get_node("animation")
@@ -60,7 +56,7 @@ func input(viewport, event, shape_idx):
 								bruises_removed += 1
 								printt("poultice applied", bruises_removed)
 
-			if grooming_tool && grooming_tool == "bandage" && bruises_removed == bruises_total && bandage_applied < 3:
+			if Tool.is("bandage") && bruises_removed == bruises_total && bandage_applied < 3:
 				bandage_applied += 1
 				get_node("bandage%d" % bandage_applied).show()
 				printt("bandage applied", bandage_applied)

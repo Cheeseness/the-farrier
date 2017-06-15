@@ -32,8 +32,6 @@ script/script = ExtResource( 1 )
 
 [node name="cursors" parent="." instance=ExtResource( 2 )]
 
-visibility/visible = false
-
 [node name="background" type="TextureFrame" parent="."]
 
 focus/ignore_mouse = true

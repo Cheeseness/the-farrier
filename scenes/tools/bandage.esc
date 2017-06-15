@@ -1,7 +1,6 @@
 :use
 
-set_global cursor/bandage true
-set_global grooming_tool bandage
+set_tool bandage
 
 :look
 
