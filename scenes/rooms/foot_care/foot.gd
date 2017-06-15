@@ -10,6 +10,7 @@ var splinters_removed = 0
 var splinters_total = 3
 var bruises_removed = 0
 var bruises_total = 2
+var bandage_applied = 0
 const splinter_scene = preload("res://scenes/conditions/splinter/splinter.tscn")
 const bruise_a_scene = preload("res://scenes/conditions/bruise/bruise_a.tscn")
 const bruise_b_scene = preload("res://scenes/conditions/bruise/bruise_b.tscn")
@@ -59,8 +60,10 @@ func input(viewport, event, shape_idx):
 								bruises_removed += 1
 								printt("poultice applied", bruises_removed)
 
-			if grooming_tool && grooming_tool == "bandage" && bruises_removed == bruises_total:
-				pass
+			if grooming_tool && grooming_tool == "bandage" && bruises_removed == bruises_total && bandage_applied < 3:
+				bandage_applied += 1
+				get_node("bandage%d" % bandage_applied).show()
+				printt("bandage applied", bandage_applied)
 
 func init_foot_positions():
 	foot_positions = []

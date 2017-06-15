@@ -1,4 +1,4 @@
-[gd_scene load_steps=19 format=1]
+[gd_scene load_steps=22 format=1]
 
 [ext_resource path="res://globals/scene.gd" type="Script" id=1]
 [ext_resource path="res://ui/cursors.tscn" type="PackedScene" id=2]
@@ -11,12 +11,15 @@
 [ext_resource path="res://globals/game.scn" type="PackedScene" id=9]
 [ext_resource path="res://scenes/rooms/foot_care/foot.gd" type="Script" id=10]
 [ext_resource path="res://scenes/rooms/foot_care/sprites/foot_clean.png" type="Texture" id=11]
-[ext_resource path="res://scenes/characters/test_dino/test_dino.tscn" type="PackedScene" id=12]
-[ext_resource path="res://scenes/characters/lull/lull.tscn" type="PackedScene" id=13]
-[ext_resource path="res://scenes/characters/krik/krik.tscn" type="PackedScene" id=14]
-[ext_resource path="res://scenes/characters/bern/bern.tscn" type="PackedScene" id=15]
-[ext_resource path="res://globals/dialog_anchor.gd" type="Script" id=16]
-[ext_resource path="res://scenes/rooms/foot_care/event_trigger.gd" type="Script" id=17]
+[ext_resource path="res://scenes/tools/sprites/bandage_applied1.png" type="Texture" id=12]
+[ext_resource path="res://scenes/tools/sprites/bandage_applied2.png" type="Texture" id=13]
+[ext_resource path="res://scenes/tools/sprites/bandage_applied3.png" type="Texture" id=14]
+[ext_resource path="res://scenes/characters/test_dino/test_dino.tscn" type="PackedScene" id=15]
+[ext_resource path="res://scenes/characters/lull/lull.tscn" type="PackedScene" id=16]
+[ext_resource path="res://scenes/characters/krik/krik.tscn" type="PackedScene" id=17]
+[ext_resource path="res://scenes/characters/bern/bern.tscn" type="PackedScene" id=18]
+[ext_resource path="res://globals/dialog_anchor.gd" type="Script" id=19]
+[ext_resource path="res://scenes/rooms/foot_care/event_trigger.gd" type="Script" id=20]
 
 [sub_resource type="ConvexPolygonShape2D" id=1]
 
@@ -160,26 +163,47 @@ polygon = Vector2Array( -195.819, -193.861, -261.275, -47.8439, -243.652, 153.55
 shape_range = Vector2( 0, 0 )
 trigger = false
 
-[node name="test_dino" parent="." instance=ExtResource( 12 )]
+[node name="bandage1" type="Sprite" parent="foot"]
+
+visibility/visible = false
+transform/pos = Vector2( 695.574, 489.138 )
+z/z = 10
+texture = ExtResource( 12 )
+
+[node name="bandage2" type="Sprite" parent="foot"]
+
+visibility/visible = false
+transform/pos = Vector2( 689.578, 470.932 )
+z/z = 20
+texture = ExtResource( 13 )
+
+[node name="bandage3" type="Sprite" parent="foot"]
+
+visibility/visible = false
+transform/pos = Vector2( 689.578, 449.908 )
+z/z = 30
+texture = ExtResource( 14 )
+
+[node name="test_dino" parent="." instance=ExtResource( 15 )]
 
 visibility/visible = false
 transform/pos = Vector2( 1552.45, 417.65 )
 z/z = 417
 
-[node name="lull" parent="." instance=ExtResource( 13 )]
+[node name="lull" parent="." instance=ExtResource( 16 )]
 
 transform/pos = Vector2( 1600, 700 )
 transform/scale = Vector2( 0.8, 0.8 )
 z/z = 700
 
-[node name="krik" parent="." instance=ExtResource( 14 )]
+[node name="krik" parent="." instance=ExtResource( 17 )]
 
 visibility/visible = false
 transform/pos = Vector2( 1600, 700 )
 transform/scale = Vector2( 0.8, 0.8 )
 z/z = 700
 
-[node name="bern" parent="." instance=ExtResource( 15 )]
+[node name="bern" parent="." instance=ExtResource( 18 )]
 
 visibility/visible = false
 transform/pos = Vector2( 1600, 700 )
@@ -190,7 +214,7 @@ z/z = 700
 
 transform/pos = Vector2( 960, 1030 )
 z/z = 1041
-script/script = ExtResource( 16 )
+script/script = ExtResource( 19 )
 animations = null
 speed = 300
 scale_on_map = false
@@ -200,7 +224,7 @@ global_id = "yemm"
 
 [node name="event_trigger" type="Node2D" parent="."]
 
-script/script = ExtResource( 17 )
+script/script = ExtResource( 20 )
 
 [node name="Timer" type="Timer" parent="event_trigger"]
 
