@@ -47,6 +47,21 @@ func input(viewport, event, shape_idx):
 							if splinters_removed == splinters_total:
 								vm.set_global("splinters_removed", true)
 
+			if grooming_tool && grooming_tool == "poultice":
+				for child in get_children():
+					if child.get_name().find("bruise") >= 0:
+						var animation = child.get_node("animation")
+						var dist = child.get_pos().distance_to(get_local_mouse_pos())
+						if dist <= 100:
+							if animation.get_current_animation() != "poultice":
+								animation.play("poultice")
+								# Bruises aren't actually removed at this stage, but poultice has been applied
+								bruises_removed += 1
+								printt("poultice applied", bruises_removed)
+
+			if grooming_tool && grooming_tool == "bandage" && bruises_removed == bruises_total:
+				pass
+
 func init_foot_positions():
 	foot_positions = []
 	for child in get_children():
@@ -77,7 +92,7 @@ func add_splinters():
 
 func add_bruises():
 	randomize()
-	for child in get_foot_positions(splinters_total):
+	for child in get_foot_positions(bruises_total):
 		var bruise
 		if randi() % 2:
 			bruise = bruise_a_scene.instance()
