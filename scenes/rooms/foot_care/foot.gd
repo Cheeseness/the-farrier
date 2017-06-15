@@ -5,6 +5,7 @@ var comfort = {
 	"level": 0,
 	"indicator": null
 }
+var foot_positions
 var splinters_removed = 0
 var splinters_total = 3
 var bruises_removed = 0
@@ -46,18 +47,25 @@ func input(viewport, event, shape_idx):
 							if splinters_removed == splinters_total:
 								vm.set_global("splinters_removed", true)
 
-func get_foot_positions(num):
-	var positions = []
+func init_foot_positions():
+	foot_positions = []
 	for child in get_children():
 		if child.get_type() == "Position2D":
-			positions.append(child)
+			foot_positions.append(child)
+
+func get_foot_positions(num):
+	if typeof(foot_positions) == TYPE_NIL:
+		init_foot_positions()
 
 	randomize()
 	var picks = []
+
 	for i in range(num):
-		var idx = randi() % positions.size()
-		picks.append(positions[idx])
-		positions.remove(idx)
+		if foot_positions.empty():
+			break
+		var idx = randi() % foot_positions.size()
+		picks.append(foot_positions[idx])
+		foot_positions.remove(idx)
 
 	return picks
 
@@ -65,7 +73,6 @@ func add_splinters():
 	for child in get_foot_positions(splinters_total):
 		var splinter = splinter_scene.instance()
 		splinter.set_pos(child.get_pos())
-		#splinter.set_scale(Vector2(0.648465, 0.648465))
 		add_child(splinter)
 
 func add_bruises():
@@ -87,7 +94,6 @@ func _ready():
 	vm.set_global("dino_hello", "*ergjbld*")
 	vm.set_global("dino_goodbye", "*asdfkld*")
 
-	# TODO: Make sure splinters and bruises are not added to same position
 	add_splinters()
 	add_bruises()
 
