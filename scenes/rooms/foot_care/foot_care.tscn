@@ -164,21 +164,24 @@ trigger = false
 [node name="bandage1" type="Sprite" parent="foot"]
 
 visibility/visible = false
-transform/pos = Vector2( 695.574, 489.138 )
+transform/pos = Vector2( 694.911, 455.304 )
+transform/scale = Vector2( 1.29693, 1.29693 )
 z/z = 10
 texture = ExtResource( 12 )
 
 [node name="bandage2" type="Sprite" parent="foot"]
 
 visibility/visible = false
-transform/pos = Vector2( 689.578, 470.932 )
+transform/pos = Vector2( 694.222, 462.308 )
+transform/scale = Vector2( 1.29693, 1.29693 )
 z/z = 20
 texture = ExtResource( 13 )
 
 [node name="bandage3" type="Sprite" parent="foot"]
 
 visibility/visible = false
-transform/pos = Vector2( 689.578, 449.908 )
+transform/pos = Vector2( 688.251, 449.245 )
+transform/scale = Vector2( 1.29693, 1.29693 )
 z/z = 30
 texture = ExtResource( 14 )
 
