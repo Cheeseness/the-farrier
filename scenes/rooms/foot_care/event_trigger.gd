@@ -11,9 +11,7 @@ func global_listener(name):
 		change_disposition(name)
 	if name == "splinter_removed":
 		if vm.get_global("splinter_removed"):
-			Input.set_custom_mouse_cursor(null)
-			vm.set_globals("cursor/", false)
-			vm.set_globals("grooming_tool", false)
+			Tool.select(null)
 			change_disposition("decrease_disposition_small")
 			start_dialogue()
 			vm.set_global("splinter_removed", false)
