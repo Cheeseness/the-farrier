@@ -315,9 +315,6 @@ func sched_event(time, obj, event):
 	event_queue.push_back([time, obj, event])
 
 func get_global(name):
-	# Yet another ugly hack
-	if name == "words" and not name in globals:
-		init_word_list()
 	#return (name in globals) && globals[name]
 	# Return actual value if set; otherwise false - Flesk
 	if name in globals:
@@ -765,24 +762,6 @@ func _ready():
 
 	set_process(true)
 
-func init_word_list():
-	# Set global word list
-	if not "words" in get_global_list():
-		set_global("words", {
-			"*bruuuuugh*": ["(greeting)", 0],
-			"*pbbbbt*" : ["(goodbye)", 0],
-			"*proooom*" : ["(sad)", 0],
-			"*braaa*" : ["(happy)", 0],
-			"*hmndn*" : ["(human)", 0],
-			"*pum*" : ["(no)", 0],
-			"*reehii*" : ["(yes)", 0],
-			"*ghneeku*" : ["(cave)", 0],
-			"*yeeduu*" : ["(dinosaur)", 0],
-			"*browmm*" : ["(pain)", 0],
-			"*harroot*" : ["(cave)", 0],
-			"*drrrrgl*" : ["(food)", 0],
-		})
-
 # Putting it here to make available; might not be the most suitable location - Flesk
 func interpolate_globals(text):
 	var i = 0
@@ -790,12 +769,11 @@ func interpolate_globals(text):
 
 	print("Interpolating globals.", text)
 
-	var words = get_global("words")
+	var words = Words.all()
 
 	for t in text.split("!!"):
 		if i % 2 and t in words:
-			if words[t][1] != 1:
-				words[t][1] += 1
+			Words.increment_state_by_dialogue(t)
 		if i % 2 and get_global(t):
 			printt("text replacement", t, get_global(t))
 			new_text += get_global(t)
@@ -805,15 +783,12 @@ func interpolate_globals(text):
 
 	# If not repeated on following "turn", learning opportunity is lost for now
 	for word in words:
-		if words[word][1] == 2:
+		if Words.learned(word):
 			set_global("%s_learned" % words[word][0], true)
 			print("Setting %s_learned" % words[word][0])
-		elif words[word][1] == 3:
+		elif Words.understood(word):
 			set_global("%s_understood" % words[word][0], true)
 			print("Setting %s_understood" % words[word][0])
 			set_global(word, "%s" % words[word][0])
-	set_global("words", words)
 
-
-	set_global("words", words)
 	return new_text
