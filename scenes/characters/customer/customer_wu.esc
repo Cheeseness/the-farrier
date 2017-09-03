@@ -1,6 +1,10 @@
 #Wu is customer_wu and "owner" of Krik. A farmer who works with Fenn to manage the village's crops and grain stores.
 
 :talk
+
+set_condition splinter 3
+set_condition bruise 2
+
 > [!customer_wu_end,!customer_wu_intro]
 	say customer_wu "My Para must've tripped over something."
 	set_global customer_wu_intro true

@@ -21,6 +21,8 @@ func global_listener(name):
 			# Reset flag, so that it works on coming back.
 			# Not an issue if we're not just reloading the same room over and over.
 			vm.set_global("splinters_removed", false)
+			# Reset Conditions singleton
+			Conditions.reset()
 			go_to_reception()
 	
 func change_disposition(name):
