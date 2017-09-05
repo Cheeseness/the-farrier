@@ -1,8 +1,4 @@
 :talk
-
-set_condition splinter 4
-set_condition bruise 3 1
-
 ? default lull
 	- "Shh shh shh..."
 		say yemm "Shh shh shh..."

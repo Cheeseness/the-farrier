@@ -5,11 +5,6 @@ var comfort = {
 	"level": 0,
 	"indicator": null
 }
-var foot_positions
-var splinters_removed = 0
-var splinters_total = 3
-var bruises_removed = 0
-var bruises_total = 2
 var bandage_applied = 0
 
 func set_comfort_level(increase=true):
@@ -33,10 +28,9 @@ func input(viewport, event, shape_idx):
 			# TODO: Handle this in a less shitty way
 			if Tool.is("pliers") && condition && condition.get_name().find("splinter") >= 0 && not condition.is_hidden():
 				condition.set_hidden(true)
-				splinters_removed += 1
-				printt("splinters removed", splinters_removed)
+				Conditions.remove("splinter")
 				vm.set_global("splinter_removed", true)
-				if splinters_removed == splinters_total:
+				if Conditions.is_removed("splinter"):
 					vm.set_global("splinters_removed", true)
 
 			if Tool.is("poultice") && condition && condition.get_name().find("bruise") >= 0:
@@ -44,13 +38,11 @@ func input(viewport, event, shape_idx):
 				if animation.get_current_animation() != "poultice":
 					animation.play("poultice")
 					# Bruises aren't actually removed at this stage, but poultice has been applied
-					bruises_removed += 1
-					printt("poultice applied", bruises_removed)
+					Conditions.remove("bruise")
 
-			if Tool.is("bandage") && bruises_removed == bruises_total && bandage_applied < 3:
+			if Tool.is("bandage") && Conditions.is_removed("bruise") && bandage_applied < 3:
 				bandage_applied += 1
 				get_node("bandage%d" % bandage_applied).show()
-				printt("bandage applied", bandage_applied)
 
 func _ready():
 	vm = get_tree().get_root().get_node("/root/vm")
@@ -60,6 +52,9 @@ func _ready():
 	vm.set_global("dino_hello", "*ergjbld*")
 	vm.set_global("dino_goodbye", "*asdfkld*")
 
+	# Set conditions here to enable without playing reception area first
+	# Conditions.set_condition("bruise", 3, null)
+	# Conditions.set_condition("splinter", 2, null)
 	Conditions.init(self)
 
 	# Hook up a temporary comfort level indicator

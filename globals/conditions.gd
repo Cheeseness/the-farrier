@@ -1,6 +1,6 @@
 extends Node
 
-# Example: var seeds = {"bruise": {"number": 3, "variance": 1}, "wound": {"number": 2}}
+# Example: var seeds = {"bruise": {"number": 3, "variance": 1}, "wound": {"number": 2, "removed": 1}}
 var conditions = {}
 var target
 
@@ -9,18 +9,11 @@ const bruise_a_scene = preload("res://scenes/conditions/bruise/bruise_a.tscn")
 const bruise_b_scene = preload("res://scenes/conditions/bruise/bruise_b.tscn")
 
 func set_condition(name, number, variance):
-	printt("set_condition", name, number, variance)
-	conditions[name] = {}
-	conditions[name]["number"] = number
+	# TODO: variance should only be used locally, and if not 0, should update number with correct value
+	# (Otherwise, the check in is_removed() will fail.)
+	conditions[name] = {"number": number}
 	if variance:
 		conditions[name]["variance"] = variance
-	printt("seeds", conditions)
-
-# TODO: Add convenience function to get/set state of any condition
-
-# TODO: Try to add conditions to current scene based on values in seeds
-func add_conditions():
-	pass
 
 func init(foot):
 	target = foot
@@ -58,8 +51,22 @@ func at(mouse_pos):
 				return child
 	return null
 
-# Helper functions
+func remove(name):
+	# Remove one unit of named condition
+	if not name in conditions:
+		return
+	if not "removed" in conditions[name]:
+		conditions[name]["removed"] = 0
+	conditions[name]["removed"] += 1
 
+func is_removed(name):
+	# Check if all units of named condition have been removed
+	if not name in conditions \
+		or conditions[name]["removed"] != conditions[name]["number"]:
+		return false
+	return true
+
+# Helper functions
 func get_positions(foot):
 	# Return randomized list of positions
 	var temp = []
