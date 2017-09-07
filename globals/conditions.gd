@@ -3,6 +3,7 @@ extends Node
 # Example: var seeds = {"bruise": {"number": 3, "variance": 1}, "wound": {"number": 2, "removed": 1}}
 var conditions = {}
 var target
+onready var vm = get_tree().get_root().get_node("/root/vm")
 
 const splinter_scene = preload("res://scenes/conditions/splinter/splinter.tscn")
 const bruise_a_scene = preload("res://scenes/conditions/bruise/bruise_a.tscn")
@@ -58,6 +59,8 @@ func remove(name):
 	if not "removed" in conditions[name]:
 		conditions[name]["removed"] = 0
 	conditions[name]["removed"] += 1
+	# TODO: Should probably replace this with a single global
+	vm.set_global("%s_removed" % name, true)
 
 func is_removed(name):
 	# Check if all units of named condition have been removed

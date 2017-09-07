@@ -18,20 +18,17 @@ func input(viewport, event, shape_idx):
 	if event.type == InputEvent.MOUSE_BUTTON and event.button_index == BUTTON_LEFT:
 		if event.is_pressed():
 			prints("grooming_tool", Tool.selected())
-			# TEMPORARY!
 
 			if Tool.selected():
 				set_comfort_level()
 
 			var condition = Conditions.at(get_local_mouse_pos())
 
-			# TODO: Handle this in a less shitty way
 			if Tool.is("pliers") && condition && condition.get_name().find("splinter") >= 0 && not condition.is_hidden():
 				condition.set_hidden(true)
 				Conditions.remove("splinter")
-				vm.set_global("splinter_removed", true)
 				if Conditions.is_removed("splinter"):
-					vm.set_global("splinters_removed", true)
+					vm.set_global("foot_healed", true)
 
 			if Tool.is("poultice") && condition && condition.get_name().find("bruise") >= 0:
 				var animation = condition.get_node("animation")
