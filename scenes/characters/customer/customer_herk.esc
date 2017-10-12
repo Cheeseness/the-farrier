@@ -1,6 +1,10 @@
 #Herk is customer_herk and "owner" of Bern. A construction worker who handles most of the building maintenance in the village.
 
 :talk
+
+set_condition splinter 3
+set_condition bruise 2
+
 > [!customer_herk_end,!customer_herk_greeting]
 	say customer_herk "Greetings, Farrier." 
 	set_global customer_herk_greeting true

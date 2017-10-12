@@ -9,18 +9,21 @@ func global_listener(name):
 
 	if Disposition.is_trigger(name):
 		change_disposition(name)
+
 	if name == "splinter_removed":
-		if vm.get_global("splinter_removed"):
-			Tool.select(null)
-			change_disposition("decrease_disposition_small")
-			start_dialogue()
-			vm.set_global("splinter_removed", false)
+		# TODO: We might want to do this for using poultice and bandages too
+		Tool.select(null)
+		change_disposition("decrease_disposition_small")
+		start_dialogue()
+
 	if name == "dinosaur_dialogue_ended":
 		# TODO Check if we're done with all our tasks - if so, go back to reception area
-		if vm.get_global("splinters_removed"):
+		if vm.get_global("foot_healed"):
 			# Reset flag, so that it works on coming back.
 			# Not an issue if we're not just reloading the same room over and over.
-			vm.set_global("splinters_removed", false)
+			vm.set_global("foot_healed", false)
+			# Reset Conditions singleton
+			Conditions.reset()
 			go_to_reception()
 	
 func change_disposition(name):

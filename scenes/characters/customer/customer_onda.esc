@@ -1,6 +1,10 @@
 #Onda is customer_onda and "owner" of Lull.
 
 :talk
+
+set_condition splinter 3
+set_condition bruise 2
+
 > [!customer_onda_step1,!customer_onda_end]
 	say customer_onda "Greetings, Farrier."
 	say yemm "Greetings to you too, Onda."
