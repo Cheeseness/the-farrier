@@ -22,14 +22,14 @@ tracks/0/keys = {
 "values": [ true, false ]
 }
 tracks/1/type = "value"
-tracks/1/path = NodePath("anchor:transform/scale")
+tracks/1/path = NodePath(".:rect/pos")
 tracks/1/interp = 1
 tracks/1/imported = false
 tracks/1/keys = {
 "times": FloatArray( 0, 0.1, 0.15, 0.3 ),
 "transitions": FloatArray( 1, 1, 1, 1 ),
 "update": 0,
-"values": [ Vector2( 1, 1 ), Vector2( 1, 1.1 ), Vector2( 1, 1.1 ), Vector2( 1, 0 ) ]
+"values": [ Vector2( 0, 680 ), Vector2( 0, 640 ), Vector2( 0, 640 ), Vector2( 0, 1080 ) ]
 }
 
 [sub_resource type="Animation" id=2]
@@ -38,17 +38,17 @@ length = 0.75
 loop = false
 step = 0.05
 tracks/0/type = "value"
-tracks/0/path = NodePath("anchor:transform/scale")
+tracks/0/path = NodePath(".:visibility/visible")
 tracks/0/interp = 1
 tracks/0/imported = false
 tracks/0/keys = {
-"times": FloatArray( 0, 0.15, 0.2, 0.35 ),
-"transitions": FloatArray( 1, 1, 1, 1 ),
-"update": 0,
-"values": [ Vector2( 1, 0 ), Vector2( 1, 1.1 ), Vector2( 1, 1.1 ), Vector2( 1, 1 ) ]
+"times": FloatArray( 0 ),
+"transitions": FloatArray( 1 ),
+"update": 1,
+"values": [ true ]
 }
 tracks/1/type = "value"
-tracks/1/path = NodePath(".:visibility/visible")
+tracks/1/path = NodePath("anchor:visibility/visible")
 tracks/1/interp = 1
 tracks/1/imported = false
 tracks/1/keys = {
@@ -58,14 +58,14 @@ tracks/1/keys = {
 "values": [ true ]
 }
 tracks/2/type = "value"
-tracks/2/path = NodePath("anchor:visibility/visible")
+tracks/2/path = NodePath(".:rect/pos")
 tracks/2/interp = 1
 tracks/2/imported = false
 tracks/2/keys = {
-"times": FloatArray( 0 ),
-"transitions": FloatArray( 1 ),
-"update": 1,
-"values": [ true ]
+"times": FloatArray( 0, 0.15, 0.2, 0.35 ),
+"transitions": FloatArray( 1, 1, 1, 1 ),
+"update": 0,
+"values": [ Vector2( 0, 1080 ), Vector2( 0, 640 ), Vector2( 0, 640 ), Vector2( 0, 680 ) ]
 }
 
 [node name="dialog" type="Control"]
@@ -91,8 +91,6 @@ mouse_exit_shadow_color = Color( 0, 0, 0, 1 )
 
 [node name="anchor" type="Node2D" parent="."]
 
-transform/scale = Vector2( 1, 1e-05 )
-
 [node name="bg" type="TextureFrame" parent="anchor"]
 
 focus/ignore_mouse = false
@@ -102,7 +100,7 @@ size_flags/vertical = 2
 margin/left = 0.0
 margin/top = 0.0
 margin/right = 1920.0
-margin/bottom = 400.0
+margin/bottom = 440.0
 texture = ExtResource( 2 )
 expand = true
 stretch_mode = 0
