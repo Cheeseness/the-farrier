@@ -250,6 +250,9 @@ func set_condition(params):
 	var variance = params[0] if params.size() > 2 else 0
 	Conditions.set_condition(params[0], params[1], variance)
 
+func add_entry(params):
+	Journal.add_entry(params[0])
+
 ### end command
 
 func run(context):
