@@ -57,10 +57,13 @@ func show_hide_dinosaurs(customer_name):
 
 	if customer_name == "customer_onda":
 		dino = get_parent().get_node("lull")
+		Journal.set_dinosaur("Lull")
 	elif customer_name == "customer_wu":
 		dino = get_parent().get_node("krik")
+		Journal.set_dinosaur("Krik")
 	elif customer_name == "customer_herk":
 		dino = get_parent().get_node("bern")
+		Journal.set_dinosaur("Bern")
 
 	if dino:
 		dino.show()
