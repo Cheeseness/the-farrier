@@ -38,6 +38,7 @@ var commands = {
 	"game_over": { "min_args": 1, "types": [TYPE_BOOL] },
 	"set_tool": { "min_args": 1, "types": [TYPE_STRING] },
 	"set_condition": { "min_args": 2, "types": [TYPE_STRING, TYPE_INT, TYPE_INT] },
+	"add_entry": { "min_args": 1, "types": [TYPE_STRING] },
 }
 
 
