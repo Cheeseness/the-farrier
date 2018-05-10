@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=1]
+[gd_scene load_steps=10 format=2]
 
 [ext_resource path="res://globals/item_background.gd" type="Script" id=1]
 [ext_resource path="res://scenes/characters/lull/sprites/parasaur_A_angry.png" type="Texture" id=2]
@@ -19,7 +19,7 @@ animations = [ {
 
 [sub_resource type="Animation" id=2]
 
-resource/name = "angry"
+resource_name = "angry"
 length = 0.1
 loop = false
 step = 0.1
@@ -28,15 +28,15 @@ tracks/0/path = NodePath("Sprite:frame")
 tracks/0/interp = 1
 tracks/0/imported = false
 tracks/0/keys = {
-"times": FloatArray( 0 ),
-"transitions": FloatArray( 1 ),
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
 "update": 0,
 "values": [ 0 ]
 }
 
 [sub_resource type="Animation" id=3]
 
-resource/name = "annoyed"
+resource_name = "annoyed"
 length = 0.1
 loop = false
 step = 0.1
@@ -45,15 +45,15 @@ tracks/0/path = NodePath("Sprite:frame")
 tracks/0/interp = 1
 tracks/0/imported = false
 tracks/0/keys = {
-"times": FloatArray( 0 ),
-"transitions": FloatArray( 1 ),
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
 "update": 0,
 "values": [ 1 ]
 }
 
 [sub_resource type="Animation" id=4]
 
-resource/name = "content"
+resource_name = "content"
 length = 0.1
 loop = false
 step = 0.1
@@ -62,15 +62,15 @@ tracks/0/path = NodePath("Sprite:frame")
 tracks/0/interp = 1
 tracks/0/imported = false
 tracks/0/keys = {
-"times": FloatArray( 0 ),
-"transitions": FloatArray( 1 ),
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
 "update": 0,
 "values": [ 2 ]
 }
 
 [sub_resource type="Animation" id=5]
 
-resource/name = "growling"
+resource_name = "growling"
 length = 0.1
 loop = false
 step = 0.1
@@ -79,15 +79,15 @@ tracks/0/path = NodePath("Sprite:frame")
 tracks/0/interp = 1
 tracks/0/imported = false
 tracks/0/keys = {
-"times": FloatArray( 0 ),
-"transitions": FloatArray( 1 ),
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
 "update": 0,
 "values": [ 3 ]
 }
 
 [sub_resource type="Animation" id=6]
 
-resource/name = "happy"
+resource_name = "happy"
 length = 0.1
 loop = false
 step = 0.1
@@ -96,15 +96,15 @@ tracks/0/path = NodePath("Sprite:frame")
 tracks/0/interp = 1
 tracks/0/imported = false
 tracks/0/keys = {
-"times": FloatArray( 0 ),
-"transitions": FloatArray( 1 ),
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
 "update": 0,
 "values": [ 4 ]
 }
 
 [sub_resource type="Animation" id=7]
 
-resource/name = "neutral"
+resource_name = "neutral"
 length = 0.1
 loop = false
 step = 0.1
@@ -113,20 +113,20 @@ tracks/0/path = NodePath("Sprite:frame")
 tracks/0/interp = 1
 tracks/0/imported = false
 tracks/0/keys = {
-"times": FloatArray( 0 ),
-"transitions": FloatArray( 1 ),
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
 "update": 0,
 "values": [ 5 ]
 }
 
 [node name="lull" type="Area2D"]
 
-input/pickable = true
+input_pickable = true
 gravity_vec = Vector2( 0, 1 )
 gravity = 98.0
 linear_damp = 0.1
 angular_damp = 1.0
-script/script = ExtResource( 1 )
+script = ExtResource( 1 )
 animations = null
 speed = 300
 scale_on_map = false
@@ -154,18 +154,16 @@ frame = 5
 
 [node name="animation" type="AnimationPlayer" parent="."]
 
-playback/process_mode = 1
-playback/default_blend_time = 0.0
-root/root = NodePath("..")
+playback_process_mode = 1
+playback_default_blend_time = 0.0
+root_node = NodePath("..")
 anims/angry = SubResource( 2 )
 anims/annoyed = SubResource( 3 )
 anims/content = SubResource( 4 )
 anims/growling = SubResource( 5 )
 anims/happy = SubResource( 6 )
 anims/neutral = SubResource( 7 )
-playback/active = true
-playback/speed = 1.0
+playback_active = true
+playback_speed = 1.0
 blend_times = [  ]
 autoplay = ""
-
-

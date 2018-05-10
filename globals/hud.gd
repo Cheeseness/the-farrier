@@ -54,7 +54,7 @@ func _ready():
 		var p = get_parent().get_parent().get_parent()
 		for i in range(0, p.get_child_count()):
 			var c = p.get_child(i)
-			if (c extends preload("res://globals/background.gd")):
+			if (c is preload("res://globals/background.gd")):
 				background = c
 				break
 				
@@ -64,4 +64,5 @@ func _ready():
 	
 
 	set_tooltip("")
+
 

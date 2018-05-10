@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=1]
+[gd_scene load_steps=9 format=2]
 
 [ext_resource path="res://ui/cursors.gd" type="Script" id=1]
 [ext_resource path="res://scenes/rooms/test/sprites/can.png" type="Texture" id=2]
@@ -12,8 +12,8 @@
 
 [node name="cursors" type="Node2D"]
 
-visibility/visible = false
-script/script = ExtResource( 1 )
+visible = false
+script = ExtResource( 1 )
 
 [node name="can" type="Sprite" parent="."]
 
@@ -34,7 +34,7 @@ texture = ExtResource( 5 )
 
 [node name="pliers" type="Sprite" parent="."]
 
-transform/pos = Vector2( -18.044, 39.0141 )
+position = Vector2( -18.044, 39.0141 )
 texture = ExtResource( 6 )
 
 [node name="poultice" type="Sprite" parent="."]
@@ -48,5 +48,3 @@ texture = ExtResource( 8 )
 [node name="water" type="Sprite" parent="."]
 
 texture = ExtResource( 9 )
-
-

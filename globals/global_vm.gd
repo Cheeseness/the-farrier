@@ -129,7 +129,7 @@ func drag_end():
 		printt("********** dragging ends")
 		if hover_object != null && !hover_object.inventory:
 			printt("calling clicked")
-			get_tree().call_group(0, "game", "clicked", hover_object, hover_object.get_pos())
+			get_tree().call_group(0, "game", "clicked", hover_object, hover_object.get_position())
 			get_tree().call_group(0, "game", "clear_pending_command")
 		elif hover_object == null:
 			get_tree().call_group(0, "game", "clear_pending_command")
@@ -163,13 +163,13 @@ func update_camera(time):
 			var obj = get_object(n)
 			if obj != null:
 				count += 1
-				pos += obj.get_pos()
+				pos += obj.get_position()
 		if count > 0:
 			pos = pos / count
 	else:
-		pos = target.get_pos()
+		pos = target.get_position()
 
-	var cpos = camera.get_pos()
+	var cpos = camera.get_position()
 
 	if cpos != pos:
 		#return
@@ -177,16 +177,16 @@ func update_camera(time):
 		var dif = pos - cpos
 		var dist = cam_speed * time
 		if dist > dif.length() || cam_speed == 0:
-			camera.set_pos(pos)
+			camera.set_position(pos)
 			#return
 		else:
-			camera.set_pos(cpos + dif.normalized() * dist)
+			camera.set_position(cpos + dif.normalized() * dist)
 			pos = cpos + dif.normalized() * dist
 
 	if Globals.get("platform/use_custom_camera"):
 		var half = game_size / 2
 		pos = _adjust_camera(pos)
-		var t = Matrix32()
+		var t = Transform2D()
 		t[2] = (-(pos - half))
 
 		get_node("/root").set_canvas_transform(t)
@@ -194,15 +194,15 @@ func update_camera(time):
 func _adjust_camera(pos):
 	var half = game_size / 2
 
-	if pos.x + half.x > camera_limits.pos.x + camera_limits.size.x:
-		pos.x = (camera_limits.pos.x + camera_limits.size.x) - half.x
-	if pos.x - half.x < camera_limits.pos.x:
-		pos.x = camera_limits.pos.x + half.x
+	if pos.x + half.x > camera_limits.position.x + camera_limits.size.x:
+		pos.x = (camera_limits.position.x + camera_limits.size.x) - half.x
+	if pos.x - half.x < camera_limits.position.x:
+		pos.x = camera_limits.position.x + half.x
 
-	if pos.y + half.y > camera_limits.pos.y + camera_limits.size.y:
-		pos.y = (camera_limits.pos.y + camera_limits.size.y) - half.y
-	if pos.y - half.y < camera_limits.pos.y:
-		pos.y = camera_limits.pos.y + half.y
+	if pos.y + half.y > camera_limits.position.y + camera_limits.size.y:
+		pos.y = (camera_limits.position.y + camera_limits.size.y) - half.y
+	if pos.y - half.y < camera_limits.position.y:
+		pos.y = camera_limits.position.y + half.y
 
 	return pos
 
@@ -378,7 +378,7 @@ func check_event_queue(time):
 		if event_queue[i][0] <= 0:
 			var obj = get_object(event_queue[i][1])
 			run_event(obj.event_table[event_queue[i][2]])
-			event_queue.remove(i)
+			event_queue.remove_and_collide(i)
 			break
 
 func _process(time):
@@ -391,7 +391,7 @@ func run_top():
 	var top = stack[stack.size()-1]
 	var ret = level.resume(top)
 	if ret == state_return || ret == state_break:
-		stack.remove(stack.size()-1)
+		stack.remove_and_collide(stack.size()-1)
 	return ret
 
 func jump(p_label):
@@ -404,10 +404,10 @@ func jump(p_label):
 		else:
 			if top.break_stop || stack.size() == 1:
 				report_errors("", ["Label not found: "+p_label+", can't jump"])
-				stack.remove(stack.size()-1)
+				stack.remove_and_collide(stack.size()-1)
 				break
 			else:
-				stack.remove(stack.size()-1)
+				stack.remove_and_collide(stack.size()-1)
 
 func run():
 	if stack.size() == 0:
@@ -418,8 +418,8 @@ func run():
 			return
 		if ret == state_break:
 			while stack.size() > 0 && !(stack[stack.size()-1].break_stop):
-				stack.remove(stack.size()-1)
-			stack.remove(stack.size()-1)
+				stack.remove_and_collide(stack.size()-1)
+			stack.remove_and_collide(stack.size()-1)
 	root.set_input_catch(false)
 	loading_game = false
 
@@ -478,7 +478,7 @@ func spawn(params):
 	if params.size() > 1:
 		var obj = get_object(params[1])
 		if obj:
-			scene.set_pos(obj.get_global_pos());
+			scene.set_position(obj.get_global_position());
 		else:
 			report_errors("", ["Global id "+params[1]+" not found for spawn"])
 	return state_return
@@ -492,12 +492,12 @@ func set_pause(p_pause):
 	emit_signal("paused", p_pause)
 
 func is_game_active():
-	return root.get_current_scene() != null && (root.get_current_scene() extends preload("res://globals/scene.gd"))
+	return root.get_current_scene() != null && (root.get_current_scene() is preload("res://globals/scene.gd"))
 
 func check_autosave():
 	if get_global("save_disabled"):
 		return
-	if root.get_current_scene() == null || !(root.get_current_scene() extends preload("res://globals/scene.gd")):
+	if root.get_current_scene() == null || !(root.get_current_scene() is preload("res://globals/scene.gd")):
 		return
 	var time = OS.get_ticks_msec()
 	if autosave_pending || (time - last_autosave) > AUTOSAVE_TIME_MS:
@@ -591,7 +591,7 @@ func save():
 	#	if k == "player" || objects[k] == null:
 	#		continue
 	#	if objects[k].moved:
-	#		var pos = objects[k].get_pos()
+	#		var pos = objects[k].get_position()
 	#		ret.append("teleport_pos " + k + " " + str(int(pos.x)) + " " + str(int(pos.y)) + "\n")
 
 	ret.append("\n")
@@ -600,7 +600,7 @@ func save():
 	ret.append("change_scene " + root.get_current_scene().get_filename() + "\n")
 
 	if root.get_current_scene().has_node("player"):
-		var pos = root.get_current_scene().get_node("player").get_global_pos()
+		var pos = root.get_current_scene().get_node("player").get_global_position()
 		ret.append("teleport_pos player " + str(pos.x) + " " + str(pos.y) + "\n")
 
 	if cam_target != null:
@@ -676,7 +676,7 @@ func _notification(what):
 		quit_request()
 
 func quit_request():
-	if root.menu_stack.size() > 0 && (root.menu_stack[root.menu_stack.size()-1] extends preload("res://ui/confirm_popup.gd")):
+	if root.menu_stack.size() > 0 && (root.menu_stack[root.menu_stack.size()-1] is preload("res://ui/confirm_popup.gd")):
 		return
 	#var ConfPopup = get_node("/root/main").load_menu("res://ui/confirm_popup.tscn")
 	#ConfPopup.PopupConfirmation("KEY_QUIT_GAME",self,"","_quit_game")

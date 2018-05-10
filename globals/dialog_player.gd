@@ -26,3 +26,4 @@ func config(params):
 
 func _ready():
 	add_to_group("dialog")
+

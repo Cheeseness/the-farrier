@@ -30,18 +30,18 @@ var event_table = {}
 #	if name in self:
 #		self[name] = val
 
-func get_interact_pos():
+func get_interact_position():
 	if has_node("interact_pos"):
-		return get_node("interact_pos").get_global_pos()
+		return get_node("interact_pos").get_global_position()
 	else:
-		return get_global_pos()
+		return get_global_position()
 
 func anim_finished():
 	if typeof(anim_notify) != typeof(null):
 		vm.finished(anim_notify)
 		anim_notify = null
 
-	if typeof(anim_scale_override) != typeof(null) && self extends Node2D:
+	if typeof(anim_scale_override) != typeof(null) && self is Node2D:
 		set_scale(get_scale() * anim_scale_override)
 		anim_scale_override = null
 
@@ -87,9 +87,9 @@ func mouse_exit():
 	_check_focus(false, false)
 
 func input(event):
-	if event.type == InputEvent.MOUSE_BUTTON || event.is_action("ui_accept"):
+	if event is InputEventMouseButton || event.is_action("ui_accept"):
 		if event.is_pressed():
-			get_tree().call_group(0, "game", "clicked", self, get_pos())
+			get_tree().call_group(0, "game", "clicked", self, get_position())
 			_check_focus(true, true)
 		else:
 			_check_focus(true, false)
@@ -124,7 +124,7 @@ func get_drag_data(point):
 	var c = Control.new()
 	var it = duplicate()
 	it.set_script(null)
-	it.set_pos(Vector2(-50, -80))
+	it.set_position(Vector2(-50, -80))
 	c.add_child(it)
 	c.show()
 	it.show()
@@ -148,7 +148,7 @@ func drop_data(point, data):
 	if !inventory:
 		return
 	
-	get_tree().call_group(0, "game", "clicked", self, get_pos())
+	get_tree().call_group(0, "game", "clicked", self, get_position())
 	vm.drag_end()
 
 
@@ -166,7 +166,7 @@ func anim_get_ph_paths(p_anim):
 	var ret = []
 	for p in placeholders[p_anim]:
 		var n = get_node(p)
-		if !(n extends InstancePlaceholder):
+		if !(n is InstancePlaceholder):
 			continue
 		ret.push_back(n.get_instance_path())
 	return ret
@@ -182,14 +182,14 @@ func play_anim(p_anim, p_notify = null, p_reverse = false, p_flip = null):
 	if p_anim in placeholders:
 		for npath in placeholders[p_anim]:
 			var node = get_node(npath)
-			if !(node extends InstancePlaceholder):
+			if !(node is InstancePlaceholder):
 				continue
 			var path = node.get_instance_path()
 			var res = vm.res_cache.get_resource(path)
 			node.replace_by_instance(res)
 			_find_sprites(get_node(npath))
 
-	if p_flip != null && self extends Node2D:
+	if p_flip != null && self is Node2D:
 		var scale = get_scale()
 		set_scale(scale * p_flip)
 		anim_scale_override = p_flip
@@ -242,27 +242,27 @@ func set_state(p_state, p_force = false):
 
 
 func teleport(obj):
-	set_pos(obj.get_global_pos())
+	set_position(obj.get_global_position())
 	_update_terrain()
 
-func teleport_pos(x, y):
-	set_pos(Vector2(x, y))
+func teleport_position(x, y):
+	set_position(Vector2(x, y))
 	_update_terrain()
 
 func _update_terrain():
-	if self extends Node2D && !use_custom_z:
-		set_z(get_pos().y)
+	if self is Node2D && !use_custom_z:
+		set_z(get_position().y)
 	if !scale_on_map && !light_on_map:
 		return
 	print("updating terrain!")
-	var pos = get_pos()
+	var pos = get_position()
 	var terrain = get_node("../terrain")
 	if terrain == null:
 		return
 	var color = terrain.get_terrain(pos)
 	var scale = terrain.get_scale_range(color.b)
 
-	if scale_on_map && (self extends Node2D) && scale != get_scale():
+	if scale_on_map && (self is Node2D) && scale != get_scale():
 		var color = terrain.get_terrain(pos)
 		var scale = terrain.get_scale_range(color.b)
 		set_scale(scale)
@@ -273,12 +273,12 @@ func _update_terrain():
 		modulate(color)
 
 func _check_bounds():
-	#printt("checking bouds for pos ", get_pos(), terrain.is_solid(get_pos()))
+	#printt("checking bouds for pos ", get_position(), terrain.is_solid(get_position()))
 	if !scale_on_map:
 		return
 	if !get_tree().is_editor_hint():
 		return
-	if terrain.is_solid(get_pos()):
+	if terrain.is_solid(get_position()):
 		if has_node("terrain_icon"):
 			get_node("terrain_icon").hide()
 	else:
@@ -346,3 +346,4 @@ func _ready():
 	call_deferred("setup_ui_anim")
 
 	call_deferred("_update_terrain")
+

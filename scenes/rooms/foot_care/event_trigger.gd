@@ -49,7 +49,7 @@ func go_to_reception():
 
 # Function is first started by timer to dodge race conditions
 func start_dialogue():
-	get_tree().call_group(0, "game", "clicked", dino, dino.get_pos())
+	get_tree().call_group(0, "game", "clicked", dino, dino.get_position())
 
 func show_hide_dinosaurs(customer_name):
 	for n in ["lull", "krik", "bern"]:
@@ -81,3 +81,4 @@ func _ready():
 	if dino:
 		prints("has active dinosaur:", dino.get_name())
 		dino.get_node("Sprite").set_frame(Disposition.get_frame())
+

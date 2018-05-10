@@ -46,7 +46,7 @@ func menu_open(menu):
 func menu_close(p_menu):
 	if menu_stack.size() == 0 || menu_stack[menu_stack.size()-1] != p_menu:
 		print("***** warning! closing unknown menu?")
-	menu_stack.remove(menu_stack.size() - 1)
+	menu_stack.remove_and_collide(menu_stack.size() - 1)
 
 	if menu_stack.size() == 0:
 		vm.set_pause(false)
@@ -99,7 +99,7 @@ func check_screen():
 	get_tree().get_root().set_size_override(true,Vector2(game_size.x,height))
 	get_tree().get_root().set_size_override_stretch(true)
 
-	var m = Matrix32()
+	var m = Transform2D()
 	var ofs = Vector2(0, (height - game_size.y) / 2)
 	m[2] = ofs
 	get_tree().get_root().set_global_canvas_transform(m)
@@ -152,3 +152,4 @@ func _ready():
 	Globals.load_resource_pack("res://scripts.zip")
 
 	call_deferred("load_telon")
+

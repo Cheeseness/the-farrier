@@ -1,4 +1,4 @@
-extends TextureFrame
+extends TextureRect
 
 ########
 #This script controls a slideshow style background with text dialogue
@@ -141,11 +141,11 @@ func _process(delta):
 			var label = Label.new()
 			label.set_size(Vector2(800, 100))
 			label.set_custom_minimum_size(Vector2(800, 100))
-			label.set_pos(Vector2(960 - 400, 540))
+			label.set_position(Vector2(960 - 400, 540))
 			label.set_autowrap(true)
 			if has_node(pending_lines[line_start][0]):
 				var anchor = get_node(pending_lines[line_start][0])
-				label.set_pos(Vector2(anchor.get_pos()[0] - 400, anchor.get_pos()[1]))
+				label.set_position(Vector2(anchor.get_position()[0] - 400, anchor.get_position()[1]))
 			label.set_valign(Label.VALIGN_BOTTOM)
 			label.set_align(Label.ALIGN_CENTER)
 			label.set_text(pending_lines[line_start][1])

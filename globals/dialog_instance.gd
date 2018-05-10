@@ -96,10 +96,10 @@ func init(p_params, p_context, p_intro, p_outro):
 	if !fixed_pos:
 		var pos
 		if character.has_node("dialog_pos"):
-			pos = character.get_node("dialog_pos").get_global_pos()
+			pos = character.get_node("dialog_pos").get_global_position()
 		else:
-			pos = character.get_pos()
-		set_pos(pos)
+			pos = character.get_position()
+		set_position(pos)
 
 	if has_node("anchor/avatars"):
 		var avatars = get_node("anchor/avatars")
@@ -143,7 +143,7 @@ func init(p_params, p_context, p_intro, p_outro):
 	label.set_text(text)
 	label.set_visible_characters(0)
 
-	if self extends Node2D:
+	if self is Node2D:
 		set_z(1)
 
 	setup_speech(text_id)
@@ -163,7 +163,7 @@ func setup_speech(tid):
 		printt("*** unable to load speech stream ", fname)
 		return
 
-	var player = StreamPlayer.new()
+	var player = AudioStreamPlayer.new()
 	player.set_name("speech_player")
 	add_child(player)
 	player.set_stream(speech_stream)
@@ -223,3 +223,4 @@ func _ready():
 		speech_language = default_speech_language
 
 	vm.connect("paused", self, "game_paused")
+

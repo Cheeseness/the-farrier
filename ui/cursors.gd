@@ -29,7 +29,7 @@ func set_cursor(name):
 	Input.set_custom_mouse_cursor(texture, texture.get_size() / 2)
 
 func _input(event):
-	if event.type == InputEvent.MOUSE_BUTTON and event.button_index == BUTTON_RIGHT and event.is_pressed():
+	if event is InputEventMouseButton and event.button_index == BUTTON_RIGHT and event.is_pressed():
 		# TODO: Figure out why is this called twice.
 		select(null)
 

@@ -28,7 +28,7 @@ func _input(event):
 		get_tree().call_group(0, "events", "skipped")
 
 func input_event(event):
-	if event.type == InputEvent.MOUSE_BUTTON && event.pressed && event.button_index == BUTTON_LEFT:
+	if event is InputEventMouseButton && event.pressed && event.button_index == BUTTON_LEFT:
 		get_tree().call_group(0, "events", "skipped")
 
 func game_cleared():
@@ -65,7 +65,7 @@ func global_changed(name):
 	printt("is item ", itemid, item)
 
 	item_anim_holder.add_child(item)
-	item.set_pos(Vector2(0, 0))
+	item.set_position(Vector2(0, 0))
 	item.show()
 	item_anim.play("new_item")
 
@@ -108,7 +108,7 @@ func rand_seek(p_node = null):
 	var pos = len * r
 	printt("seek to ", pos, r)
 
-	node.seek_pos(pos)
+	node.seek_position(pos)
 	if !node.is_playing():
 		node.play()
 
@@ -121,4 +121,5 @@ func _ready():
 
 	call_deferred("setup_vm")
 	
+
 

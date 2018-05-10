@@ -29,8 +29,9 @@ func rand_seek(p_node = null):
 
 	#if !node.is_playing():
 	node.play(pos)
-	#node.seek_pos(pos)
+	#node.seek_position(pos)
 
 func _ready():
 	add_to_group("game")
+
 

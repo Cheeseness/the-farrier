@@ -76,7 +76,7 @@ func clicked(obj, pos):
 		#action_menu.stop()
 		if action == "walk":
 
-			#click.set_pos(pos)
+			#click.set_position(pos)
 			#click_anim.play("click")
 			if player == self:
 				return
@@ -111,10 +111,10 @@ func spawn_action_menu(obj):
 	action_menu.show()
 	var pos
 	if obj.has_node("action_menu_pos"):
-		pos = obj.get_node("action_menu_pos").get_global_pos()
+		pos = obj.get_node("action_menu_pos").get_global_position()
 	else:
-		pos = obj.get_global_pos()
-	action_menu.set_pos(pos)
+		pos = obj.get_global_position()
+	action_menu.set_position(pos)
 	action_menu.start(obj)
 	#obj.grab_focus()
 
@@ -176,13 +176,13 @@ func fallback(obj, action, param = null):
 func scene_input(event):
 	if event.is_action("quick_save") && event.is_pressed() && !event.is_echo():
 		vm.request_autosave()
-	if event.type == InputEvent.JOYSTICK_MOTION:
+	if event is InputEventJoypadMotion:
 		if event.axis == 0 || event.axis == 1:
 			joystick_mode = true
 			check_joystick = true
 			set_process(true)
 
-	if event.type == InputEvent.MOUSE_BUTTON && !event.is_pressed() && event.button_index == BUTTON_LEFT:
+	if event is InputEventMouseButton && !event.is_pressed() && event.button_index == BUTTON_LEFT:
 		if vm.drag_object != null:
 			vm.drag_end()
 
@@ -209,7 +209,7 @@ func _process(time):
 		var objs = vm.get_registered_objects()
 		var mobj = null
 		var mdist
-		var pos = player.get_pos()
+		var pos = player.get_position()
 		for key in objs:
 			if key == "player":
 				continue
@@ -219,7 +219,7 @@ func _process(time):
 				continue
 			if objs[key].tooltip == "":
 				continue
-			var objpos = objs[key].get_interact_pos()
+			var objpos = objs[key].get_interact_position()
 			var odist = pos.distance_squared_to(objpos)
 			if typeof(mobj) == typeof(null):
 				mobj = objs[key]
@@ -247,7 +247,7 @@ func _process(time):
 		check_joystick = false
 		return
 
-	player.walk_to(player.get_pos() + dir * 20)
+	player.walk_to(player.get_position() + dir * 20)
 
 func set_inventory_enabled(p_enabled):
 	inventory_enabled = p_enabled
@@ -265,16 +265,16 @@ func set_camera_limits():
 		var area = Rect2()
 		for i in range(0, p.get_child_count()):
 			var c = p.get_child(i)
-			if !(c extends preload("res://globals/background.gd")):
+			if !(c is preload("res://globals/background.gd")):
 				continue
-			var pos = c.get_global_pos()
+			var pos = c.get_global_position()
 			var size = c.get_size()
 			area = area.expand(pos)
 			area = area.expand(pos + size)
 
-		camera.set_limit(MARGIN_LEFT, area.pos.x)
-		camera.set_limit(MARGIN_RIGHT, area.pos.x + area.size.x)
-		var cam_top = area.pos.y # - get_node("/root/main").screen_ofs.y
+		camera.set_limit(MARGIN_LEFT, area.position.x)
+		camera.set_limit(MARGIN_RIGHT, area.position.x + area.size.x)
+		var cam_top = area.position.y # - get_node("/root/main").screen_ofs.y
 		camera.set_limit(MARGIN_TOP, cam_top)
 		camera.set_limit(MARGIN_BOTTOM, cam_top + area.size.y + get_node("/root/main").screen_ofs.y * 2)
 
@@ -285,10 +285,10 @@ func set_camera_limits():
 		printt("setting camera limits from scene ", area)
 		cam_limit = area
 	else:
-		camera.set_limit(MARGIN_LEFT, camera_limits.pos.x)
-		camera.set_limit(MARGIN_RIGHT, camera_limits.pos.x + camera_limits.size.x)
-		camera.set_limit(MARGIN_TOP, camera_limits.pos.y)
-		camera.set_limit(MARGIN_BOTTOM, camera_limits.pos.y + camera_limits.size.y + get_node("/root/main").screen_ofs.y * 2)
+		camera.set_limit(MARGIN_LEFT, camera_limits.position.x)
+		camera.set_limit(MARGIN_RIGHT, camera_limits.position.x + camera_limits.size.x)
+		camera.set_limit(MARGIN_TOP, camera_limits.position.y)
+		camera.set_limit(MARGIN_BOTTOM, camera_limits.position.y + camera_limits.size.y + get_node("/root/main").screen_ofs.y * 2)
 		printt("setting camera limits from parameter ", camera_limits)
 
 	camera.set_offset(get_node("/root/main").screen_ofs * 2)
@@ -326,4 +326,5 @@ func _ready():
 
 	call_deferred("set_camera_limits")
 	call_deferred("load_hud")
+
 

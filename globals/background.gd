@@ -3,9 +3,9 @@ extends Control
 export var action = "walk"
 
 func input(event):
-	if event.type == InputEvent.MOUSE_BUTTON && event.pressed:
+	if event is InputEventMouseButton && event.pressed:
 		if (event.button_index == 1):
-			get_tree().call_group(0, "game", "clicked", self, get_pos() + Vector2(event.x, event.y))
+			get_tree().call_group(0, "game", "clicked", self, get_position() + Vector2(event.x, event.y))
 		elif (event.button_index == 2):
 			emit_right_click()
 
@@ -21,3 +21,4 @@ func _ready():
 
 func emit_right_click():
 	emit_signal("right_click_on_bg")
+

@@ -5,3 +5,4 @@ func show_credits():
 
 func _ready():
 	get_node("/root/main").load_menu(Globals.get("ui/main_menu"))
+

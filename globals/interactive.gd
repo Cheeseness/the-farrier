@@ -41,7 +41,7 @@ func _get_dir(angle):
 	return dir
 
 func walk_stop(pos):
-	set_pos(pos)
+	set_position(pos)
 	walk_path = []
 
 	if animation != null && animation.is_playing():
@@ -56,10 +56,10 @@ func walk_stop(pos):
 		walk_context = null
 
 func walk_to(pos, context = null):
-	walk_path = terrain.get_path(get_pos(), pos)
+	walk_path = terrain.get_path(get_position(), pos)
 	walk_context = context
 	if walk_path.size() == 0:
-		walk_stop(get_pos())
+		walk_stop(get_position())
 		set_process(false)
 		task = null
 		return
@@ -83,7 +83,7 @@ func _process(time):
 
 	if task == "walk":
 		var to_walk = speed * last_scale.x * time
-		var pos = get_pos()
+		var pos = get_position()
 		var old_pos = pos
 		var next
 		if walk_path.size() > 0:
@@ -109,7 +109,7 @@ func _process(time):
 					return
 
 		var angle = old_pos.angle_to_point(pos)
-		set_pos(pos)
+		set_position(pos)
 
 		last_dir = _get_dir(angle)
 
@@ -122,7 +122,7 @@ func _process(time):
 		_update_terrain()
 
 func _find_sprites(p = null):
-	if p.is_type("Sprite") || p.is_type("AnimatedSprite") || p.is_type("TextureFrame") || p.is_type("TextureButton"):
+	if p.is_type("Sprite") || p.is_type("AnimatedSprite") || p.is_type("TextureRect") || p.is_type("TextureButton"):
 		sprites.push_back(p)
 	for i in range(0, p.get_child_count()):
 		_find_sprites(p.get_child(i))
@@ -138,3 +138,4 @@ func _ready():
 	if has_node("animation"):
 		animation = get_node("animation")
 	vm = get_node("/root/vm")
+

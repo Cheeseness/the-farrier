@@ -45,3 +45,4 @@ func start():
 	if Globals.has_singleton("GameCenter"):
 		GameCenter = Globals.get_singleton("GameCenter")
 		iOS = Globals.get_singleton("iOS")
+

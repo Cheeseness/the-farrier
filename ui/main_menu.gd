@@ -9,7 +9,7 @@ func load_autosave():
 	vm.load_autosave()
 
 func can_continue():
-	return (root.get_current_scene() extends preload("res://globals/scene.gd")) || vm.save_data.autosave_available()
+	return (root.get_current_scene() is preload("res://globals/scene.gd")) || vm.save_data.autosave_available()
 
 func button_clicked():
 	# play a clicking sound here?
@@ -17,7 +17,7 @@ func button_clicked():
 
 func newgame_pressed():
 	button_clicked()
-	if root.get_current_scene() extends preload("res://globals/scene.gd"):
+	if root.get_current_scene() is preload("res://globals/scene.gd"):
 		confirm_popup = get_node("/root/main").load_menu("res://ui/confirm_popup.tscn")
 		confirm_popup.start("UI_NEW_GAME_CONFIRM",self,"start_new_game")
 	else:
@@ -30,7 +30,7 @@ func start_new_game(p_confirm):
 
 func continue_pressed():
 	button_clicked()
-	if root.get_current_scene() extends preload("res://globals/scene.gd"):
+	if root.get_current_scene() is preload("res://globals/scene.gd"):
 		root.menu_collapse()
 	else:
 		if vm.continue_enabled:
@@ -54,7 +54,7 @@ func close():
 
 func input(event):
 	if event.is_pressed() && !event.is_echo() && event.is_action("menu_request"):
-		if root.get_current_scene() extends preload("res://globals/scene.gd"):
+		if root.get_current_scene() is preload("res://globals/scene.gd"):
 			close()
 
 func menu_collapsed():
@@ -119,5 +119,6 @@ func _ready():
 
 	if !Globals.get("platform/exit_button"):
 		get_node("exit").hide()
+
 
 

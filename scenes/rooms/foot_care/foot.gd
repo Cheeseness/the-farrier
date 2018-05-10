@@ -15,18 +15,18 @@ func set_comfort_level(increase=true):
 func input(viewport, event, shape_idx):
 	# TODO: Distinguish between clicks and swipes
 	# TODO: Block action if comfort level of dino is too low
-	if event.type == InputEvent.MOUSE_BUTTON and event.button_index == BUTTON_LEFT:
+	if event is InputEventMouseButton and event.button_index == BUTTON_LEFT:
 		if event.is_pressed():
 			prints("grooming_tool", Tool.selected())
 
 			if Tool.selected():
 				set_comfort_level()
 
-			var condition = Conditions.at(get_local_mouse_pos())
+			var condition = Conditions.at(get_local_mouse_position())
 
 			if Tool.is("pliers") && condition && condition.get_name().find("splinter") >= 0 && not condition.is_hidden():
-				condition.set_hidden(true)
-				Conditions.remove("splinter")
+				condition.visible = !(true)
+				Conditions.remove_and_collide("splinter")
 				if Conditions.is_removed("splinter"):
 					vm.set_global("foot_healed", true)
 
@@ -35,7 +35,7 @@ func input(viewport, event, shape_idx):
 				if animation.get_current_animation() != "poultice":
 					animation.play("poultice")
 					# Bruises aren't actually removed at this stage, but poultice has been applied
-					Conditions.remove("bruise")
+					Conditions.remove_and_collide("bruise")
 
 			if Tool.is("bandage") && Conditions.is_removed("bruise") && bandage_applied < 3:
 				bandage_applied += 1
@@ -58,3 +58,4 @@ func _ready():
 	# TODO Change facial expression instead
 	comfort["indicator"] = get_parent().get_node("comfort_indicator")
 	comfort["indicator"].set_text("Level: 0")
+

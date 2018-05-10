@@ -34,12 +34,12 @@ func set_active(p_active):
 		hide()
 
 func walk_to(pos, context = null):
-	walk_path = terrain.get_path(get_pos(), pos)
+	walk_path = terrain.get_path(get_position(), pos)
 	walk_context = context
 	if walk_path.size() == 0:
 		task = null
 		params_queue = null
-		walk_stop(get_pos())
+		walk_stop(get_position())
 		set_process(false)
 		return
 	walk_destination = walk_path[walk_path.size()-1]
@@ -95,7 +95,7 @@ func anim_get_ph_paths(p_anim):
 	var ret = []
 	for p in placeholders[p_anim]:
 		var n = get_node(p)
-		if !(n extends InstancePlaceholder):
+		if !(n is InstancePlaceholder):
 			continue
 		ret.push_back(n.get_instance_path())
 	return ret
@@ -108,7 +108,7 @@ func play_anim(p_anim, p_notify = null, p_reverse = false, p_flip = null):
 	if p_anim in placeholders:
 		for npath in placeholders[p_anim]:
 			var node = get_node(npath)
-			if !(node extends InstancePlaceholder):
+			if !(node is InstancePlaceholder):
 				continue
 			var path = node.get_instance_path()
 			var res = vm.res_cache.get_resource(path)
@@ -143,10 +143,10 @@ func play_anim(p_anim, p_notify = null, p_reverse = false, p_flip = null):
 func interact(p_params):
 	var pos
 	if p_params[0].has_node("interact_pos"):
-		pos = p_params[0].get_node("interact_pos").get_global_pos()
+		pos = p_params[0].get_node("interact_pos").get_global_position()
 	else:
-		pos = p_params[0].get_global_pos()
-	if !telekinetic && get_global_pos().distance_to(pos) > 10:
+		pos = p_params[0].get_global_position()
+	if !telekinetic && get_global_position().distance_to(pos) > 10:
 		walk_to(pos)
 		params_queue = p_params
 	else:
@@ -158,7 +158,7 @@ func interact(p_params):
 		get_tree().call_group(0, "game", "interact", p_params)
 
 func walk_stop(pos):
-	set_pos(pos)
+	set_position(pos)
 	walk_path = []
 	task = null
 	set_process(false)
@@ -207,8 +207,8 @@ func _editor_transform_changed():
 	_check_bounds()
 
 func _check_bounds():
-	#printt("checking bouds for pos ", get_pos(), terrain.is_solid(get_pos()))
-	if terrain.is_solid(get_pos()):
+	#printt("checking bouds for pos ", get_position(), terrain.is_solid(get_position()))
+	if terrain.is_solid(get_position()):
 		if has_node("terrain_icon"):
 			get_node("terrain_icon").hide()
 	else:
@@ -221,7 +221,7 @@ func _check_bounds():
 		get_node("terrain_icon").show()
 
 func _update_terrain():
-	var pos = get_pos()
+	var pos = get_position()
 	set_z(pos.y)
 	var color = terrain.get_terrain(pos)
 	var scale = terrain.get_scale_range(color.b)
@@ -236,7 +236,7 @@ func _update_terrain():
 
 func _process(time):
 	if task == "walk":
-		var pos = get_pos()
+		var pos = get_position()
 		var old_pos = pos
 		var next
 		if walk_path.size() > 1:
@@ -266,7 +266,7 @@ func _process(time):
 		pos = new_pos
 
 		var angle = old_pos.angle_to_point(pos)
-		set_pos(pos)
+		set_position(pos)
 
 		last_dir = _get_dir(angle)
 
@@ -285,18 +285,18 @@ func teleport(obj):
 
 	var pos
 	if obj.has_node("interact_pos"):
-		pos = obj.get_node("interact_pos").get_global_pos()
+		pos = obj.get_node("interact_pos").get_global_position()
 	else:
-		pos = obj.get_global_pos()
+		pos = obj.get_global_position()
 
-	set_pos(pos)
+	set_position(pos)
 	_update_terrain()
 
 func set_state(name):
 	pass
 
-func teleport_pos(x, y):
-	set_pos(Vector2(x, y))
+func teleport_position(x, y):
+	set_position(Vector2(x, y))
 	_update_terrain()
 
 
@@ -322,3 +322,4 @@ func _ready():
 
 	last_scale = get_scale()
 	set_process(true)
+

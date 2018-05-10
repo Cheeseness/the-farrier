@@ -13,7 +13,7 @@ func start_dialogue():
 		customer_name = vm.get_global("next_customer")
 		show_hide_customers(customer_name)
 	var customer = get_parent().get_node(customer_name)
-	get_tree().call_group(0, "game", "clicked", customer, customer.get_pos())
+	get_tree().call_group(0, "game", "clicked", customer, customer.get_position())
 
 func show_hide_customers(customer_name):
 	for n in ["customer_onda", "customer_wu", "customer_herk", "lull", "krik", "bern"]:
@@ -33,3 +33,4 @@ func _ready():
 	vm = get_tree().get_root().get_node("/root/vm")
 	# Use listener to restart dialogue tree
 	vm.connect("global_changed", self, "global_listener")
+

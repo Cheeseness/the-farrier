@@ -12,3 +12,4 @@ func drop_data(point, data):
 
 	get_tree().call_group(0, "game", "interact", [obj, "look"])
 	get_node("/root/vm").drag_end()
+

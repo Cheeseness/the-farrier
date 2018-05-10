@@ -311,7 +311,7 @@ func read_cmd(state, level, errors):
 		add_level(state, cmd.params, errors)
 		state.indent -= 1
 	elif params[0] == "?":
-		params.remove(0)
+		params.remove_and_collide(0)
 		var dialog_params = []
 		state.indent += 1
 		add_dialog(state, dialog_params, errors)
@@ -323,7 +323,7 @@ func read_cmd(state, level, errors):
 		read_line(state)
 		return
 	else:
-		params.remove(0)
+		params.remove_and_collide(0)
 		cmd.params = params
 		read_line(state)
 
@@ -398,3 +398,4 @@ func compile(p_fname, errors):
 
 	#printt("returning ", p_fname, ret)
 	return ret
+

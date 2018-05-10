@@ -14,7 +14,7 @@ func _walk(params, block):
 		return vm.state_return
 	if !check_obj(params[1], "walk"):
 		return vm.state_return
-	var tpos = vm.get_object(params[1]).get_interact_pos()
+	var tpos = vm.get_object(params[1]).get_interact_position()
 	var speed = 0
 	if params.size() > 2:
 		speed = real(params[2])
@@ -97,7 +97,7 @@ func inventory_add(params):
 	vm.inventory_set(params[0], true)
 	return vm.state_return
 
-func inventory_remove(params):
+func inventory_remove_and_collide(params):
 	vm.inventory_set(params[0], false)
 	return vm.state_return
 	
@@ -128,10 +128,10 @@ func teleport(params):
 	vm.get_object(params[0]).teleport(vm.get_object(params[1]))
 	return vm.state_return
 
-func teleport_pos(params):
+func teleport_position(params):
 	if !check_obj(params[0], "teleport_pos"):
 		return vm.state_return
-	vm.get_object(params[0]).teleport_pos(int(params[1]), int(params[2]))
+	vm.get_object(params[0]).teleport_position(int(params[1]), int(params[2]))
 	return vm.state_return
 
 
@@ -196,7 +196,7 @@ func camera_set_target(params):
 		targets.push_back(params[i])
 	vm.camera_set_target(speed, targets)
 
-func camera_set_pos(params):
+func camera_set_position(params):
 	var speed = params[0]
 	var pos = Vector2(params[1], params[2])
 	vm.camera_set_target(speed, pos)
@@ -298,3 +298,4 @@ func _init():
 	#print("*************** vm level init")
 	#vm = get_tree().get_singleton("vm")
 	pass
+

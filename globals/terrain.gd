@@ -67,20 +67,20 @@ func debug_mode_updated(p_mode):
 	_update_texture()
 
 func make_local(pos):
-	pos = pos - get_pos()
+	pos = pos - get_position()
 	pos = pos * 1.0 / get_scale()
-	if self extends Navigation2D:
+	if self is Navigation2D:
 		pos = get_closest_point(pos)
 	return pos
 
 func make_global(pos):
 	pos = pos * get_scale()
-	pos = pos + get_pos()
+	pos = pos + get_position()
 	return pos
 
 func get_path(p_src, p_dest):
 	printt("get path ", p_src, p_dest)
-	if !(self extends Navigation2D):
+	if !(self is Navigation2D):
 		printt("returning a line")
 		return [p_src, p_dest]
 	p_src = make_local(p_src)
@@ -94,7 +94,7 @@ func get_path(p_src, p_dest):
 
 func is_solid(pos):
 
-	pos = pos - get_pos()
+	pos = pos - get_position()
 	pos = pos * 1.0 / get_scale()
 
 	var closest = get_closest_point(pos)
@@ -188,5 +188,6 @@ func _draw():
 func _ready():
 	#path = ImagePathFinder.new()
 	_update_texture()
+
 
 

@@ -64,9 +64,9 @@ func sort_items():
 		elif count >= page_size * page:
 			var slot = count - page_size * page
 			c.show()
-			printt("showing item", c.global_id, slots.get_child(slot).get_global_pos())
+			printt("showing item", c.global_id, slots.get_child(slot).get_global_position())
 			#printt("no focus")
-			c.set_global_pos(slots.get_child(slot).get_global_pos())
+			c.set_global_position(slots.get_child(slot).get_global_position())
 			#c.set_focus_mode(Control.FOCUS_NONE)
 			if !focus:
 				#c.grab_focus()
@@ -92,10 +92,10 @@ func global_changed(name):
 	inventory_changed()
 
 func input(event):
-	if event.type == InputEvent.MOUSE_BUTTON && event.pressed:
+	if event is InputEventMouseButton && event.pressed:
 		toggle()
 
-	if event.type == InputEvent.MOUSE_MOTION:
+	if event is InputEventMouseMotion:
 		#printt("mouse motion on alpha", get_node("../../..").pending_command)
 		if get_node("../../..").pending_command != "" || vm.drag_object != null:
 			toggle()
@@ -166,3 +166,4 @@ func _ready():
 	add_to_group("game")
 
 	call_deferred("sort_items")
+

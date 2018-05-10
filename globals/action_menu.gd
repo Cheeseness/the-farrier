@@ -48,3 +48,4 @@ func _ready():
 		c.connect("pressed", self, "action_pressed", [c.get_name()])
 
 	set_process_input(true)
+

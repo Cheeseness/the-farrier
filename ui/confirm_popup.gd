@@ -50,3 +50,4 @@ func _ready():
 	get_node("no").connect("pressed", self, "button_pressed", [false])
 	anim = get_node("animation")
 	anim.connect("finished", self, "anim_finished")
+

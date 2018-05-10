@@ -171,3 +171,4 @@ func autosave_available():
 func start():
 	ICloud = Globals.get_singleton("ICloud")
 	pass
+

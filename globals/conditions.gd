@@ -35,8 +35,8 @@ func init(foot):
 					cond = bruise_b_scene.instance()
 			if cond:
 				var pos = positions[0]
-				positions.remove(0)
-				cond.set_pos(pos.get_pos())
+				positions.remove_and_collide(0)
+				cond.set_position(pos.get_position())
 				foot.add_child(cond)
 
 func reset():
@@ -48,11 +48,11 @@ func at(mouse_pos):
 	for child in target.get_children():
 		var name = child.get_name()
 		if name.find("splinter") >= 0 || name.find("bruise") >= 0:
-			if child.get_pos().distance_to(mouse_pos) <= 100:
+			if child.get_position().distance_to(mouse_pos) <= 100:
 				return child
 	return null
 
-func remove(name):
+func remove_and_collide(name):
 	# Remove one unit of named condition
 	if not name in conditions:
 		return
@@ -84,6 +84,6 @@ func get_positions(foot):
 	while not temp.empty():
 		var idx = randi() % temp.size()
 		positions.append(temp[idx])
-		temp.remove(idx)
+		temp.remove_and_collide(idx)
 
 	return positions

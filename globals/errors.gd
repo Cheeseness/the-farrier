@@ -5,3 +5,4 @@ func dialog_confirmed():
 
 func _ready():
 	connect("confirmed", self, "dialog_confirmed")
+

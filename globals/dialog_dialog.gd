@@ -25,7 +25,7 @@ func selected(n):
 	ready = false
 	if timer != null:
 		timer.stop()
-		animation.set_speed(1)
+		animation.set_speed_scale(1)
 
 func timer_timeout():
 	selected(timeout_option)
@@ -147,7 +147,7 @@ func anim_finished():
 			if animation.has_animation("timer"):
 				animation.set_current_animation("timer")
 				var len = animation.get_current_animation_length()
-				animation.set_speed(len / timer_timeout)
+				animation.set_speed_scale(len / timer_timeout)
 				animation.play()
 
 	if cur == "hide":
@@ -231,3 +231,4 @@ func remove_words(cmd):
 
 	for r in remove:
 		cmd.erase(r)
+
