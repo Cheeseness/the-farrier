@@ -35,6 +35,10 @@ func start(params, p_context):
 	printt("dialog start with params ", params.size())
 	context = p_context
 	cmd = params[0]
+
+	# The Farrier hook for intercepting and adding dialogue options
+	append_words(cmd)
+
 	var i = 0
 	var nb_visible = 0
 	for q in cmd:
@@ -147,6 +151,66 @@ func anim_finished(anim_name):
 		vm.finished(context)
 		vm.add_level(cmd[option_selected].params[1], false)
 		stop()
+
+# The Farrier specific functions
+func append_words(cmd):
+	# Append words to dialogue options dynamically from list
+
+	# 0 - not learned, only appears the "turn" after it was spoken by dino
+	# 1 - learned, appears if repeated by player
+	# 2 - understood, always appears translated
+
+	# Correct words will be defined by .esc scripts,
+	# so make not to repeat words already in list.
+
+	# Remove temporary words - this approach is problematic if .esc scripts
+	# use any of the same word for dialogue branches
+	remove_words(cmd)
+
+	var words = Words.all()
+	if typeof(words) != TYPE_DICTIONARY:
+		return
+
+	for word in words:
+		if get_tree().get_root().find_node("PlaceholderYemm", true, false) != null:
+			#print("We're in the wrong scene!")
+			break
+		var meaning = Words.get_meaning(word)
+		# If word is heard, present opportunity to learn
+		if not Words.heard(word):
+			continue
+
+		var params = Words.get_learning_opportunity(word)
+
+		var dino = "lull"
+		if !vm.get_global("customer_onda_end"):
+			pass #dino is already lull
+		elif !vm.get_global("customer_wu_end"):
+			dino = "krik"
+		elif !vm.get_global("customer_herk_end"):
+			dino = "bern"
+
+		params += Words.get_learning_realization(dino, word)
+
+		cmd.append({"name": "*", "params": [word, params]})
+
+	# Remove heard but not learned words before next "turn"
+	# TODO: Figure out why it's called from event_trigger.gd as well
+	Words.reset_unlearned()
+
+func remove_words(cmd):
+	# Removing items in place doesn't work, so we'll use a temporary array
+	var remove = []
+	var words = Words.all()
+	if typeof(words) != TYPE_DICTIONARY:
+		return
+
+	for c in cmd:
+		if c["params"][0] in words:
+			remove.append(c)
+
+	for r in remove:
+		cmd.erase(r)
 
 func _ready():
 	printt("dialog ready")

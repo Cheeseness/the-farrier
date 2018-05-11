@@ -48,7 +48,7 @@ func at(mouse_pos):
 	for child in target.get_children():
 		var name = child.get_name()
 		if name.find("splinter") >= 0 || name.find("bruise") >= 0:
-			if child.get_pos().distance_to(mouse_pos) <= 100:
+			if child.position.distance_to(mouse_pos) <= 100:
 				return child
 	return null
 

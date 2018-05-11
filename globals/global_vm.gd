@@ -334,7 +334,7 @@ func get_global(name):
 	return globals[name]
 
 func set_global(name, val):
-	globals[name] = val
+	globals[name] = str(val)
 	#printt("global changed at global_vm, emitting for ", name, val)
 	emit_signal("global_changed", name)
 

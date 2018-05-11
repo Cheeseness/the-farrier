@@ -26,7 +26,7 @@ func set_cursor(name):
 	var texture = cursors[name]
 
 	# Change mouse cursor and position interaction point to the middle of texture
-	Input.set_custom_mouse_cursor(texture, texture.get_size() / 2)
+	Input.set_custom_mouse_cursor(texture, 0, texture.get_size() / 2)
 
 func _input(event):
 	if event is InputEventMouseButton and event.button_index == BUTTON_RIGHT and event.is_pressed():

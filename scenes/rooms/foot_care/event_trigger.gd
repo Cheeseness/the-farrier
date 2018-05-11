@@ -1,6 +1,5 @@
 extends Node2D
 
-var vm
 var dino
 
 func global_listener(name):
@@ -49,7 +48,7 @@ func go_to_reception():
 
 # Function is first started by timer to dodge race conditions
 func start_dialogue():
-	get_tree().call_group(0, "game", "clicked", dino, dino.get_position())
+	$"../player".interact([dino, "talk", null])
 
 func show_hide_dinosaurs(customer_name):
 	for n in ["lull", "krik", "bern"]:
@@ -66,7 +65,6 @@ func show_hide_dinosaurs(customer_name):
 		dino.show()
 
 func _ready():
-	vm = get_tree().get_root().get_node("/root/vm")
 	# Use listener to restart dialogue tree
 	vm.connect("global_changed", self, "global_listener")
 
