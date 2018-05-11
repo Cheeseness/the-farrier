@@ -327,7 +327,12 @@ func sched_event(time, obj, event):
 
 func get_global(name):
 	# If no value or looks like boolean, return boolean for backwards compatibility
-	if not name in globals or globals[name].to_lower() == "false":
+	if not name in globals:
+		return false
+	# The Farrier custom code
+	elif name == "words":
+		return {}
+	elif globals[name].to_lower() == "false":
 		return false
 	if globals[name].to_lower() == "true":
 		return true
@@ -778,3 +783,34 @@ func _ready():
 	connect("global_changed", self, "check_achievement")
 
 	set_process(true)
+
+# The Farrier hack
+func interpolate_globals(text):
+	var i = 0
+	var new_text = ""
+
+	print("Interpolating globals.", text)
+
+	var words = Words.all()
+
+	for t in text.split("!!"):
+		if i % 2 and t in words:
+			Words.increment_state_by_dialogue(t)
+		if i % 2 and get_global(t):
+			printt("text replacement", t, get_global(t))
+			new_text += get_global(t)
+		else:
+			new_text += t
+		i = i+1
+
+	# If not repeated on following "turn", learning opportunity is lost for now
+	for word in words:
+		if Words.learned(word):
+			set_global("%s_learned" % words[word][0], true)
+			print("Setting %s_learned" % words[word][0])
+		elif Words.understood(word):
+			set_global("%s_understood" % words[word][0], true)
+			print("Setting %s_understood" % words[word][0])
+			set_global(word, "%s" % words[word][0])
+
+	return new_text

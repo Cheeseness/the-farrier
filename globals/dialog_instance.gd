@@ -141,6 +141,10 @@ func init(p_params, p_context, p_intro, p_outro):
 	if character.dialog_color:
 		label["custom_colors/default_color"] = character.dialog_color
 
+	# The Farrier string interpolation
+	printt("check string for globals", text)
+	text = vm.interpolate_globals(text)
+
 	# The Farrier doesn't use RichTextLabel for dialogue
 	if label is RichTextLabel:
 		label.bbcode_enabled = true

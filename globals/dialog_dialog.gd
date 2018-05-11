@@ -65,6 +65,10 @@ func start(params, p_context):
 		elif force_ids:
 			text = "(no id) " + text
 
+		# The Farrier string interpolation
+		printt("check string for globals", text)
+		text = vm.interpolate_globals(text)
+
 		label.set_text(text)
 		but.connect("pressed", self, "selected", [i])
 		but.connect("mouse_entered",self,"_on_mouse_enter",[but])
@@ -168,6 +172,7 @@ func append_words(cmd):
 	remove_words(cmd)
 
 	var words = Words.all()
+
 	if typeof(words) != TYPE_DICTIONARY:
 		return
 
