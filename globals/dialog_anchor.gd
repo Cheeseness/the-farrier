@@ -2,6 +2,7 @@ extends "res://globals/interactive.gd"
 
 export var tooltip = ""
 export var global_id = ""
+export(Color) var dialog_color = null
 
 func set_state(p_state, p_force = false):
 	pass

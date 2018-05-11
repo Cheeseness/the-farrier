@@ -77,7 +77,7 @@ func language_changed():
 func _find_labels(p = null):
 	if p == null:
 		p = self
-	if p.is_type("Label"):
+	if p is Label:
 		labels.push_back(p)
 	for i in range(0, p.get_child_count()):
 		_find_labels(p.get_child(i))

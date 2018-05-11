@@ -36,7 +36,7 @@ func init(foot):
 			if cond:
 				var pos = positions[0]
 				positions.remove(0)
-				cond.set_pos(pos.get_pos())
+				cond.set_position(pos.get_position())
 				foot.add_child(cond)
 
 func reset():
