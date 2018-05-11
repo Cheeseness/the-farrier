@@ -1,50 +1,54 @@
+extends Container
+
 var context
 var text
 var elapsed = 0
 var total_time
 var character
-var vm
-var speed = 45.0 # characters per second
+export var typewriter_text = true
+export var characters_per_second = 45.0
+var force_disable_typewriter_text = ProjectSettings.get_setting("escoria/platform/force_disable_typewriter_text")
 var finished = false
 var play_intro = true
 var play_outro = true
 var label
 var text_done = false
+var text_timeout_seconds = ProjectSettings.get_setting("escoria/application/text_timeout_seconds")
 
 var speech_stream
 var speech_player
+var speech_suffix
 var speech_paused = false
-
-# these are globals, go somewhere with the game configuration
-var speech_enabled = true
-var speech_language = "en"
-var speech_extension = ".spx"
-var finish_with_speech = false
-
-var speech_locales = ["en", "de"]
-var default_speech_language = "en"
 
 export var fixed_pos = false
 
 func _process(time):
 	if finished:
 		return
+
+	if force_disable_typewriter_text or !typewriter_text:
+		label.set_visible_characters(label.get_total_character_count())
+		text_done = true
+
 	elapsed += time
+
 	if !text_done:
 		if elapsed >= total_time:
 			label.set_visible_characters(label.get_total_character_count())
 			text_done = true
-			#set_process(false)
+
 			return
 		else:
 			label.set_visible_characters(text.length() * elapsed / (total_time))
 			pass
 
-	if text_done && !finish_with_speech:
-		set_process(false)
+	if text_done && !vm.settings.skip_dialog:
+		finish()
 
-	if finish_with_speech && speech_stream != null && !speech_player.is_playing() && text_done:
-		set_process(false)
+	if elapsed > text_timeout_seconds and (!speech_player or !speech_player.is_playing()):
+		finish()
+
+	if vm.settings.skip_dialog && speech_stream != null && !speech_player.is_playing() && text_done:
 		finish()
 
 func skipped():
@@ -63,36 +67,37 @@ func finish():
 		var anim = get_node("animation")
 		if anim.has_animation("hide"):
 			anim.play("hide")
-		else:
-			_queue_free()
-	else:
-		_queue_free()
+	_queue_free()
 
 func init(p_params, p_context, p_intro, p_outro):
 	character = vm.get_object(p_params[0])
 	context = p_context
 	text = p_params[1]
-	var force_ids = Globals.get("debug/force_text_ids")
+	var force_ids = ProjectSettings.get_setting("escoria/platform/force_text_ids")
 	var sep = text.find(":\"")
 	var text_id = null
 	if sep > 0:
-		var tid = text.substr(0, sep)
+		text_id = text.substr(0, sep)
 		text = text.substr(sep + 2, text.length() - (sep + 2))
 
-		# This won't work unless we put the placeholder variables in translation files - Flesk
-		#var ptext = TranslationServer.translate(tid)
-		#if ptext != tid:
-		#	text = ptext
-		#elif force_ids:
-		#	text = tid + " (" + text + ")"
-		text_id = tid
+		if TranslationServer.get_locale() != ProjectSettings.get_setting("escoria/platform/development_lang"):
+			var ptext = TranslationServer.translate(text_id)
+			if ptext != text_id:
+				text = ptext
+			else:
+				text = "(NOT TRANSLATED)\n\n" + text
 
 	elif force_ids:
+		vm.report_errors("dialog_instance", ["Missing text_id for string '" + text + "'"])
 		text = "(no id) " + text
+
+	# This BBCode may be the only way to center text for a RichTextLabel
+	if ProjectSettings.get_setting("escoria/platform/dialog_force_centered"):
+		text = "[center]" + text + "[/center]"
 
 	play_intro = p_intro
 	play_outro = p_outro
-	total_time = 0 # text.length() / speed
+	total_time = text.length() / characters_per_second
 	if !fixed_pos:
 		var pos
 		if character.has_node("dialog_pos"):
@@ -105,10 +110,10 @@ func init(p_params, p_context, p_intro, p_outro):
 		var avatars = get_node("anchor/avatars")
 		if avatars.get_child_count() > 0:
 			var name
-			if p_params.size() < 3:
+			if p_params.size() < 4:
 				name = avatars.get_child(0).get_name()
 			else:
-				name = p_params[2]
+				name = p_params[3]
 			for i in range(0, avatars.get_child_count()):
 				var c = avatars.get_child(i)
 				if c.get_name() == name:
@@ -117,34 +122,34 @@ func init(p_params, p_context, p_intro, p_outro):
 					c.hide()
 
 	character.set_speaking(true)
-	get_tree().call_group(0, "game", "set_mode", "dialog")
+	get_tree().call_group_flags(SceneTree.GROUP_CALL_DEFAULT, "game", "set_mode", "dialog")
 	if has_node("animation") && play_intro:
 		var anim = get_node("animation")
 		if anim.has_animation("show"):
-			if self.is_type("Node2D"):
+			if self is Node2D:
 				show()
 			anim.play("show")
 			anim.seek(0, true)
 		else:
-			if self.is_type("Node2D"):
+			if self is Node2D:
 				show()
 			set_process(true)
 	else:
 		show()
 		set_process(true)
-	#label.set_text(text)
-	
-	# Interpolate global variables - Flesk
-	printt("check string for globals", text)
-	text = vm.interpolate_globals(text)
 
-	#If we use normal labels, we get to have text shadows
-	#label.parse_bbcode(text)
-	label.set_text(text)
-	label.set_visible_characters(0)
+	if character.dialog_color:
+		label["custom_colors/default_color"] = character.dialog_color
+
+	label.bbcode_enabled = true
+
+	var parsed_ok = label.parse_bbcode(text)
+	assert(parsed_ok == OK)
+	label.bbcode_text = text
+	label.set_visible_characters(0)  # This length is always adjusted later
 
 	if self is Node2D:
-		set_z(1)
+		set_z_index(1)
 
 	setup_speech(text_id)
 
@@ -153,21 +158,24 @@ func setup_speech(tid):
 	if tid == null || tid == "":
 		return
 
-	if !speech_enabled:
+	if !vm.settings.speech_enabled:
 		return
 
-	var fname = "res://audio/speech/"+speech_language+"/"+tid+speech_extension
+	var speech_path = ProjectSettings.get_setting("escoria/application/speech_path")
+	var fname = speech_path + vm.settings.voice_lang + "/" + tid + speech_suffix
 	printt(" ** loading speech ", fname)
 	speech_stream = load(fname)
 	if !speech_stream:
 		printt("*** unable to load speech stream ", fname)
 		return
 
+	speech_stream.set_loop(false)
+
 	var player = AudioStreamPlayer.new()
 	player.set_name("speech_player")
 	add_child(player)
 	player.set_stream(speech_stream)
-	player.set_volume(vm.settings.voice_volume * Globals.get("application/max_voice_volume"))
+	player.volume_db = vm.settings.voice_volume * ProjectSettings.get_setting("escoria/application/max_voice_volume")
 	player.play()
 
 	if !player.is_playing():
@@ -196,11 +204,12 @@ func game_paused(p_pause):
 
 func _queue_free():
 	queue_free()
-	get_tree().call_group(0, "game", "set_mode", "default")
+	get_tree().call_group_flags(SceneTree.GROUP_CALL_DEFAULT, "game", "set_mode", "default")
 	vm.finished(context)
 
 
-func anim_finished():
+func anim_finished(anim_name):
+	# TODO use the parameter here?
 	var cur = get_node("animation").get_current_animation()
 	if cur == "show":
 		set_process(true)
@@ -208,19 +217,16 @@ func anim_finished():
 		_queue_free()
 
 func _ready():
-	vm = get_tree().get_root().get_node("vm")
-	speech_extension = Globals.get("application/speech_suffix")
+	speech_suffix = ProjectSettings.get_setting("escoria/application/speech_suffix")
 	add_to_group("events")
 	if has_node("animation"):
-		get_node("animation").connect("finished", self, "anim_finished")
+		get_node("animation").connect("animation_finished", self, "anim_finished")
 	label = get_node("anchor/text")
 
-	finish_with_speech = vm.settings.skip_dialog
-
-	#speech_language = TranslationServer.get_locale().substr(0, 2)
-	speech_language = vm.settings.voice_lang
-	if !(speech_language in speech_locales):
-		speech_language = default_speech_language
+	# Ensure a supported speech locale has been set, or not set if no speech is desired
+	var speech_locales_path = ProjectSettings.get_setting("escoria/application/speech_locales_path")
+	if speech_locales_path:
+		var speech_locales_def = load(speech_locales_path).new()
+		assert(vm.settings.voice_lang in speech_locales_def.speech_locales)
 
 	vm.connect("paused", self, "game_paused")
-

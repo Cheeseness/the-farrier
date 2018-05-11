@@ -24,20 +24,20 @@ func input(viewport, event, shape_idx):
 
 			var condition = Conditions.at(get_local_mouse_position())
 
-			if Tool.is("pliers") && condition && condition.get_name().find("splinter") >= 0 && not condition.is_hidden():
+			if Tool.is_name("pliers") && condition && condition.get_name().find("splinter") >= 0 && not condition.is_hidden():
 				condition.visible = !(true)
 				Conditions.remove_and_collide("splinter")
 				if Conditions.is_removed("splinter"):
 					vm.set_global("foot_healed", true)
 
-			if Tool.is("poultice") && condition && condition.get_name().find("bruise") >= 0:
+			if Tool.is_name("poultice") && condition && condition.get_name().find("bruise") >= 0:
 				var animation = condition.get_node("animation")
 				if animation.get_current_animation() != "poultice":
 					animation.play("poultice")
 					# Bruises aren't actually removed at this stage, but poultice has been applied
 					Conditions.remove_and_collide("bruise")
 
-			if Tool.is("bandage") && Conditions.is_removed("bruise") && bandage_applied < 3:
+			if Tool.is_name("bandage") && Conditions.is_removed("bruise") && bandage_applied < 3:
 				bandage_applied += 1
 				get_node("bandage%d" % bandage_applied).show()
 

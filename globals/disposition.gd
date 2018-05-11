@@ -46,4 +46,3 @@ func change(name):
 		current_disposition = 0
 	elif name in disposition_change:
 		current_disposition += disposition_change[name]
-

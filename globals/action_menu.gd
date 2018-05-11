@@ -1,20 +1,47 @@
-var target
-var actions
+extends Container
 
+var target
 func action_pressed(action):
-	get_tree().call_group(0, "game", "action_menu_selected", target, action)
+	if !is_visible():
+		return
+	if !get_node("/root/vm").can_interact():
+		return
+
+	get_tree().call_group_flags(SceneTree.GROUP_CALL_DEFAULT, "game", "action_menu_selected", target, action)
 
 func target_visibility_changed():
 	stop()
 
-func start(p_target):
-	#actions[0].grab_focus()
+func check_clamp(click_pos, camera):
+	var my_size = get_size()
+	var vp_size = get_viewport().size
 
+	var dist_from_right = vp_size.x - (click_pos.x + my_size.x)
+	var dist_from_left = click_pos.x - my_size.x
+	var dist_from_bottom = vp_size.y - (click_pos.y + my_size.y)
+	var dist_from_top = click_pos.y - my_size.y
+
+	if dist_from_right < 0:
+		click_pos.x += dist_from_right
+	if dist_from_left < 0:
+		click_pos.x -= dist_from_left
+	if dist_from_bottom < 0:
+		click_pos.y += dist_from_bottom
+	if dist_from_top < 0:
+		click_pos.y -= dist_from_top
+
+	return click_pos - get_size()
+
+func start(p_target):
 	if target != p_target:
 		target = p_target
 		target.connect("visibility_changed", self, "target_visibility_changed")
 
-	var scale = Globals.get("platform/action_menu_scale")
+		# Do not display the tooltip alongside the menu
+		if ProjectSettings.get_setting("escoria/ui/tooltip_follows_mouse"):
+			get_tree().call_group("hud", "hide")
+
+	var scale = ProjectSettings.get_setting("escoria/platform/action_menu_scale")
 	set_scale(Vector2(scale, scale))
 
 func stop():
@@ -22,30 +49,15 @@ func stop():
 		target.disconnect("visibility_changed", self, "target_visibility_changed")
 	target = null
 	hide()
-
-func _input(event):
-	if !is_visible():
-		return
-	if !get_node("/root/vm").can_interact():
-		return
-	if !event.is_pressed():
-		return
-
-	for a in actions:
-		if event.is_action(a.get_name()):
-			action_pressed(a.get_name())
-			break
+	if ProjectSettings.get_setting("escoria/ui/tooltip_follows_mouse"):
+		get_tree().call_group("hud", "show")
 
 func _ready():
 
-	actions = []
 	var acts = get_node("actions")
 	for i in range(acts.get_child_count()):
 		var c = acts.get_child(i)
-		if !c.is_type("Button"):
+		if !(c is BaseButton):
 			continue
-		actions.push_back(c)
 		c.connect("pressed", self, "action_pressed", [c.get_name()])
-
-	set_process_input(true)
 

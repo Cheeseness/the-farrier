@@ -1,14 +1,14 @@
-extends Area2D
+extends Sprite
 
 export var action = "walk"
-var collisionshape_click
-var rectangleshape
+var area
 
 func input(viewport, event, shape_idx):
-	if event is InputEventMouseButton && event.pressed:
-		if (event.button_index == 1):
-			get_tree().call_group(0, "game", "clicked", self, get_position() + Vector2(event.x, event.y))
-		elif (event.button_index == 2):
+	if event is InputEventMouseButton and event.pressed:
+		if (event.button_index == BUTTON_LEFT):
+			var pos = get_global_mouse_position()
+			get_tree().call_group_flags(SceneTree.GROUP_CALL_DEFAULT, "game", "clicked", self, pos, event)
+		elif (event.button_index == BUTTON_RIGHT):
 			emit_right_click()
 
 func get_action():
@@ -19,21 +19,27 @@ func _init():
 
 func _enter_tree():
 	# Use size of background texture to calculate collision shape
-	var background = get_parent().get_node("background")
-	if background:
-		var size = background.get_size()
-		var extents = Vector2(size.x / 2, size.y / 2)
-		var transform = Transform2D(Vector2(1, 0), Vector2(0, 1), extents)
+	var size = get_texture().get_size()
 
-		var shape = RectangleShape2D.new()
-		shape.set_extents(extents)
-		add_shape(shape)
-		set_shape_transform(0, transform)
+	area = Area2D.new()
+	var shape = RectangleShape2D.new()
+
+	var sid = area.create_shape_owner(area)
+
+	# Move origin of Area2D to center of Sprite
+	var transform = area.shape_owner_get_transform(sid)
+	transform.origin = size / 2
+	area.shape_owner_set_transform(sid, transform)
+
+	# Set extents of RectangleShape2D to cover entire Sprite
+	shape.set_extents(size / 2)
+	area.shape_owner_add_shape(sid, shape)
+
+	add_child(area)
 
 func _ready():
-	connect("input_event", self, "input")
+	area.connect("input_event", self, "input")
 	add_to_group("background")
 
 func emit_right_click():
 	emit_signal("right_click_on_bg")
-

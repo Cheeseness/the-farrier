@@ -83,4 +83,3 @@ func get_learning_realization(dino, word):
 		{"name": "say", "params": [dino, "!!" + word + "!!"]},
 		{"name": "say", "params": ["yemm", word + " ... " + meaning + "?"]}
 	]
-

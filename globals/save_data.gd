@@ -79,7 +79,7 @@ func save_game(p_data, p_slot, p_callback):
 		var old_fname = slots[p_slot].fname
 		var d = Directory.new()
 		d.open(base)
-		d.remove_and_collide(old_fname)
+		d.remove(old_fname)
 
 	if typeof(p_callback) != typeof(null):
 		p_callback[0].call_deferred(p_callback[1], OK)
@@ -199,4 +199,3 @@ func autosave_available():
 
 func start():
 	pass
-

@@ -126,7 +126,7 @@ func _input(event):
 			current.get_node("game").scene_input(event)
 
 func load_telon():
-	var tpath = Globals.get("platform/telon")
+	var tpath = ProjectSettings.get_setting("platform/telon")
 	var tres = vm.res_cache.get_resource(tpath)
 
 	get_node("layers/telon/telon").replace_by_instance(tres)
@@ -138,8 +138,8 @@ func _ready():
 	get_node("/root").set_render_target_clear_on_new_frame(true)
 
 	game_size = Vector2()
-	game_size.x = Globals.get("display/game_width")
-	game_size.y = Globals.get("display/game_height")
+	game_size.x = ProjectSettings.get_setting("display/game_width")
+	game_size.y = ProjectSettings.get_setting("display/game_height")
 
 	vm = get_tree().get_root().get_node("vm")
 	wait_timer = get_node("layers/wait_timer")
@@ -149,7 +149,7 @@ func _ready():
 	set_process_input(true)
 	set_process(true)
 
-	Globals.load_resource_pack("res://scripts.zip")
+	ProjectSettings.load_resource_pack("res://scripts.zip")
 
 	call_deferred("load_telon")
 

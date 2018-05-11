@@ -91,7 +91,8 @@ func is_ready(path):
 func _wait_for_resource(res, path):
 	_unlock("wait_for_resource")
 	while true:
-		VS.call("sync") # workaround because sync is a keyword
+		#VisualServer.call("sync") # workaround because sync is a keyword
+		VisualServer.force_sync()
 		OS.delay_usec(16000) # wait 1 frame
 		_lock("wait_for_resource")
 		if queue.size() == 0 || queue[0] != res:
@@ -106,7 +107,7 @@ func get_resource(path):
 			var res = pending[path].res
 			if res != queue[0]:
 				var pos = queue.find(res)
-				queue.remove_and_collide(pos)
+				queue.remove(pos)
 				queue.insert(0, res)
 
 			res = _wait_for_resource(res, path)
@@ -159,4 +160,3 @@ func start():
 	sem = Semaphore.new()
 	thread = Thread.new()
 	thread.start(self, "thread_func", 0)
-

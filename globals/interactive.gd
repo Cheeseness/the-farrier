@@ -1,6 +1,6 @@
+extends Node
 export(Script) var animations
 
-var vm
 var terrain
 var walk_path
 var walk_context
@@ -78,14 +78,12 @@ func modulate(color):
 	for s in sprites:
 		s.set_modulate(color)
 
-
 func _process(time):
 
 	if task == "walk":
 		var to_walk = speed * last_scale.x * time
 		var pos = get_position()
 		var old_pos = pos
-		var next
 		if walk_path.size() > 0:
 			while to_walk > 0:
 				var next
@@ -119,10 +117,11 @@ func _process(time):
 
 		#pose_scale = animations.directions[last_dir+1]
 
+	if self is esc_type.ITEM:
 		_update_terrain()
 
 func _find_sprites(p = null):
-	if p.is_type("Sprite") || p.is_type("AnimatedSprite") || p.is_type("TextureRect") || p.is_type("TextureButton"):
+	if p is Sprite || p is AnimatedSprite || p is TextureRect || p is TextureButton:
 		sprites.push_back(p)
 	for i in range(0, p.get_child_count()):
 		_find_sprites(p.get_child(i))
@@ -133,9 +132,7 @@ func _ready():
 
 	_find_sprites(self)
 
-	if get_tree().is_editor_hint():
+	if Engine.is_editor_hint():
 		return
 	if has_node("animation"):
 		animation = get_node("animation")
-	vm = get_node("/root/vm")
-

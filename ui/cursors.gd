@@ -3,7 +3,7 @@ extends Node2D
 var cursors = {}
 var selected_tool
 
-func is(tool_name):
+func is_name(tool_name):
 	if selected_tool and selected_tool == tool_name:
 		return true
 	return false
@@ -35,7 +35,7 @@ func _input(event):
 
 func _ready():
 	for child in get_children():
-		if not child.is_type("Sprite"):
+		if not child is Sprite:
 			continue
 		cursors[child.get_name()] = child.get_texture()
 

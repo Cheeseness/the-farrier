@@ -1,4 +1,4 @@
-var vm
+extends Node
 
 var player
 var mode = "default"
@@ -21,26 +21,53 @@ var click_anim
 var camera
 export var camera_limits = Rect2()
 
+var tooltip
+
 func set_mode(p_mode):
 	mode = p_mode
 
 func mouse_enter(obj):
 	var text
 	var tt = obj.get_tooltip()
-	if current_action != "" && current_tool != null:
-		text = tr(current_action + ".combine_id")
-		text = text.replace("%2", tr(tt))
-		text = text.replace("%1", tr(current_tool.get_tooltip()))
-	elif obj.inventory:
-		var action = inventory.get_action()
-		if action == "":
-			action = current_action
-		text = tr(action + ".id")
-		text = text.replace("%1", tr(tt))
+
+	# When following the mouse, prevent text from flashing for a moment in the wrong place
+	if ProjectSettings.get_setting("escoria/ui/tooltip_follows_mouse"):
+		var pos = get_viewport().get_mouse_position()
+		pos -= tooltip.get_size() / Vector2(2, 1)
+		tooltip.set_position(pos)
+
+	# We must hide all non-inventory tooltips and interactions when the inventory is open
+	if action_menu and inventory.is_visible():
+		if obj.inventory:
+			if !current_action:
+				text = tr(tt)
+			else:
+				var action = inventory.get_action()
+				if action == "":
+					action = current_action
+				text = tr(action + ".id")
+				text = text.replace("%1", tr(tt))
+			get_tree().call_group_flags(SceneTree.GROUP_CALL_DEFAULT, "hud", "set_tooltip", text)
+			vm.hover_begin(obj)
 	else:
-		text = tt
-	get_tree().call_group(0, "hud", "set_tooltip", text)
-	vm.hover_begin(obj)
+		if current_action != "" && current_tool != null:
+			text = tr(current_action + ".combine_id")
+			text = text.replace("%2", tr(tt))
+			text = text.replace("%1", tr(current_tool.get_tooltip()))
+		elif obj.inventory:
+			if !current_action:
+				text = tr(tt)
+			else:
+				var action = inventory.get_action()
+				if action == "":
+					action = current_action
+				text = tr(action + ".id")
+				text = text.replace("%1", tr(tt))
+		else:
+			text = tt
+
+		get_tree().call_group_flags(SceneTree.GROUP_CALL_DEFAULT, "hud", "set_tooltip", text)
+		vm.hover_begin(obj)
 
 func mouse_exit(obj):
 	var text
@@ -50,11 +77,17 @@ func mouse_exit(obj):
 		text = text.replace("%1", tr(current_tool.get_tooltip()))
 	else:
 		text = ""
-	get_tree().call_group(0, "hud", "set_tooltip", text)
-	vm.hover_end()
+	get_tree().call_group_flags(SceneTree.GROUP_CALL_DEFAULT, "hud", "set_tooltip", text)
+
+	# Want to retain the hover if the player is about to perform an action
+	if !current_action:
+		vm.hover_end()
 
 func clear_action():
 	current_tool = null
+	# It is logical for action menus' actions to be cleared, but verb menus to persist
+	if action_menu:
+		current_action = ""
 
 func set_current_action(p_act):
 	if p_act != current_action:
@@ -65,56 +98,127 @@ func set_current_action(p_act):
 func set_current_tool(p_tool):
 	current_tool = p_tool
 
-func clicked(obj, pos):
-	joystick_mode = false
+func can_click():
+	# Check certain global state to see if an object could be clicked
+
 	if !vm.can_interact():
+		return false
+
+	if !player:
+		return false
+
+	if mode != "default":
+		return false
+
+	return true
+
+func clicked(obj, pos, input_event = null):
+	if not can_click():
 		return
-	if player == null:
-		player = self
-	if mode == "default":
-		var action = obj.get_action()
-		#action_menu.stop()
-		if action == "walk":
 
-			#click.set_position(pos)
-			#click_anim.play("click")
-			if player == self:
+	var walk_context = null
+	var action = obj.get_action()
+
+	# XXX: Why does this disable joystick_mode?
+	joystick_mode = false
+
+	if input_event:
+		walk_context = {"fast": input_event.doubleclick}
+
+	# If an background_area is covered by an item, the item "wins"
+	if obj is esc_type.BACKGROUND_AREA:
+		for area in obj.get_child(0).get_overlapping_areas():
+			if area.has_method("is_clicked") and area.is_clicked():
 				return
-			player.walk_to(pos)
-			get_tree().call_group(0, "hud", "set_tooltip", "")
 
-		elif obj.inventory:
+	# Hide the action menu (where available) when performing actions, so it's not eg. open while walking
+	if action_menu:
+		action_menu.stop()
 
-			if current_action == "use" && obj.use_combine && current_tool == null:
-				set_current_tool(obj)
+	if action == "walk":
+		if click:
+			click.set_position(pos)
+		if click_anim:
+			click_anim.play("click")
+
+		if inventory and inventory.is_collapsible:
+			inventory.close()
+
+		player.walk_to(pos, walk_context)
+		# Leave the tooltip if the player is in eg. a "use key with" state
+		if !current_action:
+			get_tree().call_group_flags(SceneTree.GROUP_CALL_DEFAULT, "hud", "set_tooltip", "")
+
+	elif obj.inventory:
+		# Use and look are the only valid choices with an action menu
+		if action_menu:
+			current_action = "use"
+			# XXX: Setting an action here does not update the tooltip like `mouse_enter` does. Compensate.
+			var text = tr("use.id")
+			text = text.replace("%1", tr(obj.get_tooltip()))
+			get_tree().call_group_flags(SceneTree.GROUP_CALL_DEFAULT, "hud", "set_tooltip", text)
+
+		if current_action == "use" && obj.use_combine && current_tool == null:
+			set_current_tool(obj)
+		else:
+			interact([obj, current_action, current_tool])
+	elif action != "":
+		player.interact([obj, action, current_tool])
+	elif current_action != "":
+		# Walking the player to perform current_action is fine only when inventory is closed
+		if inventory:
+			if !inventory.is_collapsible or (inventory.is_collapsible and !inventory.is_visible()):
+				player.interact([obj, current_action, current_tool])
+	elif obj is esc_type.ITEM:
+		if action_menu and obj.use_action_menu:
+			if !ProjectSettings.get_setting("escoria/ui/right_mouse_button_action_menu"):
+				spawn_action_menu(obj)
 			else:
-				interact([obj, current_action, current_tool])
-		elif action != "":
-			player.interact([obj, action, current_tool])
-		elif current_action != "":
-			player.interact([obj, current_action, current_tool])
-		elif action_menu == null:
+				if obj.has_method("get_interact_pos"):
+					pos = obj.get_interact_pos()
+				else:
+					pos = obj.get_global_position()
+				player.walk_to(pos, walk_context)
 
-			# same as action == "walk"
-			if player == self:
+func secondary_click(obj, pos, input_event = null):
+	if not can_click():
+		return
+
+	var action = obj.get_action()
+
+	if action == "walk":
+		player.walk_to(pos)
+		return
+
+	# Hide the action menu (where available) when performing actions, so it's not eg. open while walking
+	if action_menu:
+		action_menu.stop()
+
+		if obj.use_action_menu:
+			if ProjectSettings.get_setting("escoria/ui/right_mouse_button_action_menu"):
+				spawn_action_menu(obj)
 				return
-			player.walk_to(pos)
-			get_tree().call_group(0, "hud", "set_tooltip", "")
 
-		elif obj.use_action_menu && action_menu != null:
-			spawn_action_menu(obj)
-
+	if inventory:
+		if obj is esc_type.ITEM and obj.inventory:
+			# Do not set `look` as permanent action
+			interact([obj, "look"])
+			# XXX: Moving the mouse during `:look` will cause the tooltip to disappear
+			# so the following is a good-enough-for-now fix for it
+			get_tree().call_group_flags(SceneTree.GROUP_CALL_DEFAULT, "hud", "set_tooltip", obj.get_tooltip())
+			vm.hover_begin(obj)
 
 func spawn_action_menu(obj):
 	if action_menu == null:
 		return
+
+	if player:
+		player.walk_stop(player.position)
+
+	var pos = get_viewport().get_mouse_position()
+	var am_pos = action_menu.check_clamp(pos, camera)
+	action_menu.set_position(am_pos)
 	action_menu.show()
-	var pos
-	if obj.has_node("action_menu_pos"):
-		pos = obj.get_node("action_menu_pos").get_global_position()
-	else:
-		pos = obj.get_global_position()
-	action_menu.set_position(pos)
 	action_menu.start(obj)
 	#obj.grab_focus()
 
@@ -188,14 +292,23 @@ func scene_input(event):
 
 
 	if event.is_action("menu_request") && event.is_pressed() && !event.is_echo():
+		# Do not display overlay menu with action menu or inventory, it looks silly and weird
+		if action_menu:
+			if action_menu.is_visible():
+				action_menu.stop()
+
+			# Hide inventory if collapsible
+			if inventory and inventory.is_collapsible:
+				inventory.close()
+
 		if vm.can_save() && vm.can_interact() && vm.menu_enabled():
-			get_node("/root/main").load_menu(Globals.get("ui/main_menu"))
+			main.load_menu(ProjectSettings.get_setting("escoria/ui/main_menu"))
 		else:
-			#get_tree().call_group(0, "game", "ui_blocked")
+			#get_tree().call_group_flags(SceneTree.GROUP_CALL_DEFAULT, "game", "ui_blocked")
 			if vm.menu_enabled():
-				get_node("/root/main").load_menu(Globals.get("ui/in_game_menu"))
+				main.load_menu(ProjectSettings.get_setting("escoria/ui/in_game_menu"))
 			else:
-				get_tree().call_group(0, "game", "ui_blocked")
+				get_tree().call_group_flags(SceneTree.GROUP_CALL_DEFAULT, "game", "ui_blocked")
 
 
 func _process(time):
@@ -219,7 +332,7 @@ func _process(time):
 				continue
 			if objs[key].tooltip == "":
 				continue
-			var objpos = objs[key].get_interact_position()
+			var objpos = objs[key].get_interact_pos()
 			var odist = pos.distance_squared_to(objpos)
 			if typeof(mobj) == typeof(null):
 				mobj = objs[key]
@@ -230,12 +343,11 @@ func _process(time):
 					mobj = objs[key]
 		if typeof(mobj) != typeof(null):
 			if mdist < min_interact_dist:
-				if true || mobj != last_obj:
+				if mobj != last_obj:
 					spawn_action_menu(mobj)
 					mouse_enter(mobj)
 					last_obj = mobj
 			else:
-				#action_menu.stop()
 				mouse_exit(mobj)
 				last_obj = null
 
@@ -249,6 +361,13 @@ func _process(time):
 
 	player.walk_to(player.get_position() + dir * 20)
 
+func _input(ev):
+	if ProjectSettings.get_setting("escoria/ui/tooltip_follows_mouse"):
+		# Must verify `position` is there, key inputs do not have it
+		if vm.hover_object and "position" in ev:
+			var pos = ev.position - tooltip.get_size() / Vector2(2, 1)
+			tooltip.set_position(pos)
+
 func set_inventory_enabled(p_enabled):
 	inventory_enabled = p_enabled
 	if !has_node("hud_layer/hud/inv_toggle"):
@@ -260,38 +379,39 @@ func set_inventory_enabled(p_enabled):
 
 func set_camera_limits():
 	var cam_limit = camera_limits
-	if camera_limits.size.x == 0 && camera_limits.size.y == 0:
-		var p = get_parent()
+	if camera_limits.size.x == 0 and camera_limits.size.y == 0:
 		var area = Rect2()
-		for i in range(0, p.get_child_count()):
-			var c = p.get_child(i)
-			if !(c is preload("res://globals/background.gd")):
-				continue
-			var pos = c.get_global_position()
-			var size = c.get_size()
-			area = area.expand(pos)
-			area = area.expand(pos + size)
+		for child in get_parent().get_children():
+			if child is esc_type.BACKGROUND:
+				var pos = child.get_global_position()
+				var size = child.get_size()
+				area = area.expand(pos)
+				area = area.expand(pos + size)
+			if child is esc_type.BACKGROUND_AREA:
+				var pos = child.get_global_position()
+				var size = child.get_texture().get_size()
+				area = area.expand(pos)
+				area = area.expand(pos + size)
 
-		camera.set_limit(MARGIN_LEFT, area.position.x)
-		camera.set_limit(MARGIN_RIGHT, area.position.x + area.size.x)
-		var cam_top = area.position.y # - get_node("/root/main").screen_ofs.y
-		camera.set_limit(MARGIN_TOP, cam_top)
-		camera.set_limit(MARGIN_BOTTOM, cam_top + area.size.y + get_node("/root/main").screen_ofs.y * 2)
+		camera.limit_left = area.position.x
+		camera.limit_right = area.position.x + area.size.x
+		camera.limit_top = area.position.y
+		camera.limit_bottom = area.position.y + area.size.y
 
-		if area.size.x == 0 || area.size.y == 0:
-			area.size.x = 1920
-			area.size.y = 1080
+		if area.size.x == 0 or area.size.y == 0:
+			printt("No limit area! Using viewport")
+			area.size = get_viewport().size
 
 		printt("setting camera limits from scene ", area)
 		cam_limit = area
 	else:
-		camera.set_limit(MARGIN_LEFT, camera_limits.position.x)
-		camera.set_limit(MARGIN_RIGHT, camera_limits.position.x + camera_limits.size.x)
-		camera.set_limit(MARGIN_TOP, camera_limits.position.y)
-		camera.set_limit(MARGIN_BOTTOM, camera_limits.position.y + camera_limits.size.y + get_node("/root/main").screen_ofs.y * 2)
+		camera.limit_left = camera_limits.position.x
+		camera.limit_right = camera_limits.position.x + camera_limits.size.x
+		camera.limit_top = camera_limits.position.y
+		camera.limit_bottom = camera_limits.position.y + camera_limits.size.y + main.screen_ofs.y * 2
 		printt("setting camera limits from parameter ", camera_limits)
 
-	camera.set_offset(get_node("/root/main").screen_ofs * 2)
+	camera.set_offset(main.screen_ofs * 2)
 	vm.set_cam_limits(cam_limit)
 
 	#vm.update_camera(0.000000001)
@@ -299,26 +419,41 @@ func set_camera_limits():
 func load_hud():
 	var hres = vm.res_cache.get_resource(vm.get_hud_scene())
 	get_node("hud_layer/hud").replace_by_instance(hres)
-	inventory = get_node("hud_layer/hud/inventory")
+
+	# Add inventory to hud layer, usually hud_minimal.tscn, if found in project settings
+	if inventory_enabled:
+		if !$hud_layer.has_node("inventory") and ProjectSettings.get_setting("escoria/ui/inventory"):
+			inventory = load(ProjectSettings.get_setting("escoria/ui/inventory")).instance()
+			if inventory and inventory is esc_type.INVENTORY:
+				inventory.hide()
+				$hud_layer.add_child(inventory)
+		else:
+			inventory = get_node("hud_layer/hud/inventory")
+
+	# Add action menu to hud layer if found in project settings
+	if ProjectSettings.get_setting("escoria/ui/action_menu"):
+		action_menu = load(ProjectSettings.get_setting("escoria/ui/action_menu")).instance()
+		if action_menu and action_menu is esc_type.ACTION_MENU:
+			$hud_layer.add_child(action_menu)
 
 	#if inventory_enabled:
 	#	get_node("hud_layer/hud/inv_toggle").show()
 	#else:
 	#	get_node("hud_layer/hud/inv_toggle").hide()
 
+	tooltip = get_node("hud_layer/hud/tooltip")
 
 func _ready():
 	add_to_group("game")
-	vm = get_tree().get_root().get_node("vm")
 	player = get_node("../player")
-	if has_node("action_menu"):
-		action_menu = get_node("action_menu")
+
 	if fallbacks_path != "":
 		fallbacks = vm.compile(fallbacks_path)
 
-	click = get_node("click")
-	click_anim = get_node("click_anim")
-	#set_process_input(true)
+	if has_node("click"):
+		click = get_node("click")
+	if has_node("click_anim"):
+		click_anim = get_node("click_anim")
 
 	camera = get_node("camera")
 
@@ -326,5 +461,4 @@ func _ready():
 
 	call_deferred("set_camera_limits")
 	call_deferred("load_hud")
-
 

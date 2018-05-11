@@ -38,15 +38,15 @@ func continue_pressed():
 
 func save_pressed():
 	button_clicked()
-	get_node("/root/main").load_menu(Globals.get("ui/savegames"))
+	get_node("/root/main").load_menu(ProjectSettings.get_setting("ui/savegames"))
 
 func settings_pressed():
 	button_clicked()
-	root.load_menu(Globals.get("ui/settings"))
+	root.load_menu(ProjectSettings.get_setting("ui/settings"))
 
 func credits_pressed():
 	button_clicked()
-	root.load_menu(Globals.get("ui/credits"))
+	root.load_menu(ProjectSettings.get_setting("ui/credits"))
 
 func close():
 	root.menu_close(self)
@@ -117,7 +117,7 @@ func _ready():
 
 	call_deferred("set_continue_button")
 
-	if !Globals.get("platform/exit_button"):
+	if !ProjectSettings.get_setting("platform/exit_button"):
 		get_node("exit").hide()
 
 

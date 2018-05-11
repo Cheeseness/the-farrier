@@ -1,5 +1,3 @@
-var vm
-
 var sounds = []
 var bg_path = ""
 var bg_volume = 1
@@ -9,7 +7,7 @@ func get_free_player():
 	for s in sounds:
 		if !s.is_playing() && !s.has_meta("action"):
 			return s
-	var s = AudioStreamPlayer.new()
+	var s = StreamPlayer.new()
 	add_child(s)
 	sounds.push_back(s)
 	return s
@@ -93,7 +91,7 @@ func clear_sounds(p_force = false):
 		i -= 1
 		if p_force || !sounds[i].is_playing():
 			sounds[i].queue_free()
-			sounds.remove_and_collide(i)
+			sounds.remove(i)
 
 func scene_changed():
 	for s in sounds:
@@ -138,4 +136,3 @@ func _ready():
 	#set_process(true)
 	vm.connect("scene_changed", self, "scene_changed")
 	get_node("timer").connect("timeout", self, "check_sounds")
-

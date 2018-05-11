@@ -1,4 +1,4 @@
-extends "res://game/objects/item.gd"
+extends "res://demo/objects/item.gd"
 
 func game_cleared():
 	set_state("clear", true)
@@ -29,9 +29,8 @@ func rand_seek(p_node = null):
 
 	#if !node.is_playing():
 	node.play(pos)
-	#node.seek_position(pos)
+	#node.seek_pos(pos)
 
 func _ready():
 	add_to_group("game")
-
 
