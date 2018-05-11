@@ -12,5 +12,4 @@ func set_speaking(p_speaking):
 	
 func _ready():
 	if global_id != "":
-		vm = get_tree().get_root().get_node("vm")
 		vm.register_object(global_id, self)

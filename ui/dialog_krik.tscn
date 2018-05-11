@@ -43,7 +43,7 @@ tracks/0/keys = {
 "values": [ 0.0, 1.0 ]
 }
 
-[node name="dialog_instance" type="Container"]
+[node name="dialog_instance" type="Container" index="0"]
 
 anchor_left = 0.0
 anchor_top = 0.0
@@ -63,6 +63,7 @@ fixed_pos = false
 [node name="anchor" type="Node2D" parent="." index="0"]
 
 position = Vector2( 0, 0.160187 )
+z_index = 800
 
 [node name="Sprite" type="Sprite" parent="anchor" index="0"]
 

@@ -141,12 +141,16 @@ func init(p_params, p_context, p_intro, p_outro):
 	if character.dialog_color:
 		label["custom_colors/default_color"] = character.dialog_color
 
-	label.bbcode_enabled = true
+	# The Farrier doesn't use RichTextLabel for dialogue
+	if label is RichTextLabel:
+		label.bbcode_enabled = true
 
-	var parsed_ok = label.parse_bbcode(text)
-	assert(parsed_ok == OK)
-	label.bbcode_text = text
-	label.set_visible_characters(0)  # This length is always adjusted later
+		var parsed_ok = label.parse_bbcode(text)
+		assert(parsed_ok == OK)
+		label.bbcode_text = text
+		label.set_visible_characters(0)  # This length is always adjusted later
+	else:
+		label.text = text
 
 	if self is Node2D:
 		set_z_index(1)

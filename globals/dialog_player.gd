@@ -4,10 +4,15 @@ var types = {}
 
 func say(params, callback):
 	var type
-	if params.size() < 3 || !has_resource(params[2]):
+	#if params.size() < 3 || !has_resource(params[2]):
+	#	type = "default"
+	#else:
+	#	type = params[2]
+	# The Farrier custom logic for selecting dialogue
+	if params.size() < 2 || !has_resource(params[0]):
 		type = "default"
 	else:
-		type = params[2]
+		type = params[0]
 	type = type + ProjectSettings.get_setting("escoria/platform/dialog_type_suffix")
 	var inst = get_resource(type).instance()
 	get_node("/root").get_child(0).add_child(inst)
