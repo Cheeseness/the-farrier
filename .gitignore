@@ -1,9 +1,5 @@
 *~
 
-# Import metadata
-.import
-*.import
-
 # Platform specific metadata files
 .DS_Store
 ._.DS_Store

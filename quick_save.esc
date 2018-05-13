@@ -10,6 +10,6 @@ cut_scene telon fade_out
 
 ## Player
 
-change_scene res://scenes/rooms/foot_care/foot_care.tscn
+change_scene res://game/rooms/foot_care/foot_care.tscn
 
 cut_scene telon fade_in

@@ -1,0 +1,62 @@
+[gd_scene load_steps=5 format=2]
+
+[ext_resource path="res://globals/scene.gd" type="Script" id=1]
+[ext_resource path="res://game/rooms/intro/sprites/thefarrier_intro_01.png" type="Texture" id=2]
+[ext_resource path="res://game/rooms/intro/intro.gd" type="Script" id=3]
+[ext_resource path="res://globals/game.tscn" type="PackedScene" id=4]
+
+
+[node name="scene" type="Node2D" index="0"]
+
+script = ExtResource( 1 )
+events_path = ""
+
+[node name="background" type="TextureRect" parent="." index="0"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_right = 1920.0
+margin_bottom = 1080.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 1
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 1
+size_flags_vertical = 1
+texture = ExtResource( 2 )
+stretch_mode = 0
+script = ExtResource( 3 )
+
+[node name="yemm" type="Node2D" parent="background" index="0"]
+
+position = Vector2( 569.157, 230.02 )
+
+[node name="yemm2" type="Node2D" parent="background" index="1"]
+
+position = Vector2( 726.792, 393.837 )
+
+[node name="yemm3" type="Node2D" parent="background" index="2"]
+
+position = Vector2( 1076.06, 464.927 )
+
+[node name="dinosaur" type="Node2D" parent="background" index="3"]
+
+position = Vector2( 1722.66, 227.61 )
+
+[node name="dinosaur2" type="Node2D" parent="background" index="4"]
+
+position = Vector2( 1240.48, 122.52 )
+
+[node name="papa" type="Node2D" parent="background" index="5"]
+
+position = Vector2( 1133.41, 37.7674 )
+
+[node name="bell" type="Node2D" parent="background" index="6"]
+
+position = Vector2( 1791.77, 269.584 )
+
+[node name="game" parent="." index="1" instance=ExtResource( 4 )]
+
+

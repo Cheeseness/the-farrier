@@ -16,10 +16,10 @@ config/icon="res://footprint-icon.png"
 
 [autoload]
 
-Conditions="*res://globals/conditions.gd"
-Words="*res://globals/words.gd"
-Tool="*res://ui/cursors.tscn"
-Disposition="*res://globals/disposition.gd"
+Conditions="*res://game/autoloads/conditions.gd"
+Words="*res://game/autoloads/words.gd"
+Tool="*res://game/autoloads/cursors.tscn"
+Disposition="*res://game/autoloads/disposition.gd"
 main="*res://globals/main.tscn"
 vm="*res://globals/global_vm.tscn"
 esc_type="*res://globals/escoria_types.gd"

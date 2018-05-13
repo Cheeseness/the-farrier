@@ -1,0 +1,108 @@
+#Herk is customer_herk and "owner" of Bern. A construction worker who handles most of the building maintenance in the village.
+
+:talk
+
+set_condition splinter 3
+set_condition bruise 2
+
+> [!customer_herk_end,!customer_herk_greeting]
+	say customer_herk "Greetings, Farrier." 
+	set_global customer_herk_greeting true
+
+> [customer_herk_end,!customer_herk_end_intro]
+	say yemm "The wounds are cleaned and bandaged."
+	say customer_herk "Good. How soon will she be ready to work?"
+	set_global customer_herk_end_intro true
+
+? reception
+## opening dialogue
+	- "Greetings." [!customer_herk_end,!customer_herk_greeting]
+		say yemm "Greetings."
+		say customer_herk "It took a lot of effort to get here, but we made it."
+		set_global customer_herk_greeting true
+
+	- "What has happened?" [!customer_herk_end,!topic_joint_fasteners]
+		say yemm "What has happened?"
+		say customer_herk "Bern has deep cuts all over her foot. We stopped the bleeding, but it's probably started again by now."
+		set_global customer_herk_greeting true
+		? reception 
+			- "What happened?"
+				say yemm "What happened?"
+				say customer_herk "A new construction we were working on sank into the soft ground from the recent storms."
+				say customer_herk "Bern got clear of the fall, but ended up in mud and a crate of joint fasteners fell on her."
+				say customer_herk "We couldn't get her out of the mud without her feet getting cut."
+				say yemm "Joint fasteners?"
+				say customer_herk "Like nails, but very wide. We hammer them into two beams where they meet."
+				set_global topic_joint_fasteners true
+
+	- "Were any of the joint fasteners rusted?" [topic_joint_fasteners]
+		say yemm "Were any of the joint fasteners rusted?"
+		say customer_herk "Hard to say. Some might have been. Does it matter?"
+		say yemm "It's harder for me to give her the best treatment if I don't know the specifics."
+		say yemm "Blood poisoning can be very serious."
+		say customer_herk "I'll bet."
+		set_global topic_blood_poisoning true
+
+	- "Is this related to the grain stores?" [topic_joint_fasteners,topic_upset_fenn,!topic_food_crisis]
+		say yemm "Is this related to the grain stores?"
+		say customer_herk "... what about the grain stores?"
+		? reception
+			- "I just heard there might be some work being done."
+				say yemm "I just heard there might be some work being done."
+				say customer_herk "It's just some upgrades. A new silo that we need to get finished soon."
+				set_global topic_food_crisis true
+
+			- "Wu told me there's been some trouble."
+				say yemm "Wu told me there's been some trouble."
+				say customer_herk "Did he now? Well, he's not wrong."
+				say customer_herk "If we don't get this new silo built soon, there might not be anything left to eat for winter."
+				set_global topic_food_crisis true
+
+			- "I don't know. Forget I mentioned it."
+				say yemm "I don't know. Forget I mentioned it."
+				say customer_herk "The old grain silo might be leaking grain. We need to get a new one built before winter sets in."
+				set_global topic_food_crisis true
+
+	- "Let me look after Bern now." [!customer_herk_end]
+		say yemm "Let me look after Bern now."
+		change_scene res://game/rooms/foot_care/foot_care.tscn
+
+## closing dialogue
+	- "It will take weeks for these cuts to heal enough for Bern to carry any load." [customer_herk_end]
+		say yemm "It will take weeks for these cuts to heal enough for Bern to carry any load."
+		say customer_herk "Weeks? Are you sure?"
+		say yemm "Yes."
+		say customer_herk "Could we give her a few days and then put her to light work?"
+		say customer_herk "Once this job is done, I can bring her in for some proper care."
+		say yemm "It doesn't work like that."
+
+	- "I don't even think she should walk home." [customer_herk_end]
+		say yemm "I don't even think she should walk home."
+		say customer_herk "What do you want me to do? Carry her?"
+		say yemm "I think you should leave her here for a couple of days and see whether she improves enough to walk back."
+		say customer_herk "Damn, Farrier. Is it that bad?"
+		say yemm "It could be, and making her walk more will only make it worse."
+
+	- "Leave Bern here and I will monitor her progress." [customer_herk_end]
+		say yemm "Leave Bern here and I will monitor her progress."
+		say customer_herk "Farrier."
+		say customer_herk "Yemm."
+		say customer_herk "I need her back on the site. Are you absolutely sure we couldn't give her light tasks?"
+		? reception 
+			- "Take her if you must."
+				say yemm "Take her if you must."
+				say bern "!!*proooom*!!"
+				say customer_herk "Thank you. I'll make sure she avoids any heavy loads and unnecessary walking."
+				say customer_herk "We'll take it slow going home."
+				set_global next_customer false
+				change_scene res://game/rooms/farewell/farewell.tscn
+
+			- "She stays here."
+				say yemm "She stays here."
+				say bern "!!*braaa*!!"
+				say customer_herk "Fine. We'll make do... somehow."
+				set_global bern_stays true
+				set_global next_customer false
+				change_scene res://game/rooms/farewell/farewell.tscn
+
+set_global customer_dialogue_ended true
