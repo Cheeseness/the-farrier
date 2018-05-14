@@ -9,7 +9,7 @@ func load_autosave():
 	vm.load_autosave()
 
 func can_continue():
-	return (root.get_current_scene() extends preload("res://globals/scene.gd")) || vm.save_data.autosave_available()
+	return (root.get_current_scene() is preload("res://globals/scene.gd")) || vm.save_data.autosave_available()
 
 func button_clicked():
 	# play a clicking sound here?
@@ -17,7 +17,7 @@ func button_clicked():
 
 func newgame_pressed():
 	button_clicked()
-	if root.get_current_scene() extends preload("res://globals/scene.gd"):
+	if root.get_current_scene() is preload("res://globals/scene.gd"):
 		confirm_popup = get_node("/root/main").load_menu("res://ui/confirm_popup.tscn")
 		confirm_popup.start("UI_NEW_GAME_CONFIRM",self,"start_new_game")
 	else:
@@ -30,7 +30,7 @@ func start_new_game(p_confirm):
 
 func continue_pressed():
 	button_clicked()
-	if root.get_current_scene() extends preload("res://globals/scene.gd"):
+	if root.get_current_scene() is preload("res://globals/scene.gd"):
 		root.menu_collapse()
 	else:
 		if vm.continue_enabled:
@@ -38,15 +38,15 @@ func continue_pressed():
 
 func save_pressed():
 	button_clicked()
-	get_node("/root/main").load_menu(Globals.get("ui/savegames"))
+	get_node("/root/main").load_menu(ProjectSettings.get_setting("ui/savegames"))
 
 func settings_pressed():
 	button_clicked()
-	root.load_menu(Globals.get("ui/settings"))
+	root.load_menu(ProjectSettings.get_setting("ui/settings"))
 
 func credits_pressed():
 	button_clicked()
-	root.load_menu(Globals.get("ui/credits"))
+	root.load_menu(ProjectSettings.get_setting("ui/credits"))
 
 func close():
 	root.menu_close(self)
@@ -54,7 +54,7 @@ func close():
 
 func input(event):
 	if event.is_pressed() && !event.is_echo() && event.is_action("menu_request"):
-		if root.get_current_scene() extends preload("res://globals/scene.gd"):
+		if root.get_current_scene() is preload("res://globals/scene.gd"):
 			close()
 
 func menu_collapsed():
@@ -77,7 +77,7 @@ func language_changed():
 func _find_labels(p = null):
 	if p == null:
 		p = self
-	if p.is_type("Label"):
+	if p is Label:
 		labels.push_back(p)
 	for i in range(0, p.get_child_count()):
 		_find_labels(p.get_child(i))
@@ -117,7 +117,8 @@ func _ready():
 
 	call_deferred("set_continue_button")
 
-	if !Globals.get("platform/exit_button"):
+	if !ProjectSettings.get_setting("escoria/platform/exit_button"):
 		get_node("exit").hide()
+
 
 

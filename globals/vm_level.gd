@@ -1,5 +1,4 @@
 var global = null
-var vm
 var current_context
 
 func check_obj(name, cmd):
@@ -30,6 +29,14 @@ func _walk(params, block):
 
 func set_global(params):
 	vm.set_global(params[0], params[1])
+	return vm.state_return
+
+func dec_global(params):
+	vm.dec_global(params[0], params[1])
+	return vm.state_return
+
+func inc_global(params):
+	vm.inc_global(params[0], params[1])
 	return vm.state_return
 
 func debug(params):
@@ -100,7 +107,7 @@ func inventory_add(params):
 func inventory_remove(params):
 	vm.inventory_set(params[0], false)
 	return vm.state_return
-	
+
 func inventory_open(params):
 	vm.emit_signal("open_inventory", params[0])
 
@@ -119,6 +126,14 @@ func repeat(params):
 
 func wait(params):
 	return vm.wait(params, current_context)
+
+func set_use_action_menu(params):
+	var obj = vm.get_object(params[0])
+	vm.set_use_action_menu(obj, params[1])
+
+func set_speed(params):
+	var obj = vm.get_object(params[0])
+	vm.set_speed(obj, params[1])
 
 func teleport(params):
 	if !check_obj(params[0], "teleport"):
@@ -152,9 +167,6 @@ func change_scene(params):
 
 	current_context.waiting = true
 	return vm.state_yield
-
-func queue_scene(params):
-	vm.res_cache.queue_resource(params[0])
 
 func spawn(params):
 	return vm.spawn(params)
@@ -201,6 +213,16 @@ func camera_set_pos(params):
 	var pos = Vector2(params[1], params[2])
 	vm.camera_set_target(speed, pos)
 
+func camera_set_zoom(params):
+	var magnitude = params[0]
+	var time = params[1] if params.size() > 1 else 0
+	vm.camera_set_zoom(magnitude, float(time))
+
+func camera_set_zoom_height(params):
+	var magnitude = params[0] / vm.game_size.y
+	var time = params[1] if params.size() > 1 else 0
+	vm.camera_set_zoom(magnitude, float(time))
+
 func set_globals(params):
 	var pat = params[0]
 	var val = params[1]
@@ -243,6 +265,7 @@ func game_over(params):
 	current_context.waiting = true
 	return vm.state_yield
 
+# The Farrier specific commands
 func set_tool(params):
 	Tool.select(params[0])
 
@@ -293,8 +316,3 @@ func resume(context):
 
 func set_vm(p_vm):
 	vm = p_vm
-
-func _init():
-	#print("*************** vm level init")
-	#vm = get_tree().get_singleton("vm")
-	pass

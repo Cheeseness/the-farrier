@@ -1,10 +1,9 @@
 extends Control
 
-var vm
+export(bool) var is_collapsible = false
+
 var item_list = []
 var page = 0
-
-var actions = []
 
 var page_max
 var page_size
@@ -23,19 +22,28 @@ func open():
 		return
 	sort_items()
 	show()
-	get_node("animation").play("show")
+	print("inventory open")
+	if has_node("animation"):
+		get_node("animation").play("show")
 
 
 func close():
 	if !is_visible():
 		return
-	if get_node("animation").is_playing():
-		return
-	#printt("closing inventory")
-	print_stack()
-	get_node("animation").play("hide")
-	get_node("look").set_pressed(false)
+
+	if has_node("animation"):
+		var animation = get_node("animation")
+		if animation:
+			if animation.is_playing():
+				return
+			animation.play("hide")
+
+	# XXX: What is this `look` node? A verb menu thing?
+	if has_node("look"):
+		get_node("look").set_pressed(false)
+
 	current_action = ""
+	hide()
 	print("inventory close")
 
 func toggle():
@@ -64,9 +72,9 @@ func sort_items():
 		elif count >= page_size * page:
 			var slot = count - page_size * page
 			c.show()
-			printt("showing item", c.global_id, slots.get_child(slot).get_global_pos())
+			printt("showing item", c.global_id, slots.get_child(slot).get_global_position())
 			#printt("no focus")
-			c.set_global_pos(slots.get_child(slot).get_global_pos())
+			c.set_global_position(slots.get_child(slot).get_global_position())
 			#c.set_focus_mode(Control.FOCUS_NONE)
 			if !focus:
 				#c.grab_focus()
@@ -108,7 +116,7 @@ func look_toggled(pressed):
 		current_action = "look"
 	else:
 		current_action = "use"
-	get_tree().call_group(0, "game", "clear_action")
+	get_tree().call_group_flags(SceneTree.GROUP_CALL_DEFAULT, "game", "clear_action")
 
 func _input(event):
 	if !vm.can_interact():
@@ -118,24 +126,19 @@ func _input(event):
 
 func log_button_pressed():
 	close()
-	get_tree().call_group(0, "game", "open_log")
-	
+	get_tree().call_group_flags(SceneTree.GROUP_CALL_DEFAULT, "game", "open_log")
+
 func _on_open_inventory_signal(open):
 	if (open):
 		open()
 	else:
 		close()
 
-func action_pressed(n):
-	current_action = n
-	for but in actions:
-		but.set_pressed(but.get_name() == n)
-
 func _ready():
-	vm = get_tree().get_root().get_node("vm")
 	vm.connect("inventory_changed", self, "inventory_changed")
 	vm.connect("open_inventory", self, "_on_open_inventory_signal")
 	vm.connect("global_changed", self, "global_changed")
+
 	page_size = get_node("slots").get_child_count()
 	sort_items()
 	get_node("arrow_prev").connect("pressed", self, "change_page", [-1])
@@ -149,17 +152,11 @@ func _ready():
 		c.inventory = true
 		c.use_action_menu = false
 		c.hide()
+
 	items.show()
 	set_focus_mode(Control.FOCUS_NONE)
 	#get_node("mask").set_focus_mode(Control.FOCUS_NONE)
 	set_process_input(true)
-
-	var acts = get_node("actions")
-	actions = []
-	for i in range(acts.get_child_count()):
-		var c = acts.get_child(i)
-		actions.puah_back(c)
-		c.connect("pressed", self, "action_pressed", [c.get_name()])
 
 	#get_node("log_button").connect("pressed", self, "log_button_pressed")
 

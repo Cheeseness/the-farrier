@@ -1,11 +1,11 @@
 tool
 
-extends Node2D
+extends KinematicBody2D
 
 var task
 var walk_destination
 var animation
-var vm
+var vm  # A tool script cannot refer to singletons in Godot
 var terrain
 var walk_path
 var walk_context
@@ -13,6 +13,7 @@ var path_ofs
 export var speed = 300
 export var v_speed_damp = 1.0
 export(Script) var animations
+export(Color) var dialog_color = null
 var last_dir = 0
 var last_scale
 var pose_scale = 1
@@ -34,12 +35,12 @@ func set_active(p_active):
 		hide()
 
 func walk_to(pos, context = null):
-	walk_path = terrain.get_path(get_pos(), pos)
+	walk_path = terrain.get_path(get_position(), pos)
 	walk_context = context
 	if walk_path.size() == 0:
 		task = null
 		params_queue = null
-		walk_stop(get_pos())
+		walk_stop(get_position())
 		set_process(false)
 		return
 	walk_destination = walk_path[walk_path.size()-1]
@@ -53,12 +54,12 @@ func walk_to(pos, context = null):
 func walk(pos, speed, context = null):
 	walk_to(pos, context)
 
-func anim_finished():
-	if typeof(anim_notify) != typeof(null):
+func anim_finished(anim_name):
+	if anim_notify != null:
 		vm.finished(anim_notify)
 		anim_notify = null
 
-	if typeof(anim_scale_override) != typeof(null):
+	if anim_scale_override != null:
 		set_scale(get_scale() * anim_scale_override)
 		anim_scale_override = null
 
@@ -95,20 +96,20 @@ func anim_get_ph_paths(p_anim):
 	var ret = []
 	for p in placeholders[p_anim]:
 		var n = get_node(p)
-		if !(n extends InstancePlaceholder):
+		if !(n is InstancePlaceholder):
 			continue
 		ret.push_back(n.get_instance_path())
 	return ret
 
 func play_anim(p_anim, p_notify = null, p_reverse = false, p_flip = null):
-	if typeof(p_notify) != typeof(null) && (!has_node("animation") || !get_node("animation").has_animation(p_anim)):
+	if p_notify != null && (!has_node("animation") || !get_node("animation").has_animation(p_anim)):
 		vm.finished(p_notify)
 		return
 
 	if p_anim in placeholders:
 		for npath in placeholders[p_anim]:
 			var node = get_node(npath)
-			if !(node extends InstancePlaceholder):
+			if !(node is InstancePlaceholder):
 				continue
 			var path = node.get_instance_path()
 			var res = vm.res_cache.get_resource(path)
@@ -119,8 +120,8 @@ func play_anim(p_anim, p_notify = null, p_reverse = false, p_flip = null):
 	pose_scale = 1
 	_update_terrain()
 	if p_flip != null:
-		var scale = get_scale()
-		set_scale(scale * p_flip)
+		var s = get_scale()
+		set_scale(s * p_flip)
 		anim_scale_override = p_flip
 	else:
 		anim_scale_override = null
@@ -142,11 +143,11 @@ func play_anim(p_anim, p_notify = null, p_reverse = false, p_flip = null):
 
 func interact(p_params):
 	var pos
-	if p_params[0].has_node("interact_pos"):
-		pos = p_params[0].get_node("interact_pos").get_global_pos()
+	if p_params[0].has_method("get_interact_pos"):
+		pos = p_params[0].get_interact_pos()
 	else:
-		pos = p_params[0].get_global_pos()
-	if !telekinetic && get_global_pos().distance_to(pos) > 10:
+		pos = p_params[0].get_global_position()
+	if !telekinetic && get_global_position().distance_to(pos) > 10:
 		walk_to(pos)
 		params_queue = p_params
 	else:
@@ -155,10 +156,13 @@ func interact(p_params):
 			animation.play(animations.idles[last_dir])
 			pose_scale = animations.idles[last_dir + 1]
 			_update_terrain()
-		get_tree().call_group(0, "game", "interact", p_params)
+		get_tree().call_group_flags(SceneTree.GROUP_CALL_DEFAULT, "game", "interact", p_params)
 
 func walk_stop(pos):
-	set_pos(pos)
+	# Notify exits of stop position
+	get_tree().call_group_flags(SceneTree.GROUP_CALL_DEFAULT, "exit", "stopped_at", pos)
+
+	set_position(pos)
 	walk_path = []
 	task = null
 	set_process(false)
@@ -171,7 +175,7 @@ func walk_stop(pos):
 		else:
 			animation.play(animations.idles[last_dir])
 			pose_scale = animations.idles[last_dir + 1]
-		get_tree().call_group(0, "game", "interact", params_queue)
+		get_tree().call_group_flags(SceneTree.GROUP_CALL_DEFAULT, "game", "interact", params_queue)
 	else:
 		animation.play(animations.idles[last_dir])
 		pose_scale = animations.idles[last_dir + 1]
@@ -196,7 +200,7 @@ func _get_dir_deg(deg):
 
 
 func _notification(what):
-	if !get_tree() || !get_tree().is_editor_hint():
+	if !get_tree() || !Engine.is_editor_hint():
 		return
 
 	if what == CanvasItem.NOTIFICATION_TRANSFORM_CHANGED:
@@ -207,8 +211,11 @@ func _editor_transform_changed():
 	_check_bounds()
 
 func _check_bounds():
-	#printt("checking bouds for pos ", get_pos(), terrain.is_solid(get_pos()))
-	if terrain.is_solid(get_pos()):
+	if !terrain:
+		return
+
+	#printt("checking bouds for pos ", get_position(), terrain.is_solid(get_position()))
+	if terrain.is_solid(get_position()):
 		if has_node("terrain_icon"):
 			get_node("terrain_icon").hide()
 	else:
@@ -221,14 +228,17 @@ func _check_bounds():
 		get_node("terrain_icon").show()
 
 func _update_terrain():
-	var pos = get_pos()
-	set_z(pos.y)
+	if !terrain:
+		return
+
+	var pos = get_position()
+	set_z_index(pos.y)
 	var color = terrain.get_terrain(pos)
-	var scale = terrain.get_scale_range(color.b)
-	scale.x = scale.x * pose_scale
+	var scal = terrain.get_scale_range(color.b)
+	scal.x = scal.x * pose_scale
 	#if scale != last_scale:
-	if scale != get_scale():
-		last_scale = scale
+	if scal != get_scale():
+		last_scale = scal
 		set_scale(last_scale)
 	color = terrain.get_light(pos)
 	for s in sprites:
@@ -236,7 +246,7 @@ func _update_terrain():
 
 func _process(time):
 	if task == "walk":
-		var pos = get_pos()
+		var pos = get_position()
 		var old_pos = pos
 		var next
 		if walk_path.size() > 1:
@@ -244,7 +254,9 @@ func _process(time):
 		else:
 			next = walk_path[path_ofs]
 
-		var dist = speed * time * last_scale.x * last_scale.x
+		var dist = speed * time * pow(last_scale.x, 2) * terrain.player_speed_multiplier
+		if walk_context and walk_context.fast:
+			dist *= terrain.player_doubleclick_speed_multiplier
 		var dir = (next - pos).normalized()
 
 		# assume that x^2 + y^2 == 1, apply v_speed_damp the y axis
@@ -265,8 +277,8 @@ func _process(time):
 
 		pos = new_pos
 
-		var angle = old_pos.angle_to_point(pos)
-		set_pos(pos)
+		var angle = (old_pos.angle_to_point(pos) - PI/2) * -1
+		set_position(pos)
 
 		last_dir = _get_dir(angle)
 
@@ -284,41 +296,46 @@ func teleport(obj):
 		pose_scale = animations.idles[last_dir + 1]
 
 	var pos
-	if obj.has_node("interact_pos"):
-		pos = obj.get_node("interact_pos").get_global_pos()
+	if obj.has_method("get_interact_pos"):
+		pos = obj.get_interact_pos()
 	else:
-		pos = obj.get_global_pos()
+		pos = obj.get_global_position()
 
-	set_pos(pos)
+	set_position(pos)
 	_update_terrain()
 
-func set_state(name):
-	pass
+func set_state(costume):
+	var node = get_node(costume)
+	# You can `set_state player default` with no animation by that name, and get "animation"
+	animation = node if node else $"animation"
+	assert(animation is AnimationPlayer)
+	animation.play(animations.idles[last_dir])
 
 func teleport_pos(x, y):
-	set_pos(Vector2(x, y))
+	set_position(Vector2(x, y))
 	_update_terrain()
 
-
 func _find_sprites(p = null):
-	if p.is_type("Sprite") || p.is_type("AnimatedSprite"):
+	if p is Sprite || p is AnimatedSprite:
 		sprites.push_back(p)
 	for i in range(0, p.get_child_count()):
 		_find_sprites(p.get_child(i))
 
 func _ready():
 
-	terrain = get_parent().get_node("terrain")
+	if get_parent().has_node("terrain"):
+		terrain = get_parent().get_node("terrain")
+
 	_find_sprites(self)
-	if get_tree().is_editor_hint():
+	if Engine.is_editor_hint():
 		return
 
 	animation = get_node("animation")
-	vm = get_tree().get_root().get_node("vm")
+	vm = $"/root/vm"
 	vm.register_object("player", self)
 	#_update_terrain();
 	if has_node("animation"):
-		get_node("animation").connect("finished", self, "anim_finished")
+		get_node("animation").connect("animation_finished", self, "anim_finished")
 
 	last_scale = get_scale()
 	set_process(true)

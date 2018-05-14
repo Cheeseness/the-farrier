@@ -1,0 +1,59 @@
+:talk
+say customer "Still working alone, I see?" [!customer1_step1,!customer1_end]
+say yemm "There you go. Lull is all patched up." [customer1_end]
+say customer "Yeah, you just can't keep her quiet. Come on girl, let's go carry some crates." [customer1_end]
+
+? reception
+## opening dialogue step 1
+	- "I prefer it that way." [!customer1_step1,!customer1_end]
+		say yemm "I prefer it that way."
+		say customer "I told you a long time ago to get an apprentice. Wu is on the way too. I'm afraid the storm has brought you a full day's work."
+		set_global customer1_step1 true
+		## restart dialogue
+	- "I haven't found the right person for the job." [!customer1_step1,!customer1_end]
+		say yemm "I haven't found the right person for the job."
+		say customer "It can‘t be that hard. A little cleaning, some needle and thread. If the storms keep riling 'em up like this, you might need a second pair of hands."
+		set_global customer1_step1 true
+		? reception
+			- "There's more to this job than tools and medicine."
+				say yemm "There's more to this job than tools and medicine."
+				say customer "Of course. Shall we?"
+				## restart dialogue
+			- "Whatever you say..."
+				say yemm "Whatever you say..."
+				say customer "I'm just saying we can all use a helping hand."
+				## restart dialogue
+
+## opening dialogue step 2
+	- "Is she okay?" [customer1_step1,!customer1_end]
+		say yemm "Is she okay?"
+		say customer "It's not too bad. Just some nasty splinters that need plucking."
+		## restart dialogue
+	- "What happened?" [customer1_step1,!customer1_end]
+		say yemm "What happened?"
+		say customer "Heck if I know. Probably some tree laying around that she stepped on tonight."
+		set_global topic_inside true
+		## restart dialogue
+	- "Why was she outside at night?" [customer1_step1,!customer1_end,topic_inside]
+		say yemm "Why was she outside at night?"
+		say customer "Didn't you hear the storm coming? You know how agitated paras get when lightining strikes. They would tear the walls from their shed."
+		set_global topic_lightning true
+		## restart dialogue
+	- "I will take care of her now." [!customer1_end]
+		say yemm "I will take care of her now."
+		change_scene res://game/rooms/foot_care/foot_care.tscn
+
+## closing dialogue
+	- "Her foot needs rest. She should not be lifting heavy things." [customer1_end]
+		say yemm "Her foot needs rest. She should not be lifting heavy things."
+		say customer "I thought it was just a few splinters. We need her for farm work!"
+		say yemm "The wounds are on her sole and could easily open up. Lay her down for at least this day so she has time to heal."
+		say customer "Okay, well… I suppose it's better to lose her today than her foot getting worse. Thank you again, Farrier."
+		say yemm "Wish you well."
+		change_scene res://game/rooms/reception_area/reception_area.tscn
+	- "*say nothing*" [customer1_end]
+		say yem "..."
+		say customer "Thank you for healing her, Farrier!"
+		change_scene res://game/rooms/reception_area/reception_area.tscn
+
+set_global customer_dialogue_ended true

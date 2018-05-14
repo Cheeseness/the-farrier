@@ -1,0 +1,102 @@
+#Onda is customer_onda and "owner" of Lull.
+
+:talk
+
+set_condition splinter 3
+set_condition bruise 2
+
+> [!customer_onda_step1,!customer_onda_end]
+	say customer_onda "Greetings, Farrier."
+	say yemm "Greetings to you too, Onda."
+	say customer_onda "We haven't seen you for some weeks. How have you been?"
+	say yemm "Well enough."
+	say customer_onda "Are you sure you can cope on your own?"
+
+> [customer_onda_step1,!customer_onda_end,!customer_onda_step2]
+	say yemm "I see you've brought Lull."
+	set_global customer_onda_step2 true
+
+> [customer_onda_end]
+	say customer_onda "How bad was it?"
+	say yemm "Not too bad."
+	say lull "!!*braaa*!!"
+	say customer_onda "Ha ha, you just can't keep her quiet. Come on girl, let's go carry some crates."
+
+? reception
+## opening dialogue step 1
+	- "I do better work alone." [!customer_onda_step1,!customer_onda_end]
+		say yemm "I do better work alone."
+		say customer_onda "Sorry, I didn't mean to be rude. It's just that Wu is on the way too. I'm afraid the storm has left you with a lot to be done."
+		set_global customer_onda_step1 true
+		## restart dialogue
+
+	- "Nobody around here can do the work I do." [!customer_onda_step1,!customer_onda_end]
+		say yemm "Nobody around here can do the work I do."
+		say customer_onda "It can't be that hard. A little cleaning, some needle and thread."
+		say customer_onda "If the storms keep riling 'em up like this, you could do with a second pair of hands."
+		set_global customer_onda_step1 true
+		? reception
+			- "There's more to this job than tools and medicine."
+				say yemm "There's more to this job than tools and medicine."
+				say customer_onda "... of course."
+				## restart dialogue
+
+			- "This happens every year and I get by."
+				say yemm "This happens every year and I get by."
+				say customer_onda "You do. I'm sorry. The storms make me nervous every year too."
+
+			- "Whatever you say..."
+				say yemm "Whatever you say..."
+				say customer_onda "I'm just saying we can all use a helping hand."
+				## restart dialogue
+
+	- "The storms haven't been that bad." [!customer_onda_step1,!customer_onda_end]
+		say yemm "The storms haven't been that bad."
+		say customer_onda "Wu is on the way too. I'm afraid that last night's storm has left you with a lot of work to be done."
+		say yemm "These are seasonal storms. It's no more work than last year."
+		say customer_onda "I suppose not."
+		## restart dialogue
+
+## opening dialogue step 2
+	- "Is she okay?" [customer_onda_step1,!customer_onda_end]
+		say yemm "Is she okay?"
+		say customer_onda "I'm not sure. There are some nasty splinters in her foot."
+		## restart dialogue
+
+	- "What happened?" [customer_onda_step1,!customer_onda_end]
+		say yemm "What happened?"
+		say customer_onda "Heck if I know. She probably stomped on some fallen tree last night."
+		set_global topic_outside_in_storm true
+		## restart dialogue
+
+	- "Why was she outside at night during a storm?" [customer_onda_step1,!customer_onda_end,topic_outside_in_storm]
+		say yemm "Why was she outside at night during a storm?"
+		say customer_onda "You know how Paras get when lightining strikes."
+		say customer_onda "If I didn't let her out, there wouldn't be walls on the barn come morning."
+		set_global topic_lightning true
+		## restart dialogue
+
+	- "I will look after her now." [!customer_onda_end]
+		say yemm "I will look after her now."
+		change_scene res://game/rooms/foot_care/foot_care.tscn
+
+## closing dialogue
+	- "Her foot needs rest. She should not be lifting heavy things." [customer_onda_end]
+		say yemm "Her foot needs rest. She should not be lifting heavy things."
+		say customer_onda "I thought it was just a few splinters. Fenn needs her for farm work!"
+		say yemm "The punctures are on her sole and could easily open up. Let her rest for at least today so she has time to heal."
+		say customer_onda "Okay, well..."
+		say customer_onda "I suppose it's better to lose her today than have her foot get worse. Thank you again, Farrier."
+		say yemm "Goodbye Onda."
+		say yemm "Be well, Lull."
+		say lull "!!*pbbbbt*!!"
+		set_global next_customer customer_wu
+		change_scene res://game/rooms/reception_area/reception_area.tscn
+
+	- "*say nothing*" [customer_onda_end]
+		say yem "..."
+		say customer_onda "Thank you for healing her, Farrier!"
+		set_global next_customer customer_wu
+		change_scene res://game/rooms/reception_area/reception_area.tscn
+
+set_global customer_dialogue_ended true

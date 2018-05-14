@@ -1,0 +1,131 @@
+; Engine configuration file.
+; It's best edited using the editor UI and not directly,
+; since the parameters that go here are not all obvious.
+;
+; Format:
+;   [section] ; section goes between []
+;   param=value ; assign values to parameters
+
+config_version=3
+
+[application]
+
+config/name="The Farrier"
+run/main_scene="res://globals/scene_main.tscn"
+config/icon="res://footprint-icon.png"
+
+[autoload]
+
+Conditions="*res://game/autoloads/conditions.gd"
+Words="*res://game/autoloads/words.gd"
+Tool="*res://game/autoloads/cursors.tscn"
+Disposition="*res://game/autoloads/disposition.gd"
+main="*res://globals/main.tscn"
+vm="*res://globals/global_vm.tscn"
+esc_type="*res://globals/escoria_types.gd"
+
+[debug]
+
+print_clicked_control=true
+
+[display]
+
+window/size/width=1920
+window/size/height=1080
+window/size/test_width=1280
+window/size/test_height=720
+window/stretch/aspect="keep"
+game_height=1080
+game_width=1920
+
+[escoria]
+
+application/max_voice_volume=2
+application/save_data="res://globals/save_data.gd"
+application/speech_suffix=".spx"
+application/text_lang="en"
+application/voice_lang="en"
+application/speech_path="res://demo/audio/speech/"
+application/speech_enabled=true
+application/speech_locales_path="res://demo/speech_locales.gd"
+application/text_timeout_seconds=3
+platform/skip_cache=false
+platform/terminate_on_errors=true
+platform/action_menu_scale=1
+platform/credits="res://demo/ui/credits/credits.txt"
+platform/dialog_option_height=1
+platform/dialog_type_suffix=""
+platform/dialog_force_centered=false
+platform/development_lang="en"
+platform/game_start_script="res://demo/game.esc"
+platform/force_text_ids=false
+platform/force_disable_typewriter_text=false
+platform/force_quit=true
+platform/force_tooltip_global_id=false
+platform/exit_button=true
+platform/screen_resizable=true
+platform/telon="res://globals/telon.tscn"
+platform/window_title_height=32
+ui/hud="res://ui/hud.tscn"
+ui/credits="res://game/ui/credits/credits.txt"
+ui/in_game_menu=""
+ui/main_menu="res://ui/main_menu.tscn"
+ui/confirm_popup="res://demo/ui/confirm_popup.tscn"
+ui/savegames=""
+ui/tooltip_follows_mouse=false
+ui/right_mouse_button_action_menu=false
+ui/action_menu=""
+ui/inventory=""
+
+[image_loader]
+
+filter=false
+
+[importer_defaults]
+
+texture={
+"flags/filter": false,
+"flags/mipmaps": true
+}
+
+[input]
+
+inventory_toggle=[ Object(InputEventJoypadButton,"resource_local_to_scene":false,"resource_name":"","device":0,"button_index":5,"pressure":0.0,"pressed":false,"script":null)
+, Object(InputEventJoypadButton,"resource_local_to_scene":false,"resource_name":"","device":0,"button_index":7,"pressure":0.0,"pressed":false,"script":null)
+, Object(InputEventJoypadButton,"resource_local_to_scene":false,"resource_name":"","device":0,"button_index":9,"pressure":0.0,"pressed":false,"script":null)
+ ]
+look=[ Object(InputEventJoypadButton,"resource_local_to_scene":false,"resource_name":"","device":0,"button_index":3,"pressure":0.0,"pressed":false,"script":null)
+ ]
+menu_request=[ Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"pressed":false,"scancode":16777217,"unicode":0,"echo":false,"script":null)
+, Object(InputEventJoypadButton,"resource_local_to_scene":false,"resource_name":"","device":0,"button_index":11,"pressure":0.0,"pressed":false,"script":null)
+ ]
+punch_out_dodge=[ Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"pressed":false,"scancode":90,"unicode":0,"echo":false,"script":null)
+, Object(InputEventJoypadButton,"resource_local_to_scene":false,"resource_name":"","device":0,"button_index":2,"pressure":0.0,"pressed":false,"script":null)
+ ]
+punch_out_punch=[ Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"pressed":false,"scancode":88,"unicode":0,"echo":false,"script":null)
+, Object(InputEventJoypadButton,"resource_local_to_scene":false,"resource_name":"","device":0,"button_index":0,"pressure":0.0,"pressed":false,"script":null)
+ ]
+quick_save=[ Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"pressed":false,"scancode":16777247,"unicode":0,"echo":false,"script":null)
+ ]
+skip=[ Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"pressed":false,"scancode":32,"unicode":0,"echo":false,"script":null)
+, Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"pressed":false,"scancode":46,"unicode":0,"echo":false,"script":null)
+ ]
+start=[ Object(InputEventJoypadButton,"resource_local_to_scene":false,"resource_name":"","device":0,"button_index":11,"pressure":0.0,"pressed":false,"script":null)
+ ]
+talk=[ Object(InputEventJoypadButton,"resource_local_to_scene":false,"resource_name":"","device":0,"button_index":1,"pressure":0.0,"pressed":false,"script":null)
+ ]
+use=[ Object(InputEventJoypadButton,"resource_local_to_scene":false,"resource_name":"","device":0,"button_index":2,"pressure":0.0,"pressed":false,"script":null)
+ ]
+
+[platform]
+
+dialog_instance_scale=1
+disable_screen_shaders=false
+file_cases="res://game/ui/file_cases/file_cases.scn"
+gamecenter=false
+ghost_remap=""
+hud_mobile=false
+logos="res://game/logos.ogm"
+show_ingame_buttons=false
+use_custom_camera=false
+windowed_available=true

@@ -1,0 +1,104 @@
+#Wu is customer_wu and "owner" of Krik. A farmer who works with Fenn to manage the village's crops and grain stores.
+
+:talk
+
+set_condition splinter 3
+set_condition bruise 2
+
+> [!customer_wu_end,!customer_wu_intro]
+	say customer_wu "My Para must've tripped over something."
+	set_global customer_wu_intro true
+
+> [customer_wu_end,!customer_wu_end_intro]
+	say customer_wu "All done?"
+	say yemm "I've applied a poultice and bandaged the bruising."
+	say krik "!!*braaa*!!"
+	say customer_wu "I can tell Krik is relieved. You work so well with them."
+	set_global customer_wu_end_intro true
+
+? reception
+## opening dialogue
+	- "Greetings." [!customer_wu_end,!customer_wu_greeting]
+		say yemm "Greetings."
+		say customer_wu "Oh, where are my manners? Good day to you, Farrier."
+		say yemm "Good day, Wu."
+		set_global customer_wu_greeting true
+
+	- "Another open wound?" [!customer_wu_end,!customer_wu_wound]
+		say yemm "Another open wound?"
+		say customer_wu "No, gladly not. I saw Krik limping today and checked his foot - there are a lot of bruises."
+		say customer_wu "I will probably have to leave him laying on his haystack for the rest of the week."
+		say yemm "That would be a good idea."
+		say customer_wu "It's going to be hard with both Lull and Krik out of action. Fenn's going to be upset."
+		set_global customer_wu_greeting true
+		set_global customer_wu_wound true
+		set_global topic_upset_fenn true
+
+	- "Why would Fenn be upset?" [!customer_wu_end,topic_upset_fenn]
+		say yemm "Why would Fenn be upset?"
+		say yemm "The rest of the farming herd should be able to cover two dinosaurs resting."
+		say customer_wu "..."
+		say customer_wu "Don't tell anybody, but something's gotten into the grain stores."
+		say yemm "I see..."
+		say customer_wu "It doesn't look like much so far, but Fenn wants to work out where it's going before we let people know."
+		say customer_wu "He hasn't even told Onda - his own wife!"
+		say customer_wu "Sorry. Don't worry about it. We're all just feeling a little stressed."
+		set_global topic_missing_grain true
+
+	- "What caused the bruises?" [!customer_wu_end,customer_wu_wound]
+		say yemm "What caused the bruises?"
+		say customer_wu "I found Krik lying on the ground. I couldn't see anything around that might have caused this."
+		set_global topic_krik_location true
+		set_global customer_wu_greeting true
+
+	- "Where did you find Krik?" [!customer_wu_end, topic_krik_location]
+		say yemm "Where did you find Krik?"
+		say customer_wu "He was down in one of the old fields left out of this year's rotation."
+		say yemm "Which one?"
+		say customer_wu "The northern-most one, near the cliff face."
+		say customer_wu "Maybe he could have fallen, but I don't see how he could've gotten up there."
+		say yemm "And he would have more than some bruising."
+		say customer_wu "Right."
+
+	- "I will tend to Krik now." [!customer_wu_end]
+		say yemm "I will tend to Krik now."
+		change_scene res://game/rooms/foot_care/foot_care.tscn
+
+## closing dialogue
+	- "There may be a bruise on the bone as well." [customer_wu_end]
+		say yemm "There may be a bruise on the bone as well."
+		say customer_wu "Oh darn. How bad?"
+		say yemm "I'm not sure. It will depend on how quickly the swelling goes down."
+
+	- "Could Krik have been in the cave near the north field?" [customer_wu_end,topic_cave]
+		say yemm "Could Krik have been in the cave near the north field?"
+		say customer_wu "I suppose it's possible... though that would mean he walked a long way before lying down."
+
+	- "Has anybody reported any dinosaurs missing that you know of?" [customer_wu_end,topic_unknown_dinosaurs,!topic_unknown_dinosaurs_used]
+		say yemm "Has anybody reported any dinosaurs missing that you know of?"
+		say customer_wu "Not that I'm aware of. Why do you ask?"
+		? reception
+			- "It's nothing. Don't worry about it."
+				say yem "It's nothing. Don't worry about it."
+				say customer_wu "... okay, if you say so."
+				set_global topic_unknown_dinosaurs_used true
+
+			- "I just have a feeling."
+				say yem "I just have a feeling."
+				say customer_wu "Well, if I hear anything, I'll make sure someone lets you know."
+				set_global topic_unknown_dinosaurs_used true
+
+			- "Krik told me that there were missing dinosaurs."
+				say yem "Krik..."
+				say customer_wu "... it's okay. I know. Krik got himself hurt and Lull was out during the storm. I'd be worried too."
+				say customer_wu "If I hear of anything, I'll make sure someone lets you know."
+				set_global topic_unknown_dinosaurs_used true
+
+	- "Take Krik home and see that he rests." [customer_wu_end]
+		say yemm "Take Krik home and see that he rests. Come back and tell me how he is in two days."
+		say yemm "If he needs more attention, I will visit."
+		say customer_wu "Thank you again, Yemm."
+		set_global next_customer customer_herk
+		change_scene res://game/rooms/reception_area/reception_area.tscn
+
+set_global customer_dialogue_ended true

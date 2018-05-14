@@ -1,6 +1,7 @@
+extends Node
 
+export(String, FILE, ".esc") var events_path = ""
 
 func _ready():
-	get_node("/root/main").call_deferred("set_current_scene", self)
-	pass
+	main.call_deferred("set_current_scene", self, events_path)
 

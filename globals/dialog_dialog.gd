@@ -5,7 +5,6 @@ export var mouse_enter_shadow_color = Color(0.6,0.4,0)
 export var mouse_exit_color = Color(1,1,1)
 export var mouse_exit_shadow_color = Color(1,1,1)
 
-var vm
 var cmd
 var container
 var context
@@ -30,15 +29,18 @@ func selected(n):
 func timer_timeout():
 	selected(timeout_option)
 
+# called from global_vm.gd::dialog() function
 func start(params, p_context):
 	#stop()
 	printt("dialog start with params ", params.size())
 	context = p_context
 	cmd = params[0]
-	# Intercept and add dialogue options
+
+	# The Farrier hook for intercepting and adding dialogue options
 	append_words(cmd)
+
 	var i = 0
-	var visible = 0
+	var nb_visible = 0
 	for q in cmd:
 		if !vm.test(q):
 			i+=1
@@ -47,32 +49,32 @@ func start(params, p_context):
 		var but = it.get_node("button")
 		var label = but.get_node("label")
 
-		var force_ids = Globals.get("debug/force_text_ids")
+		var force_ids = ProjectSettings.get_setting("escoria/platform/force_text_ids")
 		var text = q.params[0]
 		var sep = text.find(":\"")
 		if sep > 0:
 			var tid = text.substr(0, sep)
 			text = text.substr(sep + 2, text.length() - (sep + 2))
-	
-			# This won't work unless we put the placeholder variables in translation files - Flesk
-			#var ptext = TranslationServer.translate(tid)
-			#if ptext != tid:
-			#	text = ptext
-			#elif force_ids:
-			#	text = tid + " (" + text + ")"
+
+			var ptext = TranslationServer.translate(tid)
+			if ptext != tid:
+				text = ptext
+			elif force_ids:
+				text = tid + " (" + text + ")"
 
 		elif force_ids:
 			text = "(no id) " + text
-			
-		# Interpolate global variables - Flesk
+
+		# The Farrier string interpolation
+		printt("check string for globals", text)
 		text = vm.interpolate_globals(text)
 
 		label.set_text(text)
 		but.connect("pressed", self, "selected", [i])
-		but.connect("mouse_enter",self,"_on_mouse_enter",[but])
-		but.connect("mouse_exit",self,"_on_mouse_exit",[but])
+		but.connect("mouse_entered",self,"_on_mouse_enter",[but])
+		but.connect("mouse_exited",self,"_on_mouse_exit",[but])
 
-		var height_ratio = Globals.get("platform/dialog_option_height")
+		var height_ratio = ProjectSettings.get_setting("escoria/platform/dialog_option_height")
 		var size = it.get_custom_minimum_size()
 		size.y = size.y * height_ratio
 		it.set_custom_minimum_size(size)
@@ -82,7 +84,7 @@ func start(params, p_context):
 		if i == 0:
 			but.grab_focus()
 		i+=1
-		visible += 1
+		nb_visible += 1
 
 		_on_mouse_exit(but)
 
@@ -117,11 +119,11 @@ func start(params, p_context):
 	ready = false
 	animation.play("show")
 	animation.seek(0, true)
-	
+
 func _on_mouse_enter(button):
 	button.get_node("label").add_color_override("font_color", mouse_enter_color)
 	button.get_node("label").add_color_override("font_color_shadow", mouse_enter_shadow_color)
-	
+
 func _on_mouse_exit(button):
 	button.get_node("label").add_color_override("font_color", mouse_exit_color)
 	button.get_node("label").add_color_override("font_color_shadow", mouse_exit_shadow_color)
@@ -138,44 +140,26 @@ func stop():
 func game_cleared():
 	queue_free()
 
-func anim_finished():
-	var cur = animation.get_current_animation()
-	if cur == "show":
+func anim_finished(anim_name):
+	if anim_name == "show":
 		ready = true
 		if timer_timeout > 0:
 			timer.start()
 			if animation.has_animation("timer"):
 				animation.set_current_animation("timer")
-				var len = animation.get_current_animation_length()
-				animation.set_speed(len / timer_timeout)
+				var length = animation.get_current_animation_length()
+				animation.set_speed(length / timer_timeout)
 				animation.play()
 
-	if cur == "hide":
+	if anim_name == "hide":
 		vm.finished(context)
 		vm.add_level(cmd[option_selected].params[1], false)
 		stop()
 
-func _ready():
-
-	printt("dialog ready")
-	hide()
-	vm = get_tree().get_root().get_node("vm")
-	container = get_node("anchor/scroll/container")
-	container.set_stop_mouse(false)
-	#add_to_group("dialog_dialog")
-	item = get_node("item")
-	item.get_node("button/label").set_stop_mouse(false)
-	item.get_node("button").set_stop_mouse(false)
-	item.set_stop_mouse(false)
-	call_deferred("remove_child", item)
-	animation = get_node("animation")
-	animation.connect("finished", self, "anim_finished")
-	#get_node("anchor/scroll").set_theme(preload("res://game/globals/dialog_theme.xml"))
-	add_to_group("game")
-
+# The Farrier specific functions
 func append_words(cmd):
 	# Append words to dialogue options dynamically from list
-	
+
 	# 0 - not learned, only appears the "turn" after it was spoken by dino
 	# 1 - learned, appears if repeated by player
 	# 2 - understood, always appears translated
@@ -188,9 +172,10 @@ func append_words(cmd):
 	remove_words(cmd)
 
 	var words = Words.all()
+
 	if typeof(words) != TYPE_DICTIONARY:
 		return
-	
+
 	for word in words:
 		if get_tree().get_root().find_node("PlaceholderYemm", true, false) != null:
 			#print("We're in the wrong scene!")
@@ -224,10 +209,26 @@ func remove_words(cmd):
 	var words = Words.all()
 	if typeof(words) != TYPE_DICTIONARY:
 		return
-	
+
 	for c in cmd:
 		if c["params"][0] in words:
 			remove.append(c)
 
 	for r in remove:
 		cmd.erase(r)
+
+func _ready():
+	printt("dialog ready")
+	hide()
+	container = get_node("anchor/scroll/container")
+	container.set_mouse_filter(MOUSE_FILTER_PASS)
+	add_to_group("dialog_dialog")
+	item = get_node("item")
+	item.get_node("button/label").set_mouse_filter(MOUSE_FILTER_PASS)
+	item.get_node("button").set_mouse_filter(MOUSE_FILTER_PASS)
+	item.set_mouse_filter(MOUSE_FILTER_PASS)
+	call_deferred("remove_child", item)
+	animation = get_node("animation")
+	animation.connect("animation_finished", self, "anim_finished")
+	#get_node("anchor/scroll").set_theme(preload("res://demo/globals/dialog_theme.xml"))
+	add_to_group("game")
